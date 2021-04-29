@@ -1,11 +1,11 @@
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
 
-struct Model {}
+struct Root {}
 
 pub struct Msg {}
 
-impl Component for Model {
+impl Component for Root {
     type Message = Msg;
     type Properties = ();
     fn create(_: Self::Properties, _: ComponentLink<Self>) -> Self {
@@ -37,5 +37,5 @@ impl Component for Model {
 
 #[wasm_bindgen(start)]
 pub fn run_app() {
-    App::<Model>::new().mount_to_body();
+    App::<Root>::new().mount_to_body();
 }
