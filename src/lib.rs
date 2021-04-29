@@ -21,14 +21,15 @@ impl Component for Model {
     }
 
     fn view(&self) -> Html {
-        // const wrapper = "background: red;".to_string();
         let wrapper_style =
             "display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;";
 
         html! {
             <div style=wrapper_style>
-                <p>{"Hiiiii, I'm ZhanHao Zhao, u can just call me Mist."}</p>
-                <p>{"There is my personal blog site, but there is nothing here for the time being, in the future, there may be some interesting or boring things here which come from my life❤️."}</p>
+                <div>
+                    <p>{"Hiiiii, I'm ZhanHao Zhao, u can just call me Mist."}</p>
+                    <p>{"There is my personal blog site, but there is nothing here for the time being, in the future, there may be some interesting or boring things here which come from my life❤️."}</p>
+                </div>
             </div>
         }
     }

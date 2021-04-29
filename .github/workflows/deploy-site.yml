@@ -1,0 +1,30 @@
+name: deploy-site
+on: [push]
+
+jobs:
+  cargo-build:
+    name: vercel deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions-rs/install@v0.1
+        with:
+          crate: wasm-pack
+          version: latest
+          use-tool-cache: true
+
+      - name: 'wasm-pack build'
+        run: wasm-pack build --target web --out-name wasm --out-dir ./static
+
+      - name: 'install server'
+        run: yarn add http-server
+        working-directory: static
+
+      - uses: amondnet/vercel-action@v20
+        with:
+          vercel-cli: vercel
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-args: --prod
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
