@@ -1,9 +1,30 @@
+mod pages;
+mod components;
+mod routes;
+
+use crate::routes::switch;
+use yew_router::prelude::*;
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
+use pages::{
+    home::Home,
+    about_me::AboutMe,
+    not_found::NotFound,
+};
+use routes::Routes;
+use components::Header;
+use material_yew::{
+    MatTopAppBar,
+    MatTopAppBarFixed,
+    top_app_bar_fixed::{MatTopAppBarNavigationIcon},
+    MatIconButton
+};
 
 struct Root {}
 
 pub struct Msg {}
+
+type AppRouter = Router<Routes>;
 
 impl Component for Root {
     type Message = Msg;
@@ -17,19 +38,14 @@ impl Component for Root {
     }
 
     fn change(&mut self, _: Self::Properties) -> ShouldRender {
-        false
+        true
     }
 
     fn view(&self) -> Html {
-        let wrapper_style =
-            "display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;";
-
         html! {
-            <div style=wrapper_style>
-                <div>
-                    <p>{"Hiiiii, I'm ZhanHao Zhao, u can just call me Mist."}</p>
-                    <p>{"There is my personal blog site, but there is nothing here for the time being, in the future, there may be some interesting or boring things here which come from my life❤️."}</p>
-                </div>
+            <div>
+                <Header text="Mist's Blog"></Header>
+                <AppRouter render = Router::render(switch) />
             </div>
         }
     }
