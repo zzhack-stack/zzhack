@@ -1,30 +1,31 @@
     
-    use yew_router::{route::Route, service::RouteService, Switch, agent::{
+use yew_router::{route::Route, service::RouteService, agent::{
     RouteAgent,
     RouteRequest::ChangeRoute,
 }};
 use material_yew::MatTab;
 use material_yew::MatTabBar;
 use yew::prelude::*;
+use css_in_rust::style::Style;
 use crate::routes::{
-    AppRouterAnchor,
     Routes
 };
+
+#[derive(Properties, Clone)]
+pub struct HeaderProps {
+
+}
 
 pub struct Header {
     route_service: RouteService<()>,
     props: HeaderProps,
     link: ComponentLink<Self>,
     route_agent: Box<dyn Bridge<RouteAgent<()>>>,
+    style: Style
 }
 
 pub enum HeaderMessage {
     ChangeRoute(Route<()>)
-}
-
-#[derive(Debug, Properties, Clone)]
-pub struct HeaderProps {
-    pub text: String,
 }
 
 struct Tab {
@@ -43,15 +44,35 @@ impl Component for Header {
     type Properties = HeaderProps;
 
     fn create(props: HeaderProps, link: ComponentLink<Self>) -> Self {
-        let mut route_service = RouteService::new();
-        let mut route_agent = RouteAgent::bridge(link.callback(HeaderMessage::ChangeRoute));
-        route_agent.send(ChangeRoute(Routes::NotFound.into()));
+        let route_service = RouteService::new();
+        let route_agent = RouteAgent::bridge(link.callback(HeaderMessage::ChangeRoute));
+        let style = Style::create("Header", r#"
+            height: 48px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            background: var(--base-color); 
+            box-shadow: 0 1px 1px 0 rgb(32 33 36 / 28%);
+            padding: 0 24px;
+            box-sizing: border-box;
+
+            .title {
+                font-weight: 500;
+            }
+
+            .tab_style {
+                margin-left: 50px;
+            }
+        "#).unwrap();
 
         Self {
             props,
             link,
             route_service,
             route_agent,
+            style,
         } 
     }
 
@@ -78,37 +99,21 @@ impl Component for Header {
 
 
     fn view(&self) -> yew::virtual_dom::VNode { 
-        let header_wrapper_style = "
-            height: 48px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            background: var(--base-color); 
-            box-shadow: 0 1px 6px 0 rgb(32 33 36 / 28%);
-            padding: 0 24px;
-        ";
-
-        let title_style = "
-            font-weight: 500;
-        ";
-
-        let tab_style = "
-            margin-left: 50px;
-        ";
-
         html! {
-            <div style=header_wrapper_style>
-                <div style=title_style>
-                    {self.props.text.clone()}
+            <>
+                <div class=self.style.clone().to_string()>
+                    <div class="title">
+                        {"Mist's Blog"}
+                    </div>
+                    <div class="tab_style">
+                        <MatTabBar onactivated=self.link.callback(|i: usize| HeaderMessage::ChangeRoute(TABS[i].route.clone().into()))>
+                            {for TABS.iter().map(|tab| html!{
+                                <MatTab label=tab.name is_fading_indicator=true />
+                            })}
+                        </MatTabBar>
+                    </div>
                 </div>
-                <div style=tab_style>
-                    <MatTabBar onactivated=self.link.callback(|i: usize| HeaderMessage::ChangeRoute(TABS[i].route.clone().into()))>
-                        {for TABS.iter().map(|tab| html!{
-                            <MatTab label=tab.name is_fading_indicator=true />
-                        })}
-                    </MatTabBar>
-                </div>
-            </div>
+            </>
         }
     }
 }

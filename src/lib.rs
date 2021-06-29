@@ -12,7 +12,10 @@ use pages::{
     not_found::NotFound,
 };
 use routes::Routes;
-use components::Header;
+use components::{
+    Header,
+    Footer,
+};
 use material_yew::{
     MatTopAppBar,
     MatTopAppBarFixed,
@@ -44,8 +47,9 @@ impl Component for Root {
     fn view(&self) -> Html {
         html! {
             <div>
-                <Header text="Mist's Blog"></Header>
+                <Header />
                 <AppRouter render = Router::render(switch) />
+                <Footer />
             </div>
         }
     }

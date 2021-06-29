@@ -1,9 +1,9 @@
 use crate::components::home::category_bar::CategoryBar;
 use yew::prelude::*;
 
-pub struct Home;
+pub struct Technology;
 
-impl Component for Home {
+impl Component for Technology {
     type Message = ();
     type Properties = ();
 
@@ -22,6 +22,7 @@ impl Component for Home {
     fn view(&self) -> Html {
         html! {
             <div>
+                <CategoryBar text="Technology is life" categories=vec!("文章", "开源") />
             </div>
         }
     }

@@ -1,14 +1,22 @@
-use crate::components::home::category_bar::CategoryBar;
 use yew::prelude::*;
+use css_in_rust::Style;
 
-pub struct Home;
+pub struct Footer {
+    style: Style
+}
 
-impl Component for Home {
+impl Component for Footer {
     type Message = ();
     type Properties = ();
 
     fn create(_props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        Self
+        let style = Style::create("Footer", r#"
+            
+        "#).unwrap();
+
+        Self {
+            style
+        }
     }
 
     fn update(&mut self, _msg: Self::Message) -> ShouldRender {
@@ -21,7 +29,8 @@ impl Component for Home {
 
     fn view(&self) -> Html {
         html! {
-            <div>
+            <div class=self.style.to_string()>
+                {"404"}
             </div>
         }
     }

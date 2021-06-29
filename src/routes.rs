@@ -4,6 +4,7 @@ use crate::pages::{
     home::Home,
     about_me::AboutMe,
     not_found::NotFound,
+    technology::Technology,
 };
 
 #[derive(Debug, Switch, Clone)]
@@ -32,6 +33,9 @@ pub fn switch(routes: Routes) -> Html {
         },
         Routes::NotFound => {
             html! {<NotFound />}
+        },
+        Routes::Technology => {
+            html! {<Technology />}
         },
         _ =>  html! {<Home />}
     }
