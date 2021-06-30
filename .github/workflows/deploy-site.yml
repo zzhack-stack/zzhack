@@ -8,9 +8,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: hecrj/setup-rust-action@v1
+        with:
+         rust-version: stable
+
+      - name: 'install wasm32-unknown-unknown'
+        run: rustup target add wasm32-unknown-unknown
+
+
       - uses: actions-rs/install@v0.1
         with:
           crate: wasm-pack
+          version: latest
+          use-tool-cache: true
+
+      - uses: actions-rs/install@v0.1
+        with:
+          crate: wasm-bindgen-cli
           version: latest
           use-tool-cache: true
 
@@ -20,14 +34,8 @@ jobs:
           version: latest
           use-tool-cache: true
 
-      - uses: actions-rs/install@v0.1
-        with:
-          crate: wasm-bingen-cli
-          version: latest
-          use-tool-cache: true
-
-      - name: 'trunk build'
-        run: trunk build
+      - name: build
+        run: trunk build --release
 
       - uses: amondnet/vercel-action@v20
         with:
