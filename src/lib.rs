@@ -1,38 +1,32 @@
+mod utils;
 mod pages;
 mod components;
 mod routes;
+mod services;
 
-use crate::routes::switch;
+use crate::services::ThemeService;
+use crate::routes::app_routes::switch;
 use yew_router::prelude::*;
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
-use pages::{
-    home::Home,
-    about_me::AboutMe,
-    not_found::NotFound,
-};
-use routes::Routes;
+use routes::app_routes::AppRoutes;
 use components::{
     Header,
     Footer,
-};
-use material_yew::{
-    MatTopAppBar,
-    MatTopAppBarFixed,
-    top_app_bar_fixed::{MatTopAppBarNavigationIcon},
-    MatIconButton
 };
 
 struct Root {}
 
 pub struct Msg {}
 
-type AppRouter = Router<Routes>;
+type AppRouter = Router<AppRoutes>;
 
 impl Component for Root {
     type Message = Msg;
     type Properties = ();
     fn create(_: Self::Properties, _: ComponentLink<Self>) -> Self {
+        ThemeService::init();
+
         Self {}
     }
 

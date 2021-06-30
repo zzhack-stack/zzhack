@@ -1,5 +1,14 @@
-use crate::components::home::category_bar::CategoryBar;
+use yew_router::prelude::Router;
+use crate::components::home::category_bar::{
+    CategoryBar,
+    Category,
+};
 use yew::prelude::*;
+use crate::routes::technology_routes::{
+    TechnologyRoutes,
+    switch,
+    TechnologyRouter
+};
 
 pub struct Technology;
 
@@ -22,7 +31,8 @@ impl Component for Technology {
     fn view(&self) -> Html {
         html! {
             <div>
-                <CategoryBar text="Technology is life" categories=vec!("文章", "开源") />
+                <CategoryBar text="Technology is life" categories=vec!(Category {name: "文章", route: TechnologyRoutes::Articles.into()}, Category {name: "开源", route: TechnologyRoutes::OpenSource.into()}) />
+                <TechnologyRouter render=Router::render(switch) />
             </div>
         }
     }

@@ -1,0 +1,22 @@
+:root {
+    .light {
+        --mdc-theme-primary: #3970f5;
+        --base-color: #fff;
+        --undercover-color: #f2f2f2;
+        --category-color: #f8f9fa;
+        --normal-text-color: black;
+    }
+    
+    .dark {
+        --mdc-theme-primary: #3970f5;
+        --base-color: #181a1b;
+        --category-color: #1b1e1f;
+        --undercover-color: #1f2223;
+        --mdc-tab-text-label-color-default: #939293;
+        --normal-text-color: white;
+    }
+}
+
+.text {
+    color: var(--normal-text-color);
+}

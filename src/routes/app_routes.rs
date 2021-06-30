@@ -6,9 +6,10 @@ use crate::pages::{
     not_found::NotFound,
     technology::Technology,
 };
+use crate::console_log;
 
 #[derive(Debug, Switch, Clone)]
-pub enum Routes {
+pub enum AppRoutes {
     #[to="/about/me"]
     AboutMe,
     #[to="/technology"]
@@ -19,24 +20,28 @@ pub enum Routes {
     NotFound,
     #[to="/"]
     Home,
+    #[to="/technology/articles"]
+    Articles,
+    #[to="/technology/open_source"]
+    OpenSource,
 }
 
-pub type AppRouterAnchor = RouterAnchor<Routes>;
+pub type AppRouterAnchor = RouterAnchor<AppRoutes>;
 
-pub fn switch(routes: Routes) -> Html {
+pub fn switch(routes: AppRoutes) -> Html {
     match routes {
-        Routes::Home => {
+        AppRoutes::Home => {
             html! { <Home />}
         },
-        Routes::AboutMe => {
+        AppRoutes::AboutMe => {
             html! { <AboutMe />}
         },
-        Routes::NotFound => {
+        AppRoutes::NotFound => {
             html! {<NotFound />}
         },
-        Routes::Technology => {
+        AppRoutes::Technology => {
             html! {<Technology />}
         },
-        _ =>  html! {<Home />}
+        _ =>  html! {<NotFound />}
     }
 }
