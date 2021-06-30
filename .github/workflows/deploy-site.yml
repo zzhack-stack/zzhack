@@ -14,12 +14,20 @@ jobs:
           version: latest
           use-tool-cache: true
 
-      - name: 'wasm-pack build'
-        run: wasm-pack build --target web --out-name wasm --out-dir ./static
+      - uses: actions-rs/install@v0.1
+        with:
+          crate: trunk
+          version: latest
+          use-tool-cache: true
 
-      - name: 'install server'
-        run: yarn add http-server
-        working-directory: static
+      - uses: actions-rs/install@v0.1
+        with:
+          crate: wasm-bingen-cli
+          version: latest
+          use-tool-cache: true
+
+      - name: 'trunk build'
+        run: trunk build
 
       - uses: amondnet/vercel-action@v20
         with:
