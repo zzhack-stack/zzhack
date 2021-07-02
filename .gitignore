@@ -1,6 +1,12 @@
-/target
 **/*.rs.bk
-Cargo.lock
 .vercel
-dist
+
+# Dependencies
 pkg
+/target
+
+# Dist
+dist
+
+# Platform
+.DS_Store

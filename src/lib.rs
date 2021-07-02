@@ -1,36 +1,71 @@
-mod utils;
-mod pages;
 mod components;
+mod pages;
 mod routes;
 mod services;
+mod utils;
 
-use crate::services::ThemeService;
+use crate::components::home::header::Tab;
 use crate::routes::app_routes::switch;
-use yew_router::prelude::*;
+use crate::routes::app_routes::AppRouterAnchor;
+use crate::services::ThemeService;
+use components::{Footer, Header};
+use material_yew::drawer::{MatDrawer, MatDrawerAppContent};
+use material_yew::MatList;
+use material_yew::MatListItem;
+use routes::app_routes::AppRoutes;
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
-use routes::app_routes::AppRoutes;
-use components::{
-    Header,
-    Footer,
-};
+use yew_router::prelude::*;
 
-struct Root {}
+struct Root {
+    link: ComponentLink<Self>,
+    is_open_drawer: bool,
+    tabs: Vec<Tab>,
+}
 
-pub struct Msg {}
+pub enum RootMessage {
+    ToggleDrawer(bool),
+    SwitchDrawer,
+}
 
 type AppRouter = Router<AppRoutes>;
 
 impl Component for Root {
-    type Message = Msg;
+    type Message = RootMessage;
     type Properties = ();
-    fn create(_: Self::Properties, _: ComponentLink<Self>) -> Self {
+    fn create(_: Self::Properties, link: ComponentLink<Self>) -> Self {
+        let tabs = vec![
+            Tab {
+                route: AppRoutes::Technology,
+                name: "技术",
+            },
+            Tab {
+                route: AppRoutes::Thinking,
+                name: "随想",
+            },
+            Tab {
+                route: AppRoutes::AboutMe,
+                name: "关于我",
+            },
+        ];
+
         ThemeService::init();
 
-        Self {}
+        Self {
+            link,
+            is_open_drawer: false,
+            tabs,
+        }
     }
 
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
+    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+        match msg {
+            RootMessage::ToggleDrawer(is_open_drawer) => {
+                self.is_open_drawer = is_open_drawer;
+                return false;
+            }
+            RootMessage::SwitchDrawer => self.is_open_drawer = !self.is_open_drawer,
+        }
         true
     }
 
@@ -40,11 +75,32 @@ impl Component for Root {
 
     fn view(&self) -> Html {
         html! {
-            <div>
-                <Header />
-                <AppRouter render = Router::render(switch) />
-                <Footer />
-            </div>
+            <MatDrawer
+                drawer_type="dismissible"
+                open=self.is_open_drawer
+                onopened=self.link.callback(|_| RootMessage::ToggleDrawer(true))
+                onclosed=self.link.callback(|_| RootMessage::ToggleDrawer(false))
+            >
+                <div style="background: var(--side-bar-color); height: 100%;">
+                    <MatList>
+                        {for self.tabs.iter().map(|tab| html!{
+                            <AppRouterAnchor route=tab.route.clone()>
+                                <MatListItem>
+                                    <span class="text">{tab.name}</span>
+                                </MatListItem>
+                            </AppRouterAnchor>
+                        })}
+                    </MatList>
+                </div>
+                <MatDrawerAppContent>
+                    <Header
+                        tabs=self.tabs.clone()
+                        on_menu_click=self.link.callback(|_| RootMessage::SwitchDrawer)
+                    />
+                    <AppRouter render = Router::render(switch) />
+                    <Footer />
+                </MatDrawerAppContent>
+            </MatDrawer>
         }
     }
 }

@@ -15,4 +15,4 @@ material-yew = { git = "https://github.com/hamza1311/material-yew", features = [
 yew-router = "0.15.0"
 stdweb = "0.4.20"
 css-in-rust = "0.5.0"
-web-sys = "0.3.51"
+web-sys = { version = "0.3", features = ["HtmlMetaElement", "Document", "Element", "DocumentFragment", "HtmlTemplateElement", "MediaQueryList"] }

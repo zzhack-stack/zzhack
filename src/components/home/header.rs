@@ -1,31 +1,23 @@
-    
-use yew_router::{route::Route, service::RouteService, agent::{
-    RouteAgent,
-    RouteRequest::ChangeRoute,
-}};
-use material_yew:: {
-    MatTabBar,
-    MatTab,
-    MatIconButton,
-};
-use yew::prelude::*;
-use css_in_rust::style::Style;
-use crate::routes::app_routes::{
-    AppRoutes
-};
-use crate::services::{
-    ThemeService,
-    theme_service::{
-        DARK_THEME_KEY,
-    }
-};
 use crate::console_log;
-use crate::utils::{
-    theme::by_theme,
+use crate::routes::app_routes::AppRoutes;
+use crate::services::{theme_service::DARK_THEME_KEY, ThemeService};
+use crate::utils::theme::by_reactive;
+use crate::utils::theme::by_theme;
+use crate::utils::theme::is_on_mobile;
+use css_in_rust::style::Style;
+use material_yew::{drawer::MatDrawerAppContent, MatDrawer, MatIconButton, MatTab, MatTabBar};
+use yew::prelude::*;
+use yew_router::{
+    agent::{RouteAgent, RouteRequest::ChangeRoute},
+    route::Route,
+    service::RouteService,
 };
 
 #[derive(Properties, Clone)]
-pub struct HeaderProps {}
+pub struct HeaderProps {
+    pub tabs: Vec<Tab>,
+    pub on_menu_click: Callback<web_sys::MouseEvent>,
+}
 
 pub struct Header {
     route_service: RouteService<()>,
@@ -34,26 +26,22 @@ pub struct Header {
     link: ComponentLink<Self>,
     route_agent: Box<dyn Bridge<RouteAgent<()>>>,
     style: Style,
-    is_dark_theme: bool
+    is_dark_theme: bool,
 }
 
 pub enum HeaderMessage {
-    ChangeRoute(Route<()>),
-    SwitchTheme
+    ChangeRoute(usize),
+    SwitchTheme,
+    Nope,
 }
 
-struct Tab {
-    route: AppRoutes,
-    name: &'static str
+#[derive(Clone)]
+pub struct Tab {
+    pub route: AppRoutes,
+    pub name: &'static str,
 }
 
 const GITHUB_PROFILE: &'static str = "https://github.com/youncccat";
-
-const TABS:[Tab; 3] = [
-    Tab {route: AppRoutes::Technology, name: "技术"},
-    Tab {route: AppRoutes::Thinking, name: "随想"},
-    Tab {route: AppRoutes::AboutMe, name: "关于我"},
-];
 
 impl Component for Header {
     type Message = HeaderMessage;
@@ -61,8 +49,10 @@ impl Component for Header {
 
     fn create(props: HeaderProps, link: ComponentLink<Self>) -> Self {
         let route_service = RouteService::new();
-        let route_agent = RouteAgent::bridge(link.callback(HeaderMessage::ChangeRoute));
-        let style = Style::create("Header", r#"
+        let route_agent = RouteAgent::bridge(link.callback(|_| HeaderMessage::Nope));
+        let style = Style::create(
+            "Header",
+            "
             height: 48px;
             width: 100%;
             display: flex;
@@ -78,11 +68,13 @@ impl Component for Header {
             .left {
                 display: flex;
                 align-items: center;
+                flex-shrink: 0;
             }
 
             .right {
                 display: flex;
                 align-items: center;
+                flex-shrink: 0;
             }
 
             .title {
@@ -93,8 +85,10 @@ impl Component for Header {
             .tab_style {
                 margin-left: 50px;
             }
-        "#).unwrap();
-        
+        ",
+        )
+        .unwrap();
+
         let theme_service = ThemeService::new();
         let theme = theme_service.theme.clone();
 
@@ -106,28 +100,28 @@ impl Component for Header {
             style,
             theme_service,
             is_dark_theme: theme == DARK_THEME_KEY,
-        } 
+        }
     }
 
-    fn update(&mut self, msg: HeaderMessage) -> bool { 
+    fn update(&mut self, msg: HeaderMessage) -> bool {
         match msg {
-            HeaderMessage::ChangeRoute(route) => {
+            HeaderMessage::ChangeRoute(i) => {
+                let route = self.props.tabs[i].route.clone().into();
                 let current_route = self.route_service.get_route();
 
-                console_log!("{} {} hhashhashsadhhash", current_route, route);
-
                 if current_route == route {
-                    return false                
+                    return false;
                 }
 
                 self.route_agent.send(ChangeRoute(route));
-            },
+            }
             HeaderMessage::SwitchTheme => {
                 let target_theme = !self.is_dark_theme;
 
                 self.theme_service.switch(target_theme);
                 self.is_dark_theme = target_theme;
             }
+            HeaderMessage::Nope => return false,
         }
 
         true
@@ -138,35 +132,38 @@ impl Component for Header {
         true
     }
 
-
-    fn view(&self) -> yew::virtual_dom::VNode { 
+    fn view(&self) -> yew::virtual_dom::VNode {
         html! {
-                <div class=self.style.clone().to_string()>
-                    <div class="left">
-                        <div class="title">
-                            {"Mist's Blog"}
-                        </div>
-                        <div class="tab_style">
-                            <MatTabBar onactivated=self.link.callback(|i: usize| HeaderMessage::ChangeRoute(TABS[i].route.clone().into()))>
-                                {for TABS.iter().map(|tab| html!{
-                                    <MatTab label=tab.name is_fading_indicator=true />
-                                })}
-                            </MatTabBar>
-                        </div>
+            <div class=self.style.clone().to_string()>
+                <div class="left">
+                    {by_reactive(html! {<div onclick=&self.props.on_menu_click style=format!("color: {}", by_theme("black", "white"
+                        ))>
+                        <MatIconButton icon="menu" />
+                    </div>}, html!{})}
+                    <div class="title">
+                        {"Mist's Blog"}
                     </div>
-                    <div class="right">  
-                        <div onclick=self.link.callback(|_| HeaderMessage::SwitchTheme)>
-                            <MatIconButton>
-                                <img src=by_theme("/images/dark_mode.svg", "/images/light_mode.svg") />
-                            </MatIconButton>
-                        </div>
-                        <a href=GITHUB_PROFILE>
-                            <MatIconButton>
-                                <img src=by_theme("/images/github_dark.svg", "/images/github_light.svg") />
-                            </MatIconButton>
-                        </a>
-                    </div>
+                    {by_reactive(html!{}, html!{<div class="tab_style">
+                        <MatTabBar onactivated=self.link.callback(|i: usize| HeaderMessage::ChangeRoute(i))>
+                            {for self.props.tabs.iter().map(|tab| html!{
+                            <MatTab label=tab.name is_fading_indicator=true />
+                            })}
+                        </MatTabBar>
+                    </div>})}
                 </div>
+                <div class="right">
+                    <div onclick=self.link.callback(|_| HeaderMessage::SwitchTheme)>
+                        <MatIconButton>
+                            <img src=by_theme("/images/dark_mode.svg", "/images/light_mode.svg" ) />
+                        </MatIconButton>
+                    </div>
+                    <a href=GITHUB_PROFILE>
+                        <MatIconButton>
+                            <img src=by_theme("/images/github_dark.svg", "/images/github_light.svg" ) />
+                        </MatIconButton>
+                    </a>
+                </div>
+            </div>
         }
     }
 }
