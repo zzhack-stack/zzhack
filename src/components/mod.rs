@@ -1,7 +1,5 @@
-pub mod home;
 pub mod footer;
-pub mod container;
+pub mod home;
 
-pub use home::header::Header;
 pub use footer::Footer;
-pub use container::Container;
+pub use home::header::Header;

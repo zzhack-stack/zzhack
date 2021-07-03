@@ -1,25 +1,23 @@
-use yew_router::{route::Route, service::RouteService, agent::{
-    RouteAgent,
-    RouteRequest::ChangeRoute,
-}};
-use yew::prelude::*;
-use css_in_rust::style::Style;
-use material_yew:: {
-    MatTab,
-    MatTabBar
-};
 use crate::console_log;
+use css_in_rust::style::Style;
+use material_yew::{MatTab, MatTabBar};
+use yew::prelude::*;
+use yew_router::{
+    agent::{RouteAgent, RouteRequest::ChangeRoute},
+    route::Route,
+    service::RouteService,
+};
 
 #[derive(Clone)]
 pub struct Category {
     pub name: &'static str,
-    pub route: Route
+    pub route: Route,
 }
 
 #[derive(Properties, Clone)]
 pub struct CategoryBarProps {
     pub categories: Vec<Category>,
-    pub text: &'static str
+    pub text: &'static str,
 }
 
 pub struct CategoryBar {
@@ -27,7 +25,7 @@ pub struct CategoryBar {
     link: ComponentLink<CategoryBar>,
     style: Style,
     route_service: RouteService,
-    route_agent: Box<dyn Bridge<RouteAgent>>
+    route_agent: Box<dyn Bridge<RouteAgent>>,
 }
 
 pub enum CategoryBarMessage {
@@ -42,7 +40,9 @@ impl Component for CategoryBar {
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
         let route_agent = RouteAgent::bridge(link.callback(|_| CategoryBarMessage::Nope));
         let route_service = RouteService::new();
-        let style = Style::create("CategoryBar", r#"
+        let style = Style::create(
+            "CategoryBar",
+            r#"
             width: 100%;
             height: 118px;
             background: var(--category-color);
@@ -61,7 +61,9 @@ impl Component for CategoryBar {
                 height: 48px;
                 display: flex;
             }
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
 
         Self {
             props,
@@ -74,9 +76,7 @@ impl Component for CategoryBar {
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
-            CategoryBarMessage::Nope => {
-                return false
-            },
+            CategoryBarMessage::Nope => return false,
             CategoryBarMessage::ChangeRoute(i) => {
                 let route = self.props.categories[i].route.clone();
                 let current_route = self.route_service.get_route();
@@ -84,11 +84,11 @@ impl Component for CategoryBar {
                 console_log!("{}", route.to_string());
 
                 if current_route == route {
-                    return false                
+                    return false;
                 }
 
                 self.route_agent.send(ChangeRoute(route));
-            },
+            }
         }
 
         true
