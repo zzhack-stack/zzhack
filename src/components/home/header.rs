@@ -27,6 +27,7 @@ pub struct Header {
     route_agent: Box<dyn Bridge<RouteAgent<()>>>,
     style: Style,
     is_dark_theme: bool,
+    current_tab_index: u32,
 }
 
 pub enum HeaderMessage {
@@ -42,6 +43,15 @@ pub struct Tab {
 }
 
 const GITHUB_PROFILE: &'static str = "https://github.com/youncccat";
+
+fn find_current_route_index(tabs: Vec<Tab>, current_route: Route) -> u32 {
+    tabs.iter()
+        .position(|tab| {
+            let route: Route = tab.route.clone().into();
+            current_route.contains(route.as_str())
+        })
+        .unwrap() as u32
+}
 
 impl Component for Header {
     type Message = HeaderMessage;
@@ -91,6 +101,8 @@ impl Component for Header {
 
         let theme_service = ThemeService::new();
         let theme = theme_service.theme.clone();
+        let current_tab_index =
+            find_current_route_index(props.tabs.clone(), route_service.get_route());
 
         Self {
             props,
@@ -100,6 +112,7 @@ impl Component for Header {
             style,
             theme_service,
             is_dark_theme: theme == DARK_THEME_KEY,
+            current_tab_index,
         }
     }
 
@@ -144,7 +157,7 @@ impl Component for Header {
                         {"Mist's Blog"}
                     </div>
                     {by_reactive(html!{}, html!{<div class="tab_style">
-                        <MatTabBar onactivated=self.link.callback(|i: usize| HeaderMessage::ChangeRoute(i))>
+                        <MatTabBar active_index=self.current_tab_index onactivated=self.link.callback(|i: usize| HeaderMessage::ChangeRoute(i))>
                             {for self.props.tabs.iter().map(|tab| html!{
                             <MatTab label=tab.name is_fading_indicator=true />
                             })}
