@@ -45,12 +45,15 @@ pub struct Tab {
 const GITHUB_PROFILE: &'static str = "https://github.com/youncccat";
 
 fn find_current_route_index(tabs: Vec<Tab>, current_route: Route) -> u32 {
-    tabs.iter()
-        .position(|tab| {
-            let route: Route = tab.route.clone().into();
-            current_route.contains(route.as_str())
-        })
-        .unwrap() as u32
+    console_log!("{}", current_route);
+
+    match tabs.iter().position(|tab| {
+        let route: Route = tab.route.clone().into();
+        current_route.contains(route.as_str())
+    }) {
+        Some(i) => i as u32,
+        None => 0,
+    }
 }
 
 impl Component for Header {

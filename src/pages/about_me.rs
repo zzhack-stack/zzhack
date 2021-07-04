@@ -1,6 +1,12 @@
 use crate::console_log;
+use crate::services::api_service::Res;
+use crate::services::article_service::article_service;
+use crate::services::article_service::Article;
+use crate::services::article_service::QueryRes;
 use crate::services::ArticleService;
+use crate::services::MarkdownService;
 use css_in_rust::Style;
+use yew::format::Json;
 use yew::prelude::*;
 use yew::services::fetch::FetchTask;
 use yew::services::fetch::Response;
@@ -41,13 +47,14 @@ impl Component for AboutMe {
 
     fn rendered(&mut self, first_render: bool) {
         if first_render {
-            self.task = Some(ArticleService::get(
-                "/about_me/about_me.md",
-                self.link
-                    .callback(|response: Response<Result<String, anyhow::Error>>| {
-                        let data = response.into_body().unwrap();
-                        AboutMeMessage::UpdateContent(data)
-                    }),
+            self.task = Some(article_service.get_article_by_label(
+                "me",
+                self.link.callback(|response: Res<QueryRes<Article>>| {
+                    let Json(data) = response.into_body();
+                    let article = data.unwrap().items[0].clone().body;
+
+                    AboutMeMessage::UpdateContent(article)
+                }),
             ));
         }
     }
@@ -68,10 +75,12 @@ impl Component for AboutMe {
     }
 
     fn view(&self) -> Html {
+        let markdown_service = MarkdownService::new(self.content.clone());
+
         html! {
             <div class=self.style.to_string()>
                 <div class="container">
-                    {self.content.as_str()}
+                    {Html::VRef(markdown_service.parse_to_element().into())}
                 </div>
             </div>
         }
