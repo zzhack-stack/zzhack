@@ -148,6 +148,13 @@ impl Component for Header {
         true
     }
 
+    fn rendered(&mut self, first_render: bool) {
+        if first_render {
+            self.route_agent
+                .send(ChangeRoute(AppRoutes::Technology.into()));
+        }
+    }
+
     fn view(&self) -> yew::virtual_dom::VNode {
         html! {
             <div class=self.style.clone().to_string()>
