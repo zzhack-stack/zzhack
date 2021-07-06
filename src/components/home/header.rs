@@ -149,9 +149,9 @@ impl Component for Header {
     }
 
     fn rendered(&mut self, first_render: bool) {
-        if first_render {
-            self.route_agent
-                .send(ChangeRoute(AppRoutes::Technology.into()));
+        if first_render && is_on_mobile() {
+            self.link
+                .send_message(HeaderMessage::ChangeRoute(self.current_tab_index as usize))
         }
     }
 

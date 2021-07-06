@@ -1,30 +1,39 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="http://fonts.gmirror.org/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">        <meta charset="utf-8">
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
-        <link data-trunk href="assets/styles/base.scss" rel="scss">
-        <link data-trunk rel="copy-dir" href="assets/images"> 
-        <title>Mist Blog</title>
-        <style>
-            html, body {
-                margin: 0;
-                height: 100%;
-                background: var(--undercover-color);
-            }
 
-            * {
-                font-family: 'Montserrat', sans-serif;
-            }
-        </style>
-    </head>
-    <body>
-        <script type="module">
-            import init from "./wasm.js"
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="http://fonts.gmirror.org/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+    <link data-trunk href="assets/styles/base.scss" rel="scss">
+    <link data-trunk href="assets/styles/markdown.scss" rel="scss">
+    <link data-trunk rel="copy-dir" href="assets/images">
+    <title>Mist Blog</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            background: var(--undercover-color);
+        }
+
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="module">
+        import init from "./wasm.js"
             init()
+
+            console.info(hljs)
+            hljs.highlightAll();
         </script>
-    </body>
+</body>
+
 </html>

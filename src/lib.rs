@@ -3,7 +3,6 @@ mod pages;
 mod routes;
 mod services;
 mod utils;
-
 use crate::components::home::header::Tab;
 use crate::routes::app_routes::switch;
 use crate::routes::app_routes::AppRouterAnchor;
@@ -13,6 +12,8 @@ use material_yew::drawer::{MatDrawer, MatDrawerAppContent};
 use material_yew::MatList;
 use material_yew::MatListItem;
 use routes::app_routes::AppRoutes;
+use stdweb::js;
+use stdweb::Value::Number;
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
 use yew_router::prelude::*;
@@ -85,9 +86,11 @@ impl Component for Root {
                     <MatList>
                         {for self.tabs.iter().map(|tab| html!{
                             <AppRouterAnchor route=tab.route.clone()>
-                                <MatListItem>
-                                    <span class="text">{tab.name}</span>
-                                </MatListItem>
+                                <div onclick=self.link.callback(|_| RootMessage::SwitchDrawer)>
+                                    <MatListItem>
+                                        <span class="text">{tab.name}</span>
+                                    </MatListItem>
+                                </div>
                             </AppRouterAnchor>
                         })}
                     </MatList>
@@ -108,4 +111,8 @@ impl Component for Root {
 #[wasm_bindgen(start)]
 pub fn run_app() {
     App::<Root>::new().mount_to_body();
+    // let Number(val) = js! {
+    //     return 1
+    // };
+    // console_log!("{:?}", val)
 }

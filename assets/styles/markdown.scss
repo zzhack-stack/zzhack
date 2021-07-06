@@ -1,0 +1,19 @@
+.markdown-heading {
+    font-size: 25px;
+
+    &:hover {
+        color: var(--mdc-theme-primary);
+    }
+
+    transition: 0.1s all;
+}
+
+.markdown-code {
+    pre {
+        background-color: #282c34;
+        
+        span {
+            color: #313641;
+        }
+    }
+}

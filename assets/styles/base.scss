@@ -24,6 +24,13 @@
 }
 
 .container {
-    width: 1228px;
+    width: 960px;
     margin: auto;
+}
+
+@media (max-width: 600px){
+    .container {
+        width: 100%;
+        overflow: hidden;
+    }
 }

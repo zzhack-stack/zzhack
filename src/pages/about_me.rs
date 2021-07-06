@@ -5,6 +5,7 @@ use crate::services::article_service::Article;
 use crate::services::article_service::QueryRes;
 use crate::services::ArticleService;
 use crate::services::MarkdownService;
+use crate::utils::theme::by_theme;
 use css_in_rust::Style;
 use yew::format::Json;
 use yew::prelude::*;
@@ -53,6 +54,8 @@ impl Component for AboutMe {
                     let Json(data) = response.into_body();
                     let article = data.unwrap().items[0].clone().body;
 
+                    console_log!("{}", article);
+
                     AboutMeMessage::UpdateContent(article)
                 }),
             ));
@@ -62,7 +65,6 @@ impl Component for AboutMe {
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
             AboutMeMessage::UpdateContent(content) => {
-                console_log!("{}", content);
                 self.content = content;
 
                 true
@@ -80,7 +82,7 @@ impl Component for AboutMe {
         html! {
             <div class=self.style.to_string()>
                 <div class="container">
-                    {Html::VRef(markdown_service.parse_to_element().into())}
+                    {Html::VRef(markdown_service.parse_to_element(by_theme("base16-ocean.light", "base16-ocean.light")).into())}
                 </div>
             </div>
         }
