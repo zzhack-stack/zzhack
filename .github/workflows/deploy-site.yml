@@ -15,24 +15,13 @@ jobs:
       - name: 'install wasm32-unknown-unknown'
         run: rustup target add wasm32-unknown-unknown
 
-
-      - uses: actions-rs/install@v0.1
+      - uses: jetli/wasm-bindgen-action@v0.1.0
         with:
-          crate: wasm-pack
-          version: latest
-          use-tool-cache: true
+          version: 'latest'
 
-      - uses: actions-rs/install@v0.1
+      - uses: jetli/trunk-action@v0.1.0
         with:
-          crate: wasm-bindgen-cli
-          version: latest
-          use-tool-cache: true
-
-      - uses: actions-rs/install@v0.1
-        with:
-          crate: trunk
-          version: latest
-          use-tool-cache: true
+          version: 'latest'
 
       - name: build
         run: trunk build --release
