@@ -6,6 +6,7 @@
         --category-color: #f8f9fa;
         --normal-text-color: black;
         --side-bar-color: #fff;
+        --code-block-bg: #fffcf2;        
     }
     
     .dark {
@@ -16,6 +17,7 @@
         --mdc-tab-text-label-color-default: #939293;
         --normal-text-color: white;
         --side-bar-color: #181a1b;
+        --code-block-bg: #282c34;
     }
 }
 
@@ -32,5 +34,7 @@
     .container {
         width: 100%;
         overflow: hidden;
+        padding: 10px 30px;
+        box-sizing: border-box;
     }
 }

@@ -1,3 +1,4 @@
+mod agents;
 mod components;
 mod pages;
 mod routes;
@@ -15,6 +16,7 @@ use routes::app_routes::AppRoutes;
 use stdweb::js;
 use stdweb::Value::Number;
 use wasm_bindgen::prelude::*;
+use yew::agent::Context;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -22,6 +24,7 @@ struct Root {
     link: ComponentLink<Self>,
     is_open_drawer: bool,
     tabs: Vec<Tab>,
+    theme_service: ThemeService,
 }
 
 pub enum RootMessage {
@@ -51,11 +54,13 @@ impl Component for Root {
         ];
 
         ThemeService::init();
+        let theme_service = ThemeService::new();
 
         Self {
             link,
             is_open_drawer: false,
             tabs,
+            theme_service,
         }
     }
 
@@ -71,6 +76,7 @@ impl Component for Root {
     }
 
     fn change(&mut self, _: Self::Properties) -> ShouldRender {
+        // ContextProvider::a();
         true
     }
 
@@ -100,6 +106,7 @@ impl Component for Root {
                         tabs=self.tabs.clone()
                         on_menu_click=self.link.callback(|_| RootMessage::SwitchDrawer)
                     />
+                    // <ContextProvider></ContextProvider>
                     <AppRouter render = Router::render(switch) />
                     <Footer />
                 </MatDrawerAppContent>
@@ -111,8 +118,4 @@ impl Component for Root {
 #[wasm_bindgen(start)]
 pub fn run_app() {
     App::<Root>::new().mount_to_body();
-    // let Number(val) = js! {
-    //     return 1
-    // };
-    // console_log!("{:?}", val)
 }

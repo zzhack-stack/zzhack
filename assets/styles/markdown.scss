@@ -8,12 +8,78 @@
     transition: 0.1s all;
 }
 
-.markdown-code {
-    pre {
-        background-color: #282c34;
-        
-        span {
-            color: #313641;
+.markdown-img-container {
+    max-width: 960px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 30px 0;
+
+    .markdown-img {
+        max-width: 960px;
+        border-radius: 5px;
+    }
+
+    .markdown-img-alt {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 600px){
+    .markdown-img-container {
+        max-width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    
+        .markdown-img {
+            max-width: 100%;
+            border-radius: 5px;
         }
+    }
+}
+
+.markdown-code {
+    padding: 10px 15px;
+    background: var(--code-block-bg);
+    border-radius: 5px;
+
+    .markdown-mac-control-bars {
+        display: flex;
+        align-items: center;
+
+        .control-bar {
+            width: 13px;
+            height: 13px;
+            margin-right: 8px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        .markdown-mac-close-bar {
+            @extend .control-bar;
+            
+            background: #ff5f57;
+        }
+        .markdown-mac-min-bar {
+            @extend .control-bar;
+
+            background: #febc2e;
+        }
+        .markdown-mac-max-bar {
+            @extend .control-bar;
+
+            background: #28c840;
+        }
+    }
+
+    pre {
+        background-color: var(--code-block-bg) !important;
+        white-space: break-spaces;
+        // span {
+            // color: #313641;
+        // }
     }
 }
