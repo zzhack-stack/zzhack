@@ -10,6 +10,7 @@ use yew::Callback;
 
 pub struct ArticleService {
     base_path: &'static str,
+    articles: Vec<Article>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -32,27 +33,38 @@ pub struct QueryRes<D> {
 }
 
 impl ArticleService {
-    pub fn new() -> ArticleService {
+    fn new() -> ArticleService {
         ArticleService {
             base_path: "/search/issues?q=repo:youncccat/blog-database/",
+            articles: vec![],
         }
     }
 
-    pub fn get_all(&self, callback: Callback<Res<Vec<Article>>>) -> FetchTask {
+    pub fn sync_articles(&self, callback: Callback<Res<QueryRes<Article>>>) -> FetchTask {
         let request = api_service.get(self.base_path.to_string());
 
         FetchService::fetch(request, callback).unwrap()
     }
 
-    pub fn get_article_by_label(
-        &self,
-        label: &'static str,
-        callback: Callback<Res<QueryRes<Article>>>,
-    ) -> FetchTask {
-        let request = api_service.get(format!("{}+label:{}", self.base_path.to_string(), label));
+    pub fn set_articles(&mut self, articles: Vec<Article>) {
+        self.articles = articles;
+    }
 
-        FetchService::fetch(request, callback).unwrap()
+    pub fn get_article_by_label(&self, target_label: &'static str) -> Option<Article> {
+        match self.articles.iter().find(|article| {
+            match article
+                .labels
+                .iter()
+                .find(|label| label.name == target_label)
+            {
+                Some(_) => true,
+                None => false,
+            }
+        }) {
+            Some(article) => Some(article.clone()),
+            None => None,
+        }
     }
 }
 
-pub static article_service: Lazy<ArticleService> = Lazy::new(|| ArticleService::new());
+pub static mut article_service: Lazy<ArticleService> = Lazy::new(|| ArticleService::new());

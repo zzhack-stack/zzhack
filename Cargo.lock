@@ -1001,6 +1001,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "yewdux"
+version = "0.6.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5015d52c6ceef13ff148af73b6258d5d8df401b1f9b039ec9fdc622d04166be1"
+dependencies = [
+ "serde",
+ "yew",
+]
+
+[[package]]
 name = "zzhack"
 version = "0.1.0"
 dependencies = [
@@ -1016,4 +1026,5 @@ dependencies = [
  "web-sys",
  "yew",
  "yew-router",
+ "yewdux",
 ]

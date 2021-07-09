@@ -1,8 +1,8 @@
 use crate::console_log;
+use crate::services::markdown_service::elements::render_code;
+use crate::services::markdown_service::elements::render_heading;
 use crate::services::markdown_service::elements::render_text;
-use crate::services::markdown_service::elements::{
-    render_code_block, render_image, HEADING_END, HEADING_START,
-};
+use crate::services::markdown_service::elements::{render_code_block, render_image};
 use crate::utils::theme::by_theme;
 use pulldown_cmark::CodeBlockKind::{Fenced, Indented};
 use pulldown_cmark::{html, CodeBlockKind, Event, Options, Parser, Tag};
@@ -20,6 +20,7 @@ pub struct MarkdownService {
 enum TraverseKind {
     CodeBlock(SyntaxReference),
     Image(String),
+    Heading(u32),
     Nope,
 }
 
@@ -44,6 +45,14 @@ impl MarkdownService {
                     traverse_kind = TraverseKind::Image("".into());
                     event
                 }
+                Event::Start(Tag::Heading(level)) => {
+                    traverse_kind = TraverseKind::Heading(level);
+                    event
+                }
+                Event::End(Tag::Heading(..)) => {
+                    traverse_kind = TraverseKind::Nope;
+                    event
+                }
                 Event::End(Tag::Image(kind, url, title)) => {
                     if let TraverseKind::Image(alt) = traverse_kind.clone() {
                         traverse_kind = TraverseKind::Nope;
@@ -55,8 +64,7 @@ impl MarkdownService {
 
                     Event::End(Tag::Image(kind, url, title))
                 }
-                Event::Start(Tag::Heading(..)) => Event::Html(HEADING_START.into()),
-                Event::End(Tag::Heading(..)) => Event::Html(HEADING_END.into()),
+                Event::Code(code) => Event::Html(render_code(code.to_string()).into()),
                 Event::Start(Tag::CodeBlock(kind)) => {
                     let language = match kind.clone() {
                         Indented => String::from("rust"),
@@ -103,6 +111,9 @@ impl MarkdownService {
 
                             empty_str_event
                         }
+                        TraverseKind::Heading(level) => {
+                            Event::Html(render_heading(parsed_text, level).into())
+                        }
                         _ => Event::Text(text),
                     }
                 }
@@ -111,6 +122,7 @@ impl MarkdownService {
             .filter(|event| match event {
                 Event::Start(Tag::CodeBlock(_)) | Event::End(Tag::CodeBlock(_)) => false,
                 Event::Start(Tag::Image(..)) | Event::End(Tag::Image(..)) => false,
+                Event::Start(Tag::Heading(..)) | Event::End(Tag::Heading(..)) => false,
                 _ => true,
             });
 

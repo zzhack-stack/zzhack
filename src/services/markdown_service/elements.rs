@@ -1,12 +1,13 @@
-pub static HEADING_START: &'static str = "<div class='markdown-heading'>";
-pub static HEADING_END: &'static str = "</div>";
-
-pub static IMAGE_START: &'static str = "<img class='markdown-img'>";
-pub static IMAGE_END: &'static str = "</img>";
+pub fn render_heading(content: String, level: u32) -> String {
+    format!(
+        "<a class='markdown-heading-anchor' href='#{}'><h{} class='markdown-heading'>{}</h{}></a>",
+        content, level, content, level
+    )
+}
 
 pub fn render_code_block(code_block: String) -> String {
     format!(
-        "<div class='markdown-code'>
+        "<div class='markdown-code-block'>
                 <div class='markdown-mac-control-bars'>
                     <div class='markdown-mac-close-bar'></div>
                     <div class='markdown-mac-min-bar'></div>
@@ -30,4 +31,8 @@ pub fn render_image(url: String, alt: String) -> String {
         </div>",
         url, alt, url, alt
     )
+}
+
+pub fn render_code(code: String) -> String {
+    format!("<span class='markdown-code'>{}</span>", code)
 }

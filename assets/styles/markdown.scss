@@ -1,11 +1,23 @@
 .markdown-heading {
     font-size: 25px;
+    transition: 0.1s all;
+    cursor: pointer;
+    position: relative;
 
     &:hover {
         color: var(--mdc-theme-primary);
     }
 
-    transition: 0.1s all;
+    &:hover::before {
+        content: '#';
+        position: absolute;
+        right: 100%;
+        margin-right: 10px;
+    }
+}
+
+.markdown-heading-anchor {
+    text-decoration: none;
 }
 
 .markdown-img-container {
@@ -42,6 +54,13 @@
 }
 
 .markdown-code {
+    background: var(--code-bg);
+    padding: 3px 7px;
+    border-radius: 5px;
+    color: var(--code-color) !important;
+}
+
+.markdown-code-block {
     padding: 10px 15px;
     background: var(--code-block-bg);
     border-radius: 5px;
@@ -78,8 +97,11 @@
     pre {
         background-color: var(--code-block-bg) !important;
         white-space: break-spaces;
-        // span {
-            // color: #313641;
-        // }
+    }
+}
+
+.markdown-container {
+    * {
+        color: var(--normal-text-color);
     }
 }
