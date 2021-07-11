@@ -1,12 +1,10 @@
 use crate::utils::theme::by_theme;
-use yew::prelude::*;
 use css_in_rust::Style;
-use material_yew:: {
-    MatIconButton
-};
+use material_yew::MatIconButton;
+use yew::prelude::*;
 
 pub struct Footer {
-    style: Style
+    style: Style,
 }
 
 impl Component for Footer {
@@ -14,10 +12,12 @@ impl Component for Footer {
     type Properties = ();
 
     fn create(_props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        let style = Style::create("Footer", r#"
+        let style = Style::create(
+            "Footer",
+            r#"
             width: 100%;
             padding: 10px 0;
-            background: var(--base-color);
+            background: #636e72;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,16 +27,33 @@ impl Component for Footer {
             }
 
             .separator {
-                width: 1.5px;
-                height: 20px;
+                width: 1px;
+                height: 18px;
                 background: #636e72;
                 margin-right: 10px;
             }
-        "#).unwrap();
 
-        Self {
-            style
-        }
+            .powered-by {
+                display: flex;
+                align-items: center;
+            }
+
+            .footer-text {
+                color: white;
+            }
+
+            @media (max-width: 600px){
+                flex-direction: column;
+
+                .separator {
+                    display: none;
+                }
+            }
+        "#,
+        )
+        .unwrap();
+
+        Self { style }
     }
 
     fn update(&mut self, _msg: Self::Message) -> ShouldRender {
@@ -50,16 +67,18 @@ impl Component for Footer {
     fn view(&self) -> Html {
         html! {
             <div class=self.style.to_string()>
-                <span class="text">
-                    {"Powered by"}
-                </span>
-                <a href="https://www.rust-lang.org/">
-                    <MatIconButton>
-                        <img class="icon" src="/images/rust_icon.svg" />
-                    </MatIconButton>
-                </a>
+                <div class="powered-by">
+                    <span class="footer-text">
+                        {"Powered by"}
+                    </span>
+                    <a href="https://www.rust-lang.org/">
+                        <MatIconButton>
+                            <img class="icon" src="/images/rust_icon.svg" />
+                        </MatIconButton>
+                    </a>
+                </div>
                 <div class="separator" />
-                <span class="text">
+                <span class="footer-text">
                     {"Copyright © 2021 ZhaoZhanHao"}
                 </span>
             </div>

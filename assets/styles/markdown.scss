@@ -53,6 +53,71 @@
     }
 }
 
+blockquote {
+    border-left: 8px solid var(--mdc-theme-primary);
+    margin: 0;
+    padding: 10px;
+    background: rgba(57, 113, 245, 0.1);
+    border-radius: 5px;
+    padding-left: 15px;
+
+    p {
+        color: var(--blockquote-color) !important;
+        font-size: 14px;
+        margin: 0;
+    }
+}
+
+.markdown-github-render-block-container {
+    .markdown-github-render-block-link {
+        text-decoration: none;
+    }
+
+    .markdown-github-render-block {
+        max-width: 450px;
+        overflow: hidden;
+        border-radius: 5px;
+        background: var(--mdc-theme-primary);
+        padding: 15px;
+        box-sizing: border-box;
+        display: flex;
+        margin: 25px 0;
+        align-items: center;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+        .markdown-github-render-block-icon {
+            width: 50px;
+        }
+
+        .markdown-github-render-block-info {
+            margin-left: 15px;
+
+            .markdown-github-render-block-repo {
+                color: white;
+                font-size: 16px;
+            }
+
+            .markdown-github-render-block-desc {
+                color: white;
+                font-size: 14px;
+                line-height: 1.5;
+            }
+        }
+
+        .markdown-github-render-block-goto {
+            width: 35px;
+            height: 35px;
+            flex-shrink: 0;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+    }
+}
+
 .markdown-code {
     background: var(--code-bg);
     padding: 3px 7px;

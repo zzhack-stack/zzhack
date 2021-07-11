@@ -1,13 +1,8 @@
-use crate::services::article_service::article_service;
-use crate::services::MarkdownService;
-use crate::utils::theme::by_theme;
 use css_in_rust::Style;
-use web_sys::Element;
 use yew::prelude::*;
 
 pub struct AboutMe {
     style: Style,
-    content: Element,
 }
 
 pub enum AboutMeMessage {}
@@ -16,7 +11,7 @@ impl Component for AboutMe {
     type Message = AboutMeMessage;
     type Properties = ();
 
-    fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
+    fn create(_props: Self::Properties, _link: ComponentLink<Self>) -> Self {
         let style = Style::create(
             "AboutMe",
             r#"
@@ -24,13 +19,8 @@ impl Component for AboutMe {
         "#,
         )
         .unwrap();
-        let markdown_service = unsafe {
-            MarkdownService::new(article_service.get_article_by_label("me").unwrap().body)
-        };
-        let content =
-            markdown_service.parse_to_element(by_theme("base16-ocean.light", "base16-ocean.light"));
 
-        Self { style, content }
+        Self { style }
     }
 
     fn update(&mut self, _msg: Self::Message) -> ShouldRender {
@@ -44,9 +34,7 @@ impl Component for AboutMe {
     fn view(&self) -> Html {
         html! {
             <div class=self.style.to_string()>
-                <div class="container markdown-container">
-                    {Html::VRef(self.content.clone().into())}
-                </div>
+                // <BookView number=2 />
             </div>
         }
     }

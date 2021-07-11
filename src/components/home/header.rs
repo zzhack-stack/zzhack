@@ -45,8 +45,6 @@ pub struct Tab {
 const GITHUB_PROFILE: &'static str = "https://github.com/youncccat";
 
 fn find_current_route_index(tabs: Vec<Tab>, current_route: Route) -> u32 {
-    console_log!("{}", current_route);
-
     match tabs.iter().position(|tab| {
         let route: Route = tab.route.clone().into();
         current_route.contains(route.as_str())
@@ -122,10 +120,12 @@ impl Component for Header {
     fn update(&mut self, msg: HeaderMessage) -> bool {
         match msg {
             HeaderMessage::ChangeRoute(i) => {
-                let route = self.props.tabs[i].route.clone().into();
-                let current_route = self.route_service.get_route();
+                let route: Route = self.props.tabs[i].route.clone().into();
+                let current_route = self.route_service.get_path();
 
-                if current_route == route {
+                if current_route == route.to_string()
+                    || current_route.starts_with(route.to_string().as_str())
+                {
                     return false;
                 }
 

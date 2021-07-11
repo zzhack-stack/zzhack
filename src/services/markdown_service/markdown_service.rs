@@ -1,11 +1,12 @@
 use crate::console_log;
 use crate::services::markdown_service::elements::render_code;
+use crate::services::markdown_service::elements::render_github_render_block;
 use crate::services::markdown_service::elements::render_heading;
-use crate::services::markdown_service::elements::render_text;
+use crate::services::markdown_service::elements::GitHubRenderBlock;
 use crate::services::markdown_service::elements::{render_code_block, render_image};
-use crate::utils::theme::by_theme;
 use pulldown_cmark::CodeBlockKind::{Fenced, Indented};
-use pulldown_cmark::{html, CodeBlockKind, Event, Options, Parser, Tag};
+use pulldown_cmark::{html, Event, Options, Parser, Tag};
+use serde_json;
 use syntect::highlighting::ThemeSet;
 use syntect::html::highlighted_html_for_string;
 use syntect::parsing::SyntaxReference;
@@ -19,6 +20,7 @@ pub struct MarkdownService {
 #[derive(Clone)]
 enum TraverseKind {
     CodeBlock(SyntaxReference),
+    GitHubRenderBlock,
     Image(String),
     Heading(u32),
     Nope,
@@ -30,15 +32,12 @@ impl MarkdownService {
     }
 
     pub fn parse(&self, input: &str, theme: &'static str) -> String {
-        // let mut is_code_block = false;
-        // let mut is_img = false;
         let mut traverse_kind = TraverseKind::Nope;
 
         let mut codes: Vec<String> = Vec::new();
         let ss = SyntaxSet::load_defaults_newlines();
         let ts = ThemeSet::load_defaults();
         let theme = &ts.themes[theme];
-
         let parser = Parser::new_ext(input, Options::empty())
             .map(|event| match event {
                 Event::Start(Tag::Image(..)) => {
@@ -70,6 +69,12 @@ impl MarkdownService {
                         Indented => String::from("rust"),
                         Fenced(language) => language.to_string(),
                     };
+
+                    if language == "github" {
+                        traverse_kind = TraverseKind::GitHubRenderBlock;
+                        return Event::Start(Tag::CodeBlock(kind));
+                    };
+
                     let syntax = match ss.find_syntax_by_name(language.as_str()) {
                         Some(syntax) => syntax,
                         None => ss.find_syntax_by_extension("rs").unwrap(),
@@ -79,22 +84,31 @@ impl MarkdownService {
                     Event::Start(Tag::CodeBlock(kind))
                 }
                 Event::End(Tag::CodeBlock(code)) => {
-                    if let TraverseKind::CodeBlock(syntax) = traverse_kind.clone() {
-                        let html = highlighted_html_for_string(
-                            codes.join("").as_str(),
-                            &ss,
-                            &syntax,
-                            theme,
-                        );
-                        traverse_kind = TraverseKind::Nope;
-                        // reset codes
-                        codes = Vec::new();
-                        return Event::Html(render_code_block(html).into());
-                    }
+                    let parsed_code = codes.join("");
+                    let event = match traverse_kind.clone() {
+                        TraverseKind::CodeBlock(syntax) => {
+                            let html = highlighted_html_for_string(
+                                parsed_code.as_str(),
+                                &ss,
+                                &syntax,
+                                theme,
+                            );
+                            Event::Html(render_code_block(html).into())
+                        }
+                        TraverseKind::GitHubRenderBlock => {
+                            let github_render_block: GitHubRenderBlock =
+                                serde_json::from_str(parsed_code.as_str()).unwrap();
+                            // console_log!("{} asdasd", github_render_block.url);
+                            Event::Html(render_github_render_block(github_render_block).into())
+                        }
+                        _ => Event::End(Tag::CodeBlock(code)),
+                    };
 
+                    // reset codes
+                    codes = Vec::new();
                     traverse_kind = TraverseKind::Nope;
 
-                    Event::End(Tag::CodeBlock(code))
+                    event
                 }
                 Event::Text(text) => {
                     let empty_str_event = Event::Text("".into());
@@ -106,7 +120,7 @@ impl MarkdownService {
 
                             empty_str_event
                         }
-                        TraverseKind::CodeBlock(_) => {
+                        TraverseKind::CodeBlock(_) | TraverseKind::GitHubRenderBlock => {
                             codes.push(parsed_text);
 
                             empty_str_event

@@ -1,20 +1,15 @@
-use yew::prelude::*;
-use yew_router::prelude::*;
 use crate::pages::{
     home::Home,
-    about_me::AboutMe,
-    not_found::NotFound,
-    technology::{
-        Articles,
-        OpenSource,
-    },
+    technology::{Articles, OpenSource},
 };
+use yew::prelude::*;
+use yew_router::prelude::*;
 
 #[derive(Debug, Switch, Clone)]
 pub enum TechnologyRoutes {
-    #[to="/technology/articles"]
+    #[to = "/technology/articles"]
     Articles,
-    #[to="/technology/open_source"]
+    #[to = "/technology/open_source"]
     OpenSource,
 }
 
@@ -24,11 +19,11 @@ pub fn switch(routes: TechnologyRoutes) -> Html {
     match routes {
         TechnologyRoutes::Articles => {
             html! { <Articles />}
-        },
+        }
         TechnologyRoutes::OpenSource => {
             html! { <OpenSource />}
-        },
-        _ =>  html! {<Home />}
+        }
+        _ => html! {<Home />},
     }
 }
 

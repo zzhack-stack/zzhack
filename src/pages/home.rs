@@ -22,6 +22,7 @@ impl Component for Home {
     fn view(&self) -> Html {
         html! {
             <div>
+                {"home"}
             </div>
         }
     }

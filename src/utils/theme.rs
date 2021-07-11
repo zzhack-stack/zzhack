@@ -21,8 +21,6 @@ pub fn is_on_mobile() -> bool {
 }
 
 pub fn by_reactive<T>(mobile: T, pc: T) -> T {
-    console_log!("{}", is_on_mobile());
-
     if is_on_mobile() {
         mobile
     } else {

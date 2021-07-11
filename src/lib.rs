@@ -68,7 +68,7 @@ impl Component for Root {
                 name: "随想",
             },
             Tab {
-                route: AppRoutes::AboutMe,
+                route: AppRoutes::Books(2),
                 name: "关于我",
             },
         ];
@@ -162,7 +162,7 @@ impl Root {
         html! {
             <div class="loading-wrapper">
                 <img src="https://img-blog.csdnimg.cn/20210709181729301.gif" />
-                <p class="text">{"正在同步数据......"}</p>
+                <p class="text">{"正在探索新大陆......"}</p>
             </div>
         }
     }
@@ -193,7 +193,6 @@ impl Root {
                         tabs=self.tabs.clone()
                         on_menu_click=self.link.callback(|_| RootMessage::SwitchDrawer)
                     />
-                    // <ContextProvider></ContextProvider>
                     <AppRouter render = Router::render(switch) />
                     <Footer />
                 </MatDrawerAppContent>

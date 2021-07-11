@@ -1,7 +1,17 @@
+use regex::Regex;
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct GitHubRenderBlock {
+    pub url: String,
+    pub repo: String,
+    pub description: String,
+}
+
 pub fn render_heading(content: String, level: u32) -> String {
     format!(
-        "<a class='markdown-heading-anchor' href='#{}'><h{} class='markdown-heading'>{}</h{}></a>",
-        content, level, content, level
+        "<a class='markdown-heading-anchor' href='#{}'><h{} class='markdown-heading' id={}>{}</h{}></a>",
+        content, level, content, content, level
     )
 }
 
@@ -30,6 +40,26 @@ pub fn render_image(url: String, alt: String) -> String {
             <a href='{}' class='markdown-img-alt'>{}</a>
         </div>",
         url, alt, url, alt
+    )
+}
+
+pub fn render_github_render_block(github_render_block: GitHubRenderBlock) -> String {
+    format!(
+        "<div class='markdown-github-render-block-container'>
+        <a class='markdown-github-render-block-link' href={}>
+            <div class='markdown-github-render-block'>
+                <img class='markdown-github-render-block-icon' src='/images/github_light.svg' />
+                <div class='markdown-github-render-block-info'>
+                    <div class='markdown-github-render-block-repo'>{}</div>
+                    <div class='markdown-github-render-block-desc'>{}</div>
+                </div>
+                <div class='markdown-github-render-block-goto'>
+                    <img class='markdown-github-render-block-goto-icon' src='/images/forward.svg' />
+                </div>
+            </div>  
+        </a>  
+    </div>",
+        github_render_block.url, github_render_block.repo, github_render_block.description
     )
 }
 

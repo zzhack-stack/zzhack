@@ -81,8 +81,6 @@ impl Component for CategoryBar {
                 let route = self.props.categories[i].route.clone();
                 let current_route = self.route_service.get_route();
 
-                console_log!("{}", route.to_string());
-
                 if current_route == route {
                     return false;
                 }
