@@ -4,6 +4,7 @@ use crate::services::markdown_service::elements::render_github_render_block;
 use crate::services::markdown_service::elements::render_heading;
 use crate::services::markdown_service::elements::GitHubRenderBlock;
 use crate::services::markdown_service::elements::{render_code_block, render_image};
+use core::future::Future;
 use pulldown_cmark::CodeBlockKind::{Fenced, Indented};
 use pulldown_cmark::{html, Event, Options, Parser, Tag};
 use serde_json;
@@ -11,8 +12,11 @@ use syntect::highlighting::ThemeSet;
 use syntect::html::highlighted_html_for_string;
 use syntect::parsing::SyntaxReference;
 use syntect::parsing::SyntaxSet;
+use wasm_bindgen::JsValue;
 use web_sys::Element;
+use yew::Callback;
 
+#[derive(Clone)]
 pub struct MarkdownService {
     value: String,
 }
@@ -149,7 +153,9 @@ impl MarkdownService {
 
     pub fn parse_to_element(&self, theme: &'static str) -> Element {
         let div = yew::utils::document().create_element("div").unwrap();
-        div.set_inner_html(self.parse(self.value.as_str(), theme).as_str());
+        let parsed_html = self.parse(self.value.as_str(), theme);
+
+        div.set_inner_html(parsed_html.as_str());
 
         div
     }

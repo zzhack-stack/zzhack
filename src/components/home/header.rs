@@ -75,6 +75,8 @@ impl Component for Header {
             box-shadow: 0 1px 1px 0 rgb(32 33 36 / 28%);
             padding: 0 24px;
             box-sizing: border-box;
+            position: sticky;
+            top: 0;
 
             .left {
                 display: flex;

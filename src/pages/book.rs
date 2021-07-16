@@ -4,13 +4,17 @@ use crate::pages::article::ArticleView;
 use crate::services::article_service::Book;
 use crate::services::article_service::Chapter;
 use crate::services::article_service::User;
+use crate::services::MarkdownService;
+use crate::utils::theme::by_theme;
 use crate::AppRoutes;
 use crate::Article;
 use css_in_rust::Style;
 use material_yew::MatIconButton;
 use material_yew::MatList;
 use material_yew::MatListItem;
+use web_sys::Element;
 use yew::prelude::*;
+use yew::virtual_dom::VNode;
 use yew_router::agent::RouteRequest::ChangeRoute;
 use yew_router::prelude::RouteAgent;
 
@@ -46,9 +50,10 @@ impl Component for BookView {
         let style = Style::create(
             "BookView",
             r#"
+            display:flex;
+
             .side-bar {
                 width: 300px;
-                height: 100vh;
                 background: var(--side-bar-color);
                 box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
             }
@@ -57,8 +62,26 @@ impl Component for BookView {
                 margin-left: 40px;
             }
 
+            .article {
+                flex: 1;
+            }
+
             .list-item {
 
+            }
+
+            .side-bar-container {
+                position: sticky;
+                top: 48px;
+            }
+
+            @media (max-width: 600px){
+                flex-direction: column;
+                
+                .side-bar {
+                    width: 100%;
+                    height: fit-content;
+                }
             }
         "#,
         )
@@ -104,10 +127,9 @@ impl Component for BookView {
 
                 self.selected_article = selected_article;
                 self.selected_chapter = selected_chapter;
-                self.selected_content = selected_content;
+                self.selected_content = selected_content.clone();
                 self.user = user;
-
-                self.route_agent.send(ChangeRoute(route.clone().into()));
+                self.route_agent.send(ChangeRoute(route.into()));
 
                 true
             }
@@ -159,37 +181,38 @@ impl Component for BookView {
         };
         let book_number = self.book.number;
 
-        // console_log!("{}", self.selected_content);
-
         html! {
             <div class=self.style.to_string()>
                 <div class="side-bar">
-                    <MatList>
-                       <div class="list-item" onclick=self.link.callback(move |_| BookViewMessage::ChangeRoute(AppRoutes::Books(book_number))) style=get_active_list_item_style(book_item_color)><MatListItem><span class="text">{self.book.title.clone()}</span></MatListItem></div>
-                        {
-                            for self.book.chapters.iter().map(|chapter| {
-                                let chapter_number = chapter.number;
+                    <div class="side-bar-container">
+                        <MatList>
+                            <div class="list-item" onclick=self.link.callback(move |_| BookViewMessage::ChangeRoute(AppRoutes::Books(book_number))) style=get_active_list_item_style(book_item_color)><MatListItem><span class="text">{self.book.title.clone()}</span></MatListItem></div>
+                            {
+                                for self.book.chapters.iter().map(|chapter| {
+                                    let chapter_number = chapter.number;
 
-                                html! {
-                                    <>
-                                        <div class="list-item" onclick=self.link.callback(move |_| BookViewMessage::ChangeRoute(AppRoutes::BooksWithChapter(book_number,chapter_number))) style=get_active_list_item_style(match_chapter_item_color(chapter))>
-                                            <MatListItem><span class="text">{chapter.title.clone()}</span></MatListItem>
-                                        </div>
-                                        {for chapter.articles.iter().map(|article| {
-                                            let article_number = article.number;
-                                            html! {
-                                                <div onclick=self.link.callback(move |_| BookViewMessage::ChangeRoute(AppRoutes::BooksWithArticle(book_number, chapter_number, article_number))) class="list-item" style=get_active_list_item_style(match_article_item_color(article))>
-                                                    <MatListItem><span class="article-item text">{article.title.clone()}</span></MatListItem>
-                                                </div>
-                                            }
-                                        })}
-                                    </>
-                                }
-                            })
-                        }
-                    </MatList>
+                                    html! {
+                                        <>
+                                            <div class="list-item" onclick=self.link.callback(move |_| BookViewMessage::ChangeRoute(AppRoutes::BooksWithChapter(book_number,chapter_number))) style=get_active_list_item_style(match_chapter_item_color(chapter))>
+                                                <MatListItem><span class="text">{chapter.title.clone()}</span></MatListItem>
+                                            </div>
+                                            {for chapter.articles.iter().map(|article| {
+                                                let article_number = article.number;
+                                                console_log!("{}",match_article_item_color(article));
+                                                html! {
+                                                    <div onclick=self.link.callback(move |_| BookViewMessage::ChangeRoute(AppRoutes::BooksWithArticle(book_number, chapter_number, article_number))) class="list-item" style=get_active_list_item_style(match_article_item_color(article))>
+                                                        <MatListItem><span class="article-item text">{article.title.clone()}</span></MatListItem>
+                                                    </div>
+                                                }
+                                            })}
+                                        </>
+                                    }
+                                })
+                            }
+                        </MatList>
+                    </div>
                 </div>
-                <div>
+                <div class="article">
                     <ArticleView user=self.user.clone() content=self.selected_content.clone() />
                 </div>
             </div>
