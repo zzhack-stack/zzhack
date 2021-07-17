@@ -5,6 +5,7 @@
         --undercover-color: #f2f2f2;
         --category-color: #f8f9fa;
         --normal-text-color: black;
+        --article-text-color: #404040;
         --side-bar-color: #fff;
         --code-block-bg: #fffcf2;
         --code-color: #535c68;    
@@ -21,6 +22,7 @@
         --normal-text-color: white;
         --side-bar-color: #181a1b;
         --code-block-bg: #282c34;
+        --article-text-color: white;
         --code-color: #6ab04c;
         --code-bg: #000;
         --blockquote-color: #dfe6e9;
@@ -29,6 +31,10 @@
 
 .text {
     color: var(--normal-text-color);
+}
+
+.article-text {
+    color: var(--article-text-color);
 }
 
 .container {

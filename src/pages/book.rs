@@ -30,6 +30,7 @@ pub struct BookView {
     link: ComponentLink<Self>,
     props: BookViewProps,
     user: User,
+    selected_title: String,
 }
 
 pub enum BookViewMessage {
@@ -83,7 +84,7 @@ impl Component for BookView {
         .unwrap();
         let book = unsafe { article_service.get_book_by_number(2) };
         let route_agent = RouteAgent::bridge(link.callback(|_| BookViewMessage::Nope));
-        let (selected_chapter, selected_article, selected_content, user) =
+        let (selected_chapter, selected_article, selected_content, user, title) =
             parse_selected(props.chapter_number, props.article_number, &book);
 
         Self {
@@ -92,6 +93,7 @@ impl Component for BookView {
             selected_article: selected_article,
             selected_chapter,
             selected_content,
+            selected_title: title,
             route_agent,
             link,
             props,
@@ -108,7 +110,7 @@ impl Component for BookView {
                         parse_selected(chapter_number, article_number, book)
                     };
 
-                let (selected_chapter, selected_article, selected_content, user) =
+                let (selected_chapter, selected_article, selected_content, user, title) =
                     match route.clone() {
                         AppRoutes::Books(_) => parse_route(None, None),
                         AppRoutes::BooksWithArticle(_, chapter_number, article_number) => {
@@ -125,6 +127,7 @@ impl Component for BookView {
                 self.selected_content = selected_content.clone();
                 self.user = user;
                 self.route_agent.send(ChangeRoute(route.into()));
+                self.selected_title = title;
 
                 true
             }
@@ -208,7 +211,7 @@ impl Component for BookView {
                     </div>
                 </div>
                 <div class="article">
-                    <ArticleView user=self.user.clone() content=self.selected_content.clone() />
+                    <ArticleView title=self.selected_title.clone() user=self.user.clone() content=self.selected_content.clone() />
                 </div>
             </div>
         }
@@ -219,7 +222,7 @@ fn parse_selected(
     chapter_number: Option<u32>,
     article_number: Option<u32>,
     book: &Book,
-) -> (Option<Chapter>, Option<Article>, String, User) {
+) -> (Option<Chapter>, Option<Article>, String, User, String) {
     let mut selected_chapter: Option<Chapter> = None;
     let mut selected_article: Option<Article> = None;
 
@@ -246,13 +249,13 @@ fn parse_selected(
     };
 
     let cloned_book = book.clone();
-    let (content, user) = match selected_chapter.clone() {
-        None => (cloned_book.content, cloned_book.user),
+    let (content, user, title) = match selected_chapter.clone() {
+        None => (cloned_book.content, cloned_book.user, cloned_book.title),
         Some(chapter) => match selected_article.clone() {
-            Some(article) => (article.body, article.user),
-            None => (chapter.content, chapter.user),
+            Some(article) => (article.body, article.user, article.title),
+            None => (chapter.content, chapter.user, chapter.title),
         },
     };
 
-    (selected_chapter, selected_article, content, user)
+    (selected_chapter, selected_article, content, user, title)
 }

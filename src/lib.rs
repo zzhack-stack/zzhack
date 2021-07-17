@@ -5,6 +5,7 @@ mod routes;
 mod services;
 mod store;
 mod utils;
+mod workers;
 use crate::components::home::header::Tab;
 use crate::routes::app_routes::switch;
 use crate::routes::app_routes::AppRouterAnchor;
