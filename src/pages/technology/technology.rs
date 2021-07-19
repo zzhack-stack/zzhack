@@ -1,18 +1,11 @@
+use crate::components::home::category_bar::{Category, CategoryBar};
+use crate::routes::technology_routes::{switch, TechnologyRouter, TechnologyRoutes};
 use css_in_rust::Style;
-use yew_router::prelude::Router;
-use crate::components::home::category_bar::{
-    CategoryBar,
-    Category,
-};
 use yew::prelude::*;
-use crate::routes::technology_routes::{
-    TechnologyRoutes,
-    switch,
-    TechnologyRouter
-};
+use yew_router::prelude::Router;
 
 pub struct Technology {
-    style: Style
+    style: Style,
 }
 
 impl Component for Technology {
@@ -20,13 +13,15 @@ impl Component for Technology {
     type Properties = ();
 
     fn create(_props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        let style = Style::create("Technology", r#"
+        let style = Style::create(
+            "Technology",
+            r#"
             min-height: calc(100% - 48px);
-        "#).unwrap();
+        "#,
+        )
+        .unwrap();
 
-        Self {
-            style,
-        }
+        Self { style }
     }
 
     fn update(&mut self, _msg: Self::Message) -> ShouldRender {
@@ -40,7 +35,7 @@ impl Component for Technology {
     fn view(&self) -> Html {
         html! {
             <div class=self.style.to_string()>
-                <CategoryBar text="Technology is life" categories=vec!(Category {name: "文章", route: TechnologyRoutes::Articles.into()}, Category {name: "开源", route: TechnologyRoutes::OpenSource.into()}) />
+                <CategoryBar text="文章 {x | x ∈ Tec}" categories=vec!(Category {name: "集合", route: TechnologyRoutes::Articles.into()}, Category {name: "向量", route: TechnologyRoutes::OpenSource.into()}) />
                 <TechnologyRouter render=Router::render(switch) />
             </div>
         }

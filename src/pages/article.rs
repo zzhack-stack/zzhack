@@ -107,9 +107,11 @@ impl Component for ArticleView {
             },
             ArticleViewMessage::Follow => {
                 let window = web_sys::window().unwrap();
+
                 window
                     .location()
-                    .set_href(self.props.user.html_url.as_str());
+                    .set_href(self.props.user.html_url.as_str())
+                    .unwrap();
 
                 false
             }

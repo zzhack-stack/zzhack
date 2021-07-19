@@ -62,7 +62,7 @@ impl Component for Root {
         let tabs = vec![
             Tab {
                 route: AppRoutes::Technology,
-                name: "技术",
+                name: "文章",
             },
             Tab {
                 route: AppRoutes::Thinking,
@@ -70,7 +70,7 @@ impl Component for Root {
             },
             Tab {
                 route: AppRoutes::Books(2),
-                name: "关于我",
+                name: "帮助手册",
             },
         ];
 
