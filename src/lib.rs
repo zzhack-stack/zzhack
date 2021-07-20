@@ -70,7 +70,7 @@ impl Component for Root {
             },
             Tab {
                 route: AppRoutes::Books(2),
-                name: "帮助手册",
+                name: "关于",
             },
         ];
 

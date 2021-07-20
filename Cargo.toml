@@ -23,6 +23,7 @@ serde = "1.0.126"
 yewdux = "0.6.2"
 regex = "1.5.4"
 serde_json = "1.0.64"
+chrono = "0.4.19"
 
 [dependencies.syntect]
 version = "4.5"

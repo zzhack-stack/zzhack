@@ -166,7 +166,7 @@ impl Component for Header {
                         <MatIconButton icon="menu" />
                     </div>}, html!{})}
                     <div class="title">
-                        {"Mist's Blog"}
+                        {"ZZHack"}
                     </div>
                     {by_reactive(html!{}, html!{<div class="tab_style">
                         <MatTabBar active_index=self.current_tab_index onactivated=self.link.callback(|i: usize| HeaderMessage::ChangeRoute(i))>

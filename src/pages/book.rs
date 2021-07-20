@@ -3,7 +3,6 @@ use crate::console_log;
 use crate::pages::article::ArticleView;
 use crate::services::article_service::Book;
 use crate::services::article_service::Chapter;
-use crate::services::article_service::User;
 use crate::AppRoutes;
 use crate::Article;
 use css_in_rust::Style;
@@ -25,12 +24,10 @@ pub struct BookView {
     book: Book,
     selected_chapter: Option<Chapter>,
     selected_article: Option<Article>,
-    selected_content: String,
     route_agent: Box<dyn Bridge<RouteAgent<()>>>,
+    selected_view_article: Article,
     link: ComponentLink<Self>,
     props: BookViewProps,
-    user: User,
-    selected_title: String,
 }
 
 pub enum BookViewMessage {
@@ -84,20 +81,18 @@ impl Component for BookView {
         .unwrap();
         let book = unsafe { article_service.get_book_by_number(2) };
         let route_agent = RouteAgent::bridge(link.callback(|_| BookViewMessage::Nope));
-        let (selected_chapter, selected_article, selected_content, user, title) =
+        let (selected_chapter, selected_article, selected_view_article) =
             parse_selected(props.chapter_number, props.article_number, &book);
 
         Self {
             style,
             book,
-            selected_article: selected_article,
+            selected_article,
             selected_chapter,
-            selected_content,
-            selected_title: title,
+            selected_view_article,
             route_agent,
             link,
             props,
-            user,
         }
     }
 
@@ -110,7 +105,7 @@ impl Component for BookView {
                         parse_selected(chapter_number, article_number, book)
                     };
 
-                let (selected_chapter, selected_article, selected_content, user, title) =
+                let (selected_chapter, selected_article, selected_view_article) =
                     match route.clone() {
                         AppRoutes::Books(_) => parse_route(None, None),
                         AppRoutes::BooksWithArticle(_, chapter_number, article_number) => {
@@ -124,10 +119,8 @@ impl Component for BookView {
 
                 self.selected_article = selected_article;
                 self.selected_chapter = selected_chapter;
-                self.selected_content = selected_content.clone();
-                self.user = user;
+                self.selected_view_article = selected_view_article;
                 self.route_agent.send(ChangeRoute(route.into()));
-                self.selected_title = title;
 
                 true
             }
@@ -211,7 +204,7 @@ impl Component for BookView {
                     </div>
                 </div>
                 <div class="article">
-                    <ArticleView title=self.selected_title.clone() user=self.user.clone() content=self.selected_content.clone() />
+                    <ArticleView article=self.selected_view_article.clone() />
                 </div>
             </div>
         }
@@ -222,7 +215,7 @@ fn parse_selected(
     chapter_number: Option<u32>,
     article_number: Option<u32>,
     book: &Book,
-) -> (Option<Chapter>, Option<Article>, String, User, String) {
+) -> (Option<Chapter>, Option<Article>, Article) {
     let mut selected_chapter: Option<Chapter> = None;
     let mut selected_article: Option<Article> = None;
 
@@ -249,13 +242,51 @@ fn parse_selected(
     };
 
     let cloned_book = book.clone();
-    let (content, user, title) = match selected_chapter.clone() {
-        None => (cloned_book.content, cloned_book.user, cloned_book.title),
+    let (body, user, title, cover, number, created_at, updated_at) = match selected_chapter.clone()
+    {
+        None => (
+            cloned_book.content,
+            cloned_book.user,
+            cloned_book.title,
+            cloned_book.cover,
+            cloned_book.number,
+            cloned_book.created_at,
+            cloned_book.updated_at,
+        ),
         Some(chapter) => match selected_article.clone() {
-            Some(article) => (article.body, article.user, article.title),
-            None => (chapter.content, chapter.user, chapter.title),
+            Some(article) => (
+                article.body,
+                article.user,
+                article.title,
+                article.cover,
+                article.number,
+                article.created_at,
+                article.updated_at,
+            ),
+            None => (
+                chapter.content,
+                chapter.user,
+                chapter.title,
+                chapter.cover,
+                chapter.number,
+                chapter.created_at,
+                chapter.updated_at,
+            ),
         },
     };
 
-    (selected_chapter, selected_article, content, user, title)
+    (
+        selected_chapter,
+        selected_article,
+        Article {
+            title,
+            user,
+            body,
+            cover,
+            number,
+            created_at,
+            updated_at,
+            labels: vec![],
+        },
+    )
 }

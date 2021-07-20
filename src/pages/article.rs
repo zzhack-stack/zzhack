@@ -1,24 +1,17 @@
 use crate::components::Avatar;
 use crate::console_log;
-use crate::services::article_service::User;
-use crate::services::MarkdownService;
-use crate::utils::theme::by_theme;
 use crate::workers::markdown_worker::MarkdownInput;
 use crate::workers::markdown_worker::MarkdownWorker;
+use crate::Article;
+use chrono::DateTime;
 use css_in_rust::Style;
 use material_yew::MatButton;
-use material_yew::MatIconButton;
-use std::borrow::Cow;
-use std::time::Duration;
 use yew::prelude::*;
-use yew::services::{ConsoleService, Task, TimeoutService};
 use yew::virtual_dom::VNode;
 
 #[derive(Properties, Clone)]
 pub struct ArticleViewProps {
-    pub content: String,
-    pub user: User,
-    pub title: String,
+    pub article: Article,
 }
 
 pub enum ArticleViewMessage {
@@ -63,10 +56,26 @@ impl Component for ArticleView {
                 padding: 0 10px;
                 border-radius: 5px;
             }
+            
+            .cover-header {
+                width: 100%;
+                height: 500px;
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+                display: flex;
+                justify-content: center;
+            }
+
+            .cover-img {
+                height: 100%;
+            }
+
+            .time-block {
+                
+            }
         "#,
         )
         .unwrap();
-        link.send_message(ArticleViewMessage::ParseContent(props.clone().content));
+        link.send_message(ArticleViewMessage::ParseContent(props.clone().article.body));
         let markdown_worker = MarkdownWorker::bridge(
             link.callback(|_| ArticleViewMessage::ParsedMarkdownContent(None)),
         );
@@ -110,7 +119,7 @@ impl Component for ArticleView {
 
                 window
                     .location()
-                    .set_href(self.props.user.html_url.as_str())
+                    .set_href(self.props.article.user.html_url.as_str())
                     .unwrap();
 
                 false
@@ -120,10 +129,10 @@ impl Component for ArticleView {
 
     fn change(&mut self, props: Self::Properties) -> ShouldRender {
         // // true
-        if self.props.content != props.content.clone() {
+        if self.props.article.body != props.article.body.clone() {
             self.props = props.clone();
             self.link
-                .send_message(ArticleViewMessage::ParseContent(props.content.clone()));
+                .send_message(ArticleViewMessage::ParseContent(props.article.body.clone()));
 
             false
         } else {
@@ -132,16 +141,32 @@ impl Component for ArticleView {
     }
 
     fn view(&self) -> Html {
+        let article = self.props.article.clone();
+
         html! {
             <div class=self.style.to_string()>
+
+                {match article.cover {
+                    Some(cover) => html! {
+                        <div style=format!("background: {};", cover.background) class="cover-header">
+                            <img class="cover-img" src={cover.cover} />
+                        </div>
+                    },
+                    None => html! {}
+                }}
+
                 <div class="container">
-                    <h1 class="title article-text">{self.props.title.clone()}</h1>
+                    <h1 class="title article-text">{article.title.clone()}</h1>
                     <div class="author">
-                        <Avatar user={self.props.user.clone()} />
+                        <Avatar user={article.user.clone()} />
                         <div onclick=self.link.callback(|_| ArticleViewMessage::Follow)>
                             <MatButton  raised=true label="Follow!" />
                         </div>
                     </div>
+                    // <div class="time-block">
+                    //     <span>{article.created_at}</span>
+                    //     <span>{article.updated_at}</span>
+                    // </div>
                     <div class="markdown-container">
                         {match self.render_content.clone() {
                             Some(content) => content,
@@ -154,10 +179,7 @@ impl Component for ArticleView {
     }
 }
 
-// fn render_content(content: String) -> VNode {
-//     let markdown_service = MarkdownService::new(content);
-//     let el =
-//         markdown_service.parse_to_element(by_theme("base16-ocean.light", "base16-ocean.light"));
+// fn format_date(time_str: String) -> (hour minutes) {
+//     let rfc3339 = DateTime::parse_from_rfc3339(time_str.as_str()).unwrap();
 
-//     Html::VRef(el.into())
 // }

@@ -1,3 +1,4 @@
+use crate::console_log;
 use crate::services::api_service::api_service;
 use crate::services::api_service::Res;
 use once_cell::sync::Lazy;
@@ -26,6 +27,9 @@ pub struct Chapter {
     pub articles: Vec<Article>,
     pub title: String,
     pub user: User,
+    pub cover: Option<Cover>,
+    pub created_at: String,
+    pub updated_at: String,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -35,6 +39,9 @@ pub struct Book {
     pub number: u32,
     pub user: User,
     pub chapters: Vec<Chapter>,
+    pub cover: Option<Cover>,
+    pub created_at: String,
+    pub updated_at: String,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -44,6 +51,9 @@ pub struct Article {
     pub number: u32,
     pub title: String,
     pub user: User,
+    pub cover: Option<Cover>,
+    pub created_at: String,
+    pub updated_at: String,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -60,6 +70,20 @@ pub struct QueryRes<D> {
     pub total_count: usize,
 }
 
+#[derive(Deserialize, Debug, Clone)]
+pub struct Cover {
+    pub number: u32,
+    pub cover: String,
+    pub background: String,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct Covers {
+    pub covers: Vec<Cover>,
+}
+
+const COVER_ISSUE_NUMBER: u32 = 7;
+
 impl ArticleService {
     fn new() -> ArticleService {
         ArticleService {
@@ -74,8 +98,41 @@ impl ArticleService {
         FetchService::fetch(request, callback).unwrap()
     }
 
+    fn select_cover_by_number(&mut self, number: u32) -> Option<&Article> {
+        self.articles.iter().find(|article| {
+            console_log!("{} {}", article.number, number);
+            article.number == number
+        })
+    }
+
+    fn attach_cover(&mut self) {
+        let covers = self.select_cover_by_number(COVER_ISSUE_NUMBER).unwrap();
+        let covers: Covers = serde_json::from_str(covers.body.trim()).unwrap();
+        let covers = covers.covers;
+        let articles: Vec<Article> = self
+            .articles
+            .iter()
+            .map(
+                |article| match covers.iter().find(|item| item.number == article.number) {
+                    Some(item) => Article {
+                        cover: Some(item.clone()),
+                        ..(article.clone())
+                    },
+                    None => Article {
+                        cover: None,
+                        ..(article.clone())
+                    },
+                },
+            )
+            .collect();
+
+        self.articles = articles;
+    }
+
     pub fn set_articles(&mut self, articles: Vec<Article>) {
         self.articles = articles;
+
+        self.attach_cover()
     }
 
     pub fn get_articles_by_label(&self, target_label: String) -> Vec<Article> {
@@ -124,6 +181,9 @@ impl ArticleService {
             .get_articles_by_label(get_related_label(issue_number))
             .iter()
             .map(|chapter| Chapter {
+                created_at: chapter.created_at.clone(),
+                updated_at: chapter.updated_at.clone(),
+                cover: chapter.cover.clone(),
                 number: chapter.number,
                 user: chapter.user.clone(),
                 title: chapter.title.clone(),
@@ -133,6 +193,9 @@ impl ArticleService {
             .collect();
 
         Book {
+            updated_at: book.updated_at.clone(),
+            created_at: book.created_at.clone(),
+            cover: book.cover.clone(),
             title: book.title.clone(),
             content: book.body.clone(),
             user: book.user.clone(),
