@@ -60,7 +60,6 @@ impl Component for ArticleView {
             .cover-header {
                 width: 100%;
                 height: 500px;
-                box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
                 display: flex;
                 justify-content: center;
             }
@@ -129,7 +128,7 @@ impl Component for ArticleView {
 
     fn change(&mut self, props: Self::Properties) -> ShouldRender {
         // // true
-        if self.props.article.body != props.article.body.clone() {
+        if self.props.article.title != props.article.title.clone() {
             self.props = props.clone();
             self.link
                 .send_message(ArticleViewMessage::ParseContent(props.article.body.clone()));
