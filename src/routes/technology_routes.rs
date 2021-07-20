@@ -7,9 +7,9 @@ use yew_router::prelude::*;
 
 #[derive(Debug, Switch, Clone)]
 pub enum TechnologyRoutes {
-    #[to = "/technology/articles"]
+    #[to = "/technology/collection"]
     Articles,
-    #[to = "/technology/open_source"]
+    #[to = "/technology/vector"]
     OpenSource,
 }
 

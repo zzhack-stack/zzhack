@@ -71,6 +71,17 @@ impl Component for ArticleView {
             .time-block {
                 
             }
+
+            @media (max-width: 600px){
+                .cover-header {
+                    height: auto;
+                }
+
+                .cover-img {
+                    width: 100%;
+                    height: fit-content;
+                }
+            }
         "#,
         )
         .unwrap();
