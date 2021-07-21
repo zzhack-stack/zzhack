@@ -19,6 +19,7 @@ use crate::store::StoreStates;
 use components::{Footer, Header};
 use css_in_rust::Style;
 use material_yew::drawer::{MatDrawer, MatDrawerAppContent};
+use material_yew::MatLinearProgress;
 use material_yew::MatList;
 use material_yew::MatListItem;
 use routes::app_routes::AppRoutes;
@@ -87,6 +88,16 @@ impl Component for Root {
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+            }
+
+            .loading-text {
+                font-size: 80px;
+            }
+
+            @media (max-width: 600px){
+                .loading-text {
+                    font-size: 30px;
+                }
             }
         "#,
         )
@@ -162,8 +173,13 @@ impl Root {
     fn render_loading(&self) -> Html {
         html! {
             <div class="loading-wrapper">
-                <img src="https://img-blog.csdnimg.cn/20210709181729301.gif" />
-                <p class="text">{"正在探索新大陆......"}</p>
+                <div class="loading-text">
+                    {"ZZHACK"}
+                </div>
+                // <img src="https://img-blog.csdnimg.cn/20210709181729301.gif" />
+                <div style="width: 70%; max-width: 430px; margin-top: 30px;">
+                    <MatLinearProgress indeterminate=true />
+                </div>
             </div>
         }
     }
