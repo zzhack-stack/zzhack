@@ -173,10 +173,9 @@ impl Root {
     fn render_loading(&self) -> Html {
         html! {
             <div class="loading-wrapper">
-                <div class="loading-text">
+                <div class="text loading-text">
                     {"ZZHACK"}
                 </div>
-                // <img src="https://img-blog.csdnimg.cn/20210709181729301.gif" />
                 <div style="width: 70%; max-width: 430px; margin-top: 30px;">
                     <MatLinearProgress indeterminate=true />
                 </div>

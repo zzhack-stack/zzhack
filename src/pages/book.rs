@@ -220,6 +220,7 @@ fn new_style(is_expand_side_bar: bool) -> Style {
 
             .catalog {{
                 display: none;
+                z-index: 10;
             }}
 
             @media (max-width: 600px){{
