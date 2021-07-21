@@ -6,6 +6,7 @@ use crate::services::article_service::Chapter;
 use crate::AppRoutes;
 use crate::Article;
 use css_in_rust::Style;
+use material_yew::MatFab;
 use material_yew::MatList;
 use material_yew::MatListItem;
 use yew::prelude::*;
@@ -28,11 +29,13 @@ pub struct BookView {
     selected_view_article: Article,
     link: ComponentLink<Self>,
     props: BookViewProps,
+    is_expand_side_bar: bool,
 }
 
 pub enum BookViewMessage {
     ChangeRoute(AppRoutes),
     Nope,
+    ChangeIsExpandSideBar,
 }
 
 impl Component for BookView {
@@ -40,45 +43,8 @@ impl Component for BookView {
     type Properties = BookViewProps;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        let style = Style::create(
-            "BookView",
-            r#"
-            display:flex;
-
-            .side-bar {
-                width: 300px;
-                background: var(--side-bar-color);
-                box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-            }
-            
-            .article-item {
-                margin-left: 40px;
-            }
-
-            .article {
-                flex: 1;
-            }
-
-            .list-item {
-
-            }
-
-            .side-bar-container {
-                position: sticky;
-                top: 48px;
-            }
-
-            @media (max-width: 600px){
-                flex-direction: column;
-                
-                .side-bar {
-                    width: 100%;
-                    height: fit-content;
-                }
-            }
-        "#,
-        )
-        .unwrap();
+        let is_expand_side_bar = false;
+        let style = new_style(is_expand_side_bar);
         let book = unsafe { article_service.get_book_by_number(2) };
         let route_agent = RouteAgent::bridge(link.callback(|_| BookViewMessage::Nope));
         let (selected_chapter, selected_article, selected_view_article) =
@@ -93,6 +59,7 @@ impl Component for BookView {
             route_agent,
             link,
             props,
+            is_expand_side_bar,
         }
     }
 
@@ -121,6 +88,13 @@ impl Component for BookView {
                 self.selected_chapter = selected_chapter;
                 self.selected_view_article = selected_view_article;
                 self.route_agent.send(ChangeRoute(route.into()));
+
+                true
+            }
+            BookViewMessage::ChangeIsExpandSideBar => {
+                let is_expand_side_bar = !self.is_expand_side_bar;
+                self.style = new_style(is_expand_side_bar);
+                self.is_expand_side_bar = is_expand_side_bar;
 
                 true
             }
@@ -206,9 +180,70 @@ impl Component for BookView {
                 <div class="article">
                     <ArticleView article=self.selected_view_article.clone() />
                 </div>
+                <div class="catalog" onclick=self.link.callback(|_| BookViewMessage::ChangeIsExpandSideBar)>
+                    <MatFab icon="add" label="目录" extended=true />
+                </div>
             </div>
         }
     }
+}
+
+fn new_style(is_expand_side_bar: bool) -> Style {
+    Style::create(
+            "BookView",
+            format!(r#"
+            display:flex;
+
+            .side-bar {{
+                width: 300px;
+                transition: 0.3s all;
+                background: var(--side-bar-color);
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+            }}
+            
+            .article-item {{
+                margin-left: 40px;
+            }}
+
+            .article {{
+                flex: 1;
+            }}
+
+            .list-item {{
+
+            }}
+
+            .side-bar-container {{
+                position: sticky;
+                top: 48px;
+            }}
+
+            .catalog {{
+                position: fixed;
+                right: 50px;
+                bottom: 50px;
+            }}
+
+            @media (max-width: 600px){{
+                flex-direction: column;
+                
+                .side-bar {{
+                    width: 100%;
+                    height: fit-content;
+                    position: fixed;
+                    z-index: 10;
+                    border-bottom-left-radius: 10px;
+                    border-bottom-right-radius: 10px;
+                    {}
+                }}
+            }}
+        "#, if is_expand_side_bar {
+            "top: 48px;"
+        } else {
+            "top: -256px;"
+        }),
+        )
+        .unwrap()
 }
 
 fn parse_selected(

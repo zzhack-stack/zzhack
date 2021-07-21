@@ -70,7 +70,7 @@ impl Component for Header {
             align-items: center;
             justify-content: space-between;
             position: relative;
-            z-index: 1;
+            z-index: 11;
             background: var(--base-color); 
             box-shadow: 0 1px 1px 0 rgb(32 33 36 / 28%);
             padding: 0 24px;
