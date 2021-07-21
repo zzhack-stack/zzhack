@@ -219,14 +219,18 @@ fn new_style(is_expand_side_bar: bool) -> Style {
             }}
 
             .catalog {{
-                position: fixed;
-                right: 50px;
-                bottom: 50px;
+                display: none;
             }}
 
             @media (max-width: 600px){{
                 flex-direction: column;
                 
+                .catalog {{
+                    position: fixed;
+                    right: 50px;
+                    bottom: 50px;
+                }}
+
                 .side-bar {{
                     width: 100%;
                     height: fit-content;
