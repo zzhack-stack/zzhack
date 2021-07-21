@@ -226,6 +226,7 @@ fn new_style(is_expand_side_bar: bool) -> Style {
                 flex-direction: column;
                 
                 .catalog {{
+                    display: block;
                     position: fixed;
                     right: 50px;
                     bottom: 50px;
