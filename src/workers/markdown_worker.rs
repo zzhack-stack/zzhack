@@ -70,8 +70,7 @@ impl Agent for MarkdownWorker {
 
 fn render_content(content: String) -> VNode {
     let markdown_service = MarkdownService::new(content);
-    let el =
-        markdown_service.parse_to_element(by_theme("base16-ocean.light", "base16-ocean.light"));
+    let el = markdown_service.parse_to_element(by_theme("base16-ocean.light", "base16-ocean.dark"));
 
     Html::VRef(el.into())
 }
