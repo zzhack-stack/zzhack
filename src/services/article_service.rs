@@ -56,6 +56,13 @@ pub struct Article {
     pub updated_at: String,
 }
 
+#[derive(Debug, Clone)]
+pub struct ArticleWithMetadata {
+    pub is_book: bool,
+    pub article: Article,
+    pub filters: Vec<Label>,
+}
+
 #[derive(Deserialize, Debug, Clone)]
 pub struct User {
     pub login: String,
@@ -135,14 +142,44 @@ impl ArticleService {
         self.attach_cover()
     }
 
-    pub fn get_articles_by_label(&self, target_label: String) -> Vec<Article> {
+    pub fn get_articles_by_labels_with_metadata(
+        &self,
+        target_labels: Vec<&'static str>,
+    ) -> Vec<ArticleWithMetadata> {
+        self.get_articles_by_labels(target_labels)
+            .iter()
+            .map(|article| ArticleWithMetadata {
+                filters: article
+                    .labels
+                    .clone()
+                    .into_iter()
+                    .filter(|label| label.name.starts_with("filter:"))
+                    .map(|label| Label {
+                        name: label.name[7..].to_string(),
+                        ..label
+                    })
+                    .collect(),
+                is_book: match article
+                    .labels
+                    .iter()
+                    .find(|label| label.name == "type:book")
+                {
+                    Some(_) => true,
+                    None => false,
+                },
+                article: article.clone(),
+            })
+            .collect()
+    }
+
+    pub fn get_articles_by_labels(&self, target_labels: Vec<&str>) -> Vec<Article> {
         let mut articles: Vec<Article> = Vec::new();
 
         for article in self.articles.iter() {
             if match article
                 .labels
                 .iter()
-                .find(|label| label.name == target_label)
+                .find(|label| target_labels.contains(&label.name.as_str()))
             {
                 Some(label) => true,
                 None => false,
@@ -154,7 +191,11 @@ impl ArticleService {
         articles
     }
 
-    pub fn get_article_by_label(&self, target_label: &'static str) -> Option<Article> {
+    pub fn get_articles_by_label(&self, target_label: &str) -> Vec<Article> {
+        self.get_articles_by_labels(vec![target_label])
+    }
+
+    pub fn get_article_by_label(&self, target_label: &str) -> Option<Article> {
         match self.articles.iter().find(|article| {
             match article
                 .labels
@@ -170,6 +211,14 @@ impl ArticleService {
         }
     }
 
+    pub fn get_article_by_number(&self, issue_number: u32) -> Article {
+        self.articles
+            .clone()
+            .into_iter()
+            .find(|article| article.number == issue_number)
+            .unwrap()
+    }
+
     pub fn get_book_by_number(&self, issue_number: u32) -> Book {
         let get_related_label = |number: u32| -> String { format!("related:{}", number) };
         let book = self
@@ -178,7 +227,7 @@ impl ArticleService {
             .find(|article| article.number == issue_number)
             .unwrap();
         let chapters = self
-            .get_articles_by_label(get_related_label(issue_number))
+            .get_articles_by_label(get_related_label(issue_number).as_str())
             .iter()
             .map(|chapter| Chapter {
                 created_at: chapter.created_at.clone(),
@@ -188,7 +237,7 @@ impl ArticleService {
                 user: chapter.user.clone(),
                 title: chapter.title.clone(),
                 content: chapter.body.clone(),
-                articles: self.get_articles_by_label(get_related_label(chapter.number)),
+                articles: self.get_articles_by_label(get_related_label(chapter.number).as_str()),
             })
             .collect();
 

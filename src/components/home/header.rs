@@ -1,9 +1,13 @@
 use crate::console_log;
 use crate::routes::app_routes::AppRoutes;
-use crate::services::{theme_service::DARK_THEME_KEY, ThemeService};
+use crate::services::{
+    theme_service::{DARK_THEME_KEY, LIGHT_THEME_KEY},
+    ThemeService,
+};
 use crate::utils::theme::by_reactive;
 use crate::utils::theme::by_theme;
 use crate::utils::theme::is_on_mobile;
+use crate::workers::theme_agent::{ThemeAgent, ThemeAgentInput};
 use css_in_rust::style::Style;
 use material_yew::{drawer::MatDrawerAppContent, MatDrawer, MatIconButton, MatTab, MatTabBar};
 use yew::prelude::*;
@@ -21,12 +25,12 @@ pub struct HeaderProps {
 
 pub struct Header {
     route_service: RouteService<()>,
-    theme_service: ThemeService,
     props: HeaderProps,
     link: ComponentLink<Self>,
     route_agent: Box<dyn Bridge<RouteAgent<()>>>,
     style: Style,
     is_dark_theme: bool,
+    theme_agent: Box<dyn Bridge<ThemeAgent>>,
     current_tab_index: u32,
 }
 
@@ -34,6 +38,7 @@ pub enum HeaderMessage {
     ChangeRoute(usize),
     SwitchTheme,
     Nope,
+    ChangeTheme,
 }
 
 #[derive(Clone)]
@@ -104,6 +109,7 @@ impl Component for Header {
 
         let theme_service = ThemeService::new();
         let theme = theme_service.theme.clone();
+        let theme_agent = ThemeAgent::bridge(link.callback(|_| HeaderMessage::ChangeTheme));
         let current_tab_index =
             find_current_route_index(props.tabs.clone(), route_service.get_route());
 
@@ -113,9 +119,9 @@ impl Component for Header {
             route_service,
             route_agent,
             style,
-            theme_service,
             is_dark_theme: theme == DARK_THEME_KEY,
             current_tab_index,
+            theme_agent,
         }
     }
 
@@ -136,9 +142,15 @@ impl Component for Header {
             HeaderMessage::SwitchTheme => {
                 let target_theme = !self.is_dark_theme;
 
-                self.theme_service.switch(target_theme);
                 self.is_dark_theme = target_theme;
+                self.theme_agent
+                    .send(ThemeAgentInput::ChangeTheme(if self.is_dark_theme {
+                        DARK_THEME_KEY
+                    } else {
+                        LIGHT_THEME_KEY
+                    }));
             }
+            HeaderMessage::ChangeTheme => {}
             HeaderMessage::Nope => return false,
         }
 

@@ -12,9 +12,13 @@
         --code-color: #535c68;    
         --code-bg: rgba(255, 121, 121, 0.15);
         --blockquote-color: #636e72;
+        --shallow-gray: #4e5969;
+        --title-color: #1d2129;
     }
     
     .dark {
+        --title-color: white;
+        --shallow-gray: #4e5969;
         --mdc-theme-primary: #3970f5;
         --mdc-theme-secondary:#ff7979;
         --base-color: #181a1b;
@@ -42,6 +46,14 @@
 .container {
     width: 960px;
     margin: auto;
+}
+
+.articles {
+    background: var(--base-color);
+    border-radius: 3px;
+    box-shadow: rgba(0, 0 , 0, 0.16) 0px 1px 4px;
+    width: 100%;
+    padding: 10px 15px;
 }
 
 @media (max-width: 600px){

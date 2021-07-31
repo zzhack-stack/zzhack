@@ -1,11 +1,16 @@
-use crate::console_log;
+use crate::article_service;
 use crate::pages::book::BookView;
-use crate::pages::{about_me::AboutMe, home::Home, not_found::NotFound, technology::Technology};
+use crate::pages::{
+    about_me::AboutMe, article::ArticleView, articles::Articles, home::Home, not_found::NotFound,
+    technology::Technology,
+};
 use yew::prelude::*;
 use yew_router::prelude::*;
 
 #[derive(Debug, Switch, Clone)]
 pub enum AppRoutes {
+    #[to = "/articles/{number}"]
+    Articles(u32),
     #[to = "/books/{book_number}/chapters/{chapter_number}/articles/{article_number}"]
     BooksWithArticle(u32, u32, u32),
     #[to = "/books/{book_number}/chapters/{chapter_number}"]
@@ -22,10 +27,8 @@ pub enum AppRoutes {
     NotFound,
     #[to = "/"]
     Home,
-    #[to = "/technology/articles"]
-    Articles,
-    #[to = "/technology/open_source"]
-    OpenSource,
+    // #[to = "/technology/open_source"]
+    // OpenSource,
 }
 
 pub type AppRouterAnchor = RouterAnchor<AppRoutes>;
@@ -49,6 +52,11 @@ pub fn switch(routes: AppRoutes) -> Html {
         }
         AppRoutes::Books(number) => {
             html! { <BookView number=number />}
+        }
+        AppRoutes::Articles(number) => {
+            let article = unsafe { article_service.get_article_by_number(number) };
+
+            html! {<ArticleView article=article />}
         }
         AppRoutes::Home => {
             html! { <Home />}

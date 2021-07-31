@@ -1,5 +1,6 @@
 use crate::components::home::category_bar::{Category, CategoryBar};
 use crate::routes::technology_routes::{switch, TechnologyRouter, TechnologyRoutes};
+use crate::Footer;
 use css_in_rust::Style;
 use yew::prelude::*;
 use yew_router::prelude::Router;
@@ -34,10 +35,13 @@ impl Component for Technology {
 
     fn view(&self) -> Html {
         html! {
-            <div class=self.style.to_string()>
-                <CategoryBar text="文章 {x | x ∈ Tec}" categories=vec!(Category {name: "集合", route: TechnologyRoutes::Articles.into()}, Category {name: "向量", route: TechnologyRoutes::OpenSource.into()}) />
-                <TechnologyRouter render=Router::render(switch) />
-            </div>
+            <>
+                <div class=self.style.to_string()>
+                    <CategoryBar dark_icon="/images/construction_dark.svg" light_icon="/images/construction_light.svg" text="文章 {x | x ∈ Tec}" categories=vec!(Category {name: "集合", route: TechnologyRoutes::Collection.into()}, Category {name: "向量", route: TechnologyRoutes::OpenSource.into()}) />
+                    <TechnologyRouter render=Router::render(switch) />
+                </div>
+                <Footer />
+            </>
         }
     }
 }

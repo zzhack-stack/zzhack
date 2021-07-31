@@ -1,4 +1,6 @@
 use crate::console_log;
+use crate::utils::theme::by_theme;
+use crate::workers::theme_agent::ThemeAgent;
 use css_in_rust::style::Style;
 use material_yew::{MatTab, MatTabBar};
 use yew::prelude::*;
@@ -18,6 +20,8 @@ pub struct Category {
 pub struct CategoryBarProps {
     pub categories: Vec<Category>,
     pub text: &'static str,
+    pub light_icon: &'static str,
+    pub dark_icon: &'static str,
 }
 
 pub struct CategoryBar {
@@ -26,10 +30,12 @@ pub struct CategoryBar {
     style: Style,
     route_service: RouteService,
     route_agent: Box<dyn Bridge<RouteAgent>>,
+    theme_agent: Box<dyn Bridge<ThemeAgent>>,
 }
 
 pub enum CategoryBarMessage {
     ChangeRoute(usize),
+    ChangeTheme,
     Nope,
 }
 
@@ -61,9 +67,14 @@ impl Component for CategoryBar {
                 height: 48px;
                 display: flex;
             }
+
+            .icon {
+                margin-right: 10px;
+            }
         "#,
         )
         .unwrap();
+        let theme_agent = ThemeAgent::bridge(link.callback(|_| CategoryBarMessage::ChangeTheme));
 
         Self {
             props,
@@ -71,6 +82,7 @@ impl Component for CategoryBar {
             style,
             route_agent,
             route_service,
+            theme_agent,
         }
     }
 
@@ -87,6 +99,9 @@ impl Component for CategoryBar {
 
                 self.route_agent.send(ChangeRoute(route));
             }
+            CategoryBarMessage::ChangeTheme => {
+                console_log!("hello world");
+            }
         }
 
         true
@@ -101,6 +116,7 @@ impl Component for CategoryBar {
         html! {
             <div class=self.style.to_string()>
                 <div class="text">
+                    <img class="icon" src={by_theme(self.props.dark_icon, self.props.light_icon)} />
                     {self.props.text}
                 </div>
                 <div class="tabs">

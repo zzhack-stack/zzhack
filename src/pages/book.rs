@@ -190,15 +190,20 @@ impl Component for BookView {
 
 fn new_style(is_expand_side_bar: bool) -> Style {
     Style::create(
-            "BookView",
-            format!(r#"
+        "BookView",
+        format!(
+            r#"
             display:flex;
 
             .side-bar {{
                 width: 300px;
                 transition: 0.3s all;
                 background: var(--side-bar-color);
-                box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+                font-size: 13px;
+            }}
+
+            .side-bar * {{
+                font-size: 13px;
             }}
             
             .article-item {{
@@ -243,13 +248,15 @@ fn new_style(is_expand_side_bar: bool) -> Style {
                     {}
                 }}
             }}
-        "#, if is_expand_side_bar {
-            "top: 48px;"
-        } else {
-            "top: -256px;"
-        }),
-        )
-        .unwrap()
+        "#,
+            if is_expand_side_bar {
+                "top: 48px;"
+            } else {
+                "top: -256px;"
+            }
+        ),
+    )
+    .unwrap()
 }
 
 fn parse_selected(

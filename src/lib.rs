@@ -1,4 +1,3 @@
-mod agents;
 mod components;
 mod pages;
 mod routes;
@@ -210,7 +209,6 @@ impl Root {
                         on_menu_click=self.link.callback(|_| RootMessage::SwitchDrawer)
                     />
                     <AppRouter render = Router::render(switch) />
-                    <Footer />
                 </MatDrawerAppContent>
             </MatDrawer>
         }
