@@ -200,12 +200,10 @@ fn new_style(is_expand_side_bar: bool) -> Style {
                 transition: 0.3s all;
                 background: var(--side-bar-color);
                 font-size: 13px;
+                border-right: 1px solid rgba(0, 0, 0, 0.12);
+                border-top: 1px solid rgba(0, 0, 0, 0.12);
             }}
 
-            .side-bar * {{
-                font-size: 13px;
-            }}
-            
             .article-item {{
                 margin-left: 40px;
             }}

@@ -1,5 +1,7 @@
 :root {
     .light {
+        --primary-color: #3970f5;
+        --header-color: #3970f5;
         --mdc-theme-primary: #3970f5;
         --mdc-theme-secondary:#ff7979;
         --base-color: #fff;
@@ -17,6 +19,8 @@
     }
     
     .dark {
+        --header-color: #181a1b;
+        --primary-color: #3970f5;
         --title-color: white;
         --shallow-gray: #4e5969;
         --mdc-theme-primary: #3970f5;

@@ -1,5 +1,8 @@
+use crate::components::home::category_bar::{Category, CategoryBar};
+use crate::routes::about_routes::{switch, AboutRouter, AboutRoutes};
 use css_in_rust::Style;
 use yew::prelude::*;
+use yew_router::prelude::Router;
 
 pub struct AboutMe {
     style: Style,
@@ -34,7 +37,8 @@ impl Component for AboutMe {
     fn view(&self) -> Html {
         html! {
             <div class=self.style.to_string()>
-                // <BookView number=2 />
+                <CategoryBar dark_icon="/images/help_dark.svg" light_icon="/images/help_light.svg" text="帮助中心" categories=vec!(Category {name: "关于我", route: AboutRoutes::AboutMe.into()}, Category {name: "帮助", route: AboutRoutes::AboutHelp.into()}) />
+                <AboutRouter render=Router::render(switch) />
             </div>
         }
     }

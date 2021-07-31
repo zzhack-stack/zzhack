@@ -17,8 +17,8 @@ pub enum AppRoutes {
     BooksWithChapter(u32, u32),
     #[to = "/books/{number}"]
     Books(u32),
-    #[to = "/about/me"]
-    AboutMe,
+    #[to = "/about"]
+    About,
     #[to = "/technology"]
     Technology,
     #[to = "/thinking"]
@@ -35,7 +35,7 @@ pub type AppRouterAnchor = RouterAnchor<AppRoutes>;
 
 pub fn switch(routes: AppRoutes) -> Html {
     match routes {
-        AppRoutes::AboutMe => {
+        AppRoutes::About => {
             html! { <AboutMe />}
         }
         AppRoutes::NotFound => {
