@@ -22,7 +22,9 @@ pub fn switch(routes: AboutRoutes) -> Html {
             html! { <ArticleView article=article />}
         }
         AboutRoutes::AboutHelp => {
-            html! { <BookView number=2 />}
+            let article = unsafe { article_service.get_article_by_number(2) };
+
+            html! { <ArticleView article=article />}
         }
         _ => html! {<Home />},
     }

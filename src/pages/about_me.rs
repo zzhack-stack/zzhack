@@ -37,7 +37,7 @@ impl Component for AboutMe {
     fn view(&self) -> Html {
         html! {
             <div class=self.style.to_string()>
-                <CategoryBar dark_icon="/images/help_dark.svg" light_icon="/images/help_light.svg" text="帮助中心" categories=vec!(Category {name: "关于我", route: AboutRoutes::AboutMe.into()}, Category {name: "帮助", route: AboutRoutes::AboutHelp.into()}) />
+                <CategoryBar dark_icon="/images/help_dark.svg" light_icon="/images/help_light.svg" text="帮助中心" categories=vec!(Category {name: "关于我", route: AboutRoutes::AboutMe.into()}, Category {name: "FQA", route: AboutRoutes::AboutHelp.into()}) />
                 <AboutRouter render=Router::render(switch) />
             </div>
         }

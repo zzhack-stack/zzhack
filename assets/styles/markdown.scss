@@ -75,6 +75,7 @@ blockquote {
 
     .markdown-github-render-block {
         max-width: 450px;
+        width: fit-content;
         overflow: hidden;
         border-radius: 5px;
         background: var(--mdc-theme-primary);

@@ -94,7 +94,7 @@ const COVER_ISSUE_NUMBER: u32 = 7;
 impl ArticleService {
     fn new() -> ArticleService {
         ArticleService {
-            base_path: "/search/issues?q=repo:youncccat/blog-database/",
+            base_path: "/search/issues?q=repo:youncccat/blog-database/+is:open",
             articles: vec![],
         }
     }
@@ -114,7 +114,13 @@ impl ArticleService {
 
     fn attach_cover(&mut self) {
         let covers = self.select_cover_by_number(COVER_ISSUE_NUMBER).unwrap();
-        let covers: Covers = serde_json::from_str(covers.body.trim()).unwrap();
+        let covers: Covers = match serde_json::from_str(covers.body.trim()) {
+            Ok(covers) => covers,
+            Err(err) => {
+                println!("{}", err);
+                return;
+            }
+        };
         let covers = covers.covers;
         let articles: Vec<Article> = self
             .articles
