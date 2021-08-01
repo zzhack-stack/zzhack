@@ -72,6 +72,17 @@ impl Component for ArticleView {
                 
             }
 
+            .bottom-prompt {
+                text-align: center;
+                margin: 50px 0;
+                font-size: 14px;
+                color: var(--prompt-color);
+            }
+
+            .comments {
+
+            }
+
             @media (max-width: 600px){
                 .cover-header {
                     height: auto;
@@ -184,6 +195,7 @@ impl Component for ArticleView {
                         }}
                     </div>
                 </div>
+                <div class="bottom-prompt">{"🎉 已经到底了，感谢你的阅读！"}</div>
             </div>
         }
     }
