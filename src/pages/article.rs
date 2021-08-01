@@ -39,7 +39,6 @@ impl Component for ArticleView {
             r#"
             width: 100%;
             min-height: 100vh;
-            padding-bottom: 100px;
 
             .title {
                 font-size: 35px;
@@ -83,7 +82,7 @@ impl Component for ArticleView {
 
             }
 
-            @media (max-width: 600px){
+            @media (max-width: 600px){                
                 .cover-header {
                     height: auto;
                 }
