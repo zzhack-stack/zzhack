@@ -25,6 +25,16 @@ impl Component for Collection {
                 border-top: 1px solid rgba(0, 0, 0, 0.12);
                 padding-top: 10px;
             }
+
+            .wrapper {
+                display: flex;
+            }
+
+            @media (max-width: 600px){
+                .wrapper {
+                    justify-content: center;
+                }
+            }
         "#,
         )
         .unwrap();
@@ -43,7 +53,7 @@ impl Component for Collection {
     fn view(&self) -> Html {
         html! {
             <div class=self.style.to_string()>
-                <div style="display: flex;" class="container">
+                <div class="wrapper container">
                     <div style="margin: 35px 0;" class="articles">
                         {for self.articles.iter().map(|article| {
                             let idx = self.articles.iter().position(|item| item.article.number == article.article.number).unwrap();
