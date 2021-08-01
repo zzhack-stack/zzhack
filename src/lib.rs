@@ -208,7 +208,7 @@ impl Root {
                         tabs=self.tabs.clone()
                         on_menu_click=self.link.callback(|_| RootMessage::SwitchDrawer)
                     />
-                    <AppRouter render = Router::render(switch) />
+                    <AppRouter redirect=Router::redirect(|_| AppRoutes::Technology) render = Router::render(switch) />
                 </MatDrawerAppContent>
             </MatDrawer>
         }

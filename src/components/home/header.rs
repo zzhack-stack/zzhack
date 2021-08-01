@@ -32,6 +32,7 @@ pub struct Header {
     is_dark_theme: bool,
     theme_agent: Box<dyn Bridge<ThemeAgent>>,
     current_tab_index: u32,
+    init_route: bool,
 }
 
 pub enum HeaderMessage {
@@ -122,6 +123,7 @@ impl Component for Header {
             is_dark_theme: theme == DARK_THEME_KEY,
             current_tab_index,
             theme_agent,
+            init_route: false,
         }
     }
 
@@ -130,6 +132,11 @@ impl Component for Header {
             HeaderMessage::ChangeRoute(i) => {
                 let route: Route = self.props.tabs[i].route.clone().into();
                 let current_route = self.route_service.get_path();
+
+                if !self.init_route {
+                    self.init_route = true;
+                    return false;
+                }
 
                 if current_route == route.to_string()
                     || current_route.starts_with(route.to_string().as_str())

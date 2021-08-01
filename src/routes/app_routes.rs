@@ -1,5 +1,7 @@
 use crate::article_service;
+use crate::console_log;
 use crate::pages::book::BookView;
+use crate::pages::oauth_redirect::OAuthRedirect;
 use crate::pages::{
     about_me::AboutMe, article::ArticleView, articles::Articles, home::Home, not_found::NotFound,
     technology::Technology,
@@ -9,6 +11,8 @@ use yew_router::prelude::*;
 
 #[derive(Debug, Switch, Clone)]
 pub enum AppRoutes {
+    #[to = "/oauth/redirect?code={code}&origin={url}"]
+    GitHubOAuthRedirect(String, String),
     #[to = "/articles/{number}"]
     Articles(u32),
     #[to = "/books/{book_number}/chapters/{chapter_number}/articles/{article_number}"]
@@ -25,16 +29,17 @@ pub enum AppRoutes {
     Thinking,
     #[to = "/404"]
     NotFound,
-    #[to = "/"]
-    Home,
-    // #[to = "/technology/open_source"]
-    // OpenSource,
+    // #[to = "/"; redirect = ""]
+    // Home,
 }
 
 pub type AppRouterAnchor = RouterAnchor<AppRoutes>;
 
 pub fn switch(routes: AppRoutes) -> Html {
     match routes {
+        AppRoutes::GitHubOAuthRedirect(code, redirect_url) => {
+            html! {<OAuthRedirect code={code} redirect_url=redirect_url />}
+        }
         AppRoutes::About => {
             html! { <AboutMe />}
         }
@@ -58,9 +63,9 @@ pub fn switch(routes: AppRoutes) -> Html {
 
             html! {<ArticleView article=article />}
         }
-        AppRoutes::Home => {
-            html! { <Home />}
-        }
+        // AppRoutes::Home => {
+        //     html! { <Home />}
+        // }
         _ => html! {<NotFound />},
     }
 }
