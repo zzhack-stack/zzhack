@@ -1,3 +1,4 @@
+use crate::article_service;
 use crate::console_log;
 use crate::routes::app_routes::AppRoutes;
 use crate::services::{
@@ -8,8 +9,10 @@ use crate::utils::theme::by_reactive;
 use crate::utils::theme::by_theme;
 use crate::utils::theme::is_on_mobile;
 use crate::workers::theme_agent::{ThemeAgent, ThemeAgentInput};
+use crate::Article;
 use css_in_rust::style::Style;
 use material_yew::{drawer::MatDrawerAppContent, MatDrawer, MatIconButton, MatTab, MatTabBar};
+use regex::Regex;
 use yew::prelude::*;
 use yew_router::{
     agent::{RouteAgent, RouteRequest::ChangeRoute},
@@ -33,6 +36,8 @@ pub struct Header {
     theme_agent: Box<dyn Bridge<ThemeAgent>>,
     current_tab_index: u32,
     init_route: bool,
+    search_result: String,
+    search_articles: Vec<String>,
 }
 
 pub enum HeaderMessage {
@@ -40,6 +45,7 @@ pub enum HeaderMessage {
     SwitchTheme,
     Nope,
     ChangeTheme,
+    UpdateSearchResult(String),
 }
 
 #[derive(Clone)]
@@ -104,6 +110,92 @@ impl Component for Header {
             .tab_style {
                 margin-left: 50px;
             }
+
+            .search-wrapper {
+                height: 30px;
+                border-radius: 5px;
+                background: #dfe6e9;
+                padding: 0 5px;
+                display: flex;
+                position: relative;
+                border: solid 1px transparent;
+            }
+
+            .search-input {
+                width: 179px;
+                background: transparent;
+                border: none;
+                outline: none;
+                font-size: 14px;
+                transition: 0.3s all;
+            }
+
+            .search-input:focus ~.search-result {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            .search-wrapper:focus {
+                border-color: #fdcb6e;
+            }
+
+            .search-icon {
+                width: 18px;
+            }
+
+            .search-result {
+                width: 300px;
+                min-height: 150px;
+                background: var(--primary-color);
+                position: absolute;
+                right: 0;
+                top: 100%;
+                border-radius: 5px;
+                transform: translateX(140%);
+                opacity: 0;
+                transition: 0.3s all;
+                margin-top: 20px;
+                color: var(--search-card-color);
+                padding: 10px 0;
+            }
+
+            .search-result-text {
+                color: var(--search-card-color);
+            }
+
+            .search-result-wrapper {
+                width: 100%;
+                height: 150px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .search-article {
+                width: 100%;
+                height: 48px;
+                transition: 0.3s all;
+                color: var(--search-card-color);
+                border-bottom: 1px solid var(--search-card-hover-color);
+                display: flex;
+                align-items: center;
+                font-size: 14px;
+                padding: 0 10px;
+            }
+
+            .search-article:hover {
+                background: var(--search-card-hover-color);
+            }
+
+            .search-result-box {
+                width: 100%;
+            }
+
+            @media (max-width: 600px){
+                .search-wrapper {
+                    display: none;
+                }
+            }
         ",
         )
         .unwrap();
@@ -124,6 +216,8 @@ impl Component for Header {
             current_tab_index,
             theme_agent,
             init_route: false,
+            search_result: String::from(""),
+            search_articles: vec![],
         }
     }
 
@@ -158,6 +252,26 @@ impl Component for Header {
                     }));
             }
             HeaderMessage::ChangeTheme => {}
+            HeaderMessage::UpdateSearchResult(input) => {
+                self.search_result = input;
+
+                if &self.search_result == "" {
+                    self.search_articles = vec![];
+                    return true;
+                }
+
+                let title_regex = match Regex::new(&self.search_result) {
+                    Ok(regex) => regex,
+                    Err(_) => return false,
+                };
+
+                let articles = unsafe { article_service.get_articles_by_pattern(title_regex) };
+
+                self.search_articles = articles
+                    .iter()
+                    .map(|article| article.title.clone())
+                    .collect();
+            }
             HeaderMessage::Nope => return false,
         }
 
@@ -196,6 +310,34 @@ impl Component for Header {
                     </div>})}
                 </div>
                 <div class="right">
+                    <div class="search-wrapper">
+                        <input class="search-input" oninput=self.link.callback(|e:InputData| HeaderMessage::UpdateSearchResult(e.value)) />
+                        <img class="search-icon" src=by_theme("/images/search_dark.svg", "/images/search_light.svg") />
+                        <div class="search-result">
+                            {
+                                if self.search_articles.len() == 0 {
+                                    html! {
+                                        <div class="search-result-wrapper">
+                                            <span class="search-result-text">{"Nothing."}</span>
+                                        </div>
+                                    }
+                                } else {
+                                    html!{
+                                        <div class="search-result-box">
+                                            <div class="search-article">
+                                                {format!("找到以下 {} 个结果：", self.search_articles.len())}
+                                            </div>
+                                            {
+                                                for self.search_articles.iter().map(|title| {
+                                                    html!{ <div class="search-article">{title}</div>}
+                                                })
+                                            }
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
                     <div onclick=self.link.callback(|_| HeaderMessage::SwitchTheme)>
                         <MatIconButton>
                             <img src=by_theme("/images/dark_mode.svg", "/images/light_mode.svg" ) />

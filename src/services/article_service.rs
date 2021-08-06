@@ -2,6 +2,7 @@ use crate::console_log;
 use crate::services::api_service::api_service;
 use crate::services::api_service::Res;
 use once_cell::sync::Lazy;
+use regex::Regex;
 use serde::Deserialize;
 use yew::format::Json;
 use yew::services::fetch::FetchTask;
@@ -175,6 +176,14 @@ impl ArticleService {
                 },
                 article: article.clone(),
             })
+            .collect()
+    }
+
+    pub fn get_articles_by_pattern(&self, regex: Regex) -> Vec<Article> {
+        self.articles
+            .clone()
+            .into_iter()
+            .filter(|article| regex.is_match(article.title.as_str()))
             .collect()
     }
 
