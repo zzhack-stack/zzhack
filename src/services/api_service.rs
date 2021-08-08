@@ -1,4 +1,5 @@
 use once_cell::sync::Lazy;
+use regex::Regex;
 use yew::format::Json;
 use yew::format::Nothing;
 use yew::format::Text;
@@ -31,9 +32,16 @@ impl APIService {
     where
         B: Into<Text> + std::fmt::Debug,
     {
+        let regex = Regex::new("^http").unwrap();
+        let parsed_uri = if regex.is_match(path.as_str()) {
+            format!("{}{}{}", self.endpoint, self.prefix, path)
+        } else {
+            path
+        };
+
         Request::builder()
             .method(method)
-            .uri(format!("{}{}{}", self.endpoint, self.prefix, path))
+            .uri(parsed_uri)
             .header("Content-Type", "application/json")
             .body(body)
             .expect("Request failure")
