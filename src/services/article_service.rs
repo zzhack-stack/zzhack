@@ -95,7 +95,8 @@ const COVER_ISSUE_NUMBER: u32 = 7;
 impl ArticleService {
     fn new() -> ArticleService {
         ArticleService {
-            base_path: "/search/issues?q=repo:youncccat/blog-database/+is:open",
+            base_path:
+                "https://api.github.com/search/issues?q=repo:youncccat/blog-database/+is:open",
             articles: vec![],
         }
     }

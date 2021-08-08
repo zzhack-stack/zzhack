@@ -114,7 +114,7 @@ impl Component for Header {
             .search-wrapper {
                 height: 30px;
                 border-radius: 5px;
-                background: #dfe6e9;
+                background: var(--search-bg-color);
                 padding: 0 5px;
                 display: flex;
                 position: relative;
@@ -128,6 +128,7 @@ impl Component for Header {
                 outline: none;
                 font-size: 14px;
                 transition: 0.3s all;
+                color: var(--normal-text-color);
             }
 
             .search-input:focus ~.search-result {

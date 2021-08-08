@@ -1,3 +1,4 @@
+use crate::console_log;
 use once_cell::sync::Lazy;
 use regex::Regex;
 use yew::format::Json;
@@ -34,9 +35,9 @@ impl APIService {
     {
         let regex = Regex::new("^http").unwrap();
         let parsed_uri = if regex.is_match(path.as_str()) {
-            format!("{}{}{}", self.endpoint, self.prefix, path)
-        } else {
             path
+        } else {
+            format!("{}{}{}", self.endpoint, self.prefix, path)
         };
 
         Request::builder()
@@ -49,4 +50,4 @@ impl APIService {
 }
 
 pub static api_service: Lazy<APIService> =
-    Lazy::new(|| APIService::new("https://api.github.com", None));
+    Lazy::new(|| APIService::new("http://localhost:3000", None));
