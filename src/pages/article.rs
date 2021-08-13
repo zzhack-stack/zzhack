@@ -61,10 +61,13 @@ impl Component for ArticleView {
                 height: 500px;
                 display: flex;
                 justify-content: center;
+                align-items: center;
+                overflow: hidden;
             }
 
             .cover-img {
-                height: 100%;
+                width: 100%;
+                height: max-content;
             }
 
             .time-block {
@@ -175,7 +178,7 @@ impl Component for ArticleView {
                     None => html! {}
                 }}
 
-                <div class="container">
+                <div class="article-container">
                     <h1 class="title article-text">{article.title.clone()}</h1>
                     <div class="author">
                         <Avatar user={article.user.clone()} />
