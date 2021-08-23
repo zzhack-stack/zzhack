@@ -11,6 +11,7 @@ use crate::utils::theme::is_on_mobile;
 use crate::workers::theme_agent::{ThemeAgent, ThemeAgentInput};
 use crate::Article;
 use css_in_rust::style::Style;
+use material_yew::MatButton;
 use material_yew::{drawer::MatDrawerAppContent, MatDrawer, MatIconButton, MatTab, MatTabBar};
 use regex::Regex;
 use yew::prelude::*;
@@ -55,6 +56,18 @@ pub struct Tab {
 }
 
 const GITHUB_PROFILE: &'static str = "https://github.com/youncccat";
+
+fn get_github_oauth_url() -> String {
+    let window = web_sys::window().unwrap();
+    let origin = window.location().href().unwrap();
+
+    format!(
+        "https://github.com/login/oauth/authorize?client_id=20ac7165581dc3691b9d&redirect_uri=http://localhost:8080/oauth/redirect?origin={}",
+        origin
+    )
+
+    // "https://github.com/login/oauth/authorize?client_id=20ac7165581dc3691b9d&redirect_uri=http://localhost:8080/oauth/redirect".to_string()
+}
 
 fn find_current_route_index(tabs: Vec<Tab>, current_route: Route) -> u32 {
     match tabs.iter().position(|tab| {
@@ -348,6 +361,9 @@ impl Component for Header {
                         <MatIconButton>
                             <img src=by_theme("/images/github_dark.svg", "/images/github_light.svg" ) />
                         </MatIconButton>
+                    </a>
+                    <a href=get_github_oauth_url()>
+                        <MatButton  label="登录" />
                     </a>
                 </div>
             </div>

@@ -108,10 +108,9 @@ impl ArticleService {
     }
 
     fn select_cover_by_number(&mut self, number: u32) -> Option<&Article> {
-        self.articles.iter().find(|article| {
-            console_log!("{} {}", article.number, number);
-            article.number == number
-        })
+        self.articles
+            .iter()
+            .find(|article| article.number == number)
     }
 
     fn attach_cover(&mut self) {

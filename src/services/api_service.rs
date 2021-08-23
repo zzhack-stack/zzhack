@@ -16,7 +16,7 @@ pub struct APIService {
 pub type Res<R> = Response<Json<Result<R, anyhow::Error>>>;
 
 impl APIService {
-    fn new(endpoint: &'static str, prefix: Option<&'static str>) -> APIService {
+    pub fn new(endpoint: &'static str, prefix: Option<&'static str>) -> APIService {
         let prefix = match prefix {
             Some(prefix) => prefix,
             None => "",

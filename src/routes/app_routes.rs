@@ -11,7 +11,7 @@ use yew_router::prelude::*;
 
 #[derive(Debug, Switch, Clone)]
 pub enum AppRoutes {
-    #[to = "/oauth/redirect?code={code}&origin={url}"]
+    #[to = "/oauth/redirect?origin={url}&code={code}"]
     GitHubOAuthRedirect(String, String),
     #[to = "/articles/{number}"]
     Articles(u32),
@@ -37,7 +37,7 @@ pub type AppRouterAnchor = RouterAnchor<AppRoutes>;
 
 pub fn switch(routes: AppRoutes) -> Html {
     match routes {
-        AppRoutes::GitHubOAuthRedirect(code, redirect_url) => {
+        AppRoutes::GitHubOAuthRedirect(redirect_url, code) => {
             html! {<OAuthRedirect code={code} redirect_url=redirect_url />}
         }
         AppRoutes::About => {
@@ -63,9 +63,6 @@ pub fn switch(routes: AppRoutes) -> Html {
 
             html! {<ArticleView article=article />}
         }
-        // AppRoutes::Home => {
-        //     html! { <Home />}
-        // }
         _ => html! {<NotFound />},
     }
 }
