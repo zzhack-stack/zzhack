@@ -115,13 +115,22 @@ impl Component for Header {
                 flex-shrink: 0;
             }
 
+            .zzhack_icon {
+                width: 30px;
+            }
+
+            .zzhack {
+                height: 16px;
+                margin-left: 10px;
+            }
+
             .title {
-                font-weight: 500;
-                color: var(--normal-text-color);
+                display: flex;   
+                align-items: center;             
             }
 
             .tab_style {
-                margin-left: 50px;
+                margin-left: 25px;
             }
 
             .search-wrapper {
@@ -313,7 +322,8 @@ impl Component for Header {
                         <MatIconButton icon="menu" />
                     </div>}, html!{})}
                     <div class="title">
-                        {"ZZHack"}
+                        <img class="zzhack_icon" src=by_theme("/images/zzhack_icon_dark.svg", "/images/zzhack_icon_light.svg") />
+                        <img class="zzhack" src=by_theme("/images/zzhack_dark.svg", "/images/zzhack_light.svg") />
                     </div>
                     {by_reactive(html!{}, html!{<div class="tab_style">
                         <MatTabBar active_index=self.current_tab_index onactivated=self.link.callback(|i: usize| HeaderMessage::ChangeRoute(i))>
