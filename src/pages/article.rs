@@ -92,7 +92,7 @@ impl Component for ArticleView {
 
                 .cover-img {
                     width: 100%;
-                    height: fit-content;
+                    height: auto;
                 }
             }
         "#,
