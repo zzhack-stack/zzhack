@@ -80,24 +80,6 @@ impl Component for Root {
             "Root",
             r#"
             height: 100%;
-
-            .loading-wrapper {
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .loading-text {
-                font-size: 80px;
-            }
-
-            @media (max-width: 600px){
-                .loading-text {
-                    font-size: 30px;
-                }
-            }
         "#,
         )
         .unwrap();
@@ -149,8 +131,7 @@ impl Component for Root {
     }
 
     fn change(&mut self, _: Self::Properties) -> ShouldRender {
-        // ContextProvider::a();
-        true
+        false
     }
 
     fn view(&self) -> Html {
@@ -172,12 +153,8 @@ impl Root {
     fn render_loading(&self) -> Html {
         html! {
             <div class="loading-wrapper">
-                <div class="text loading-text">
-                    {"ZZHACK"}
-                </div>
-                <div style="width: 70%; max-width: 430px; margin-top: 30px;">
-                    <MatLinearProgress indeterminate=true />
-                </div>
+                <img class="loading-icon" src="/images/zzhack_icon_light.svg" />
+                // <img class="loading-text" src="/images/zzhack_light.svg" />
             </div>
         }
     }

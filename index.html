@@ -10,8 +10,9 @@
     <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
     <link data-trunk href="assets/styles/base.scss" rel="scss">
     <link data-trunk href="assets/styles/markdown.scss" rel="scss">
+    <link data-trunk href="assets/images/zzhack_icon_dark.svg" rel="icon">
     <link data-trunk rel="copy-dir" href="assets/images">
-    <title>ZZHack</title>
+    <title>zzhack</title>
     <style>
         html,
         body {
@@ -26,17 +27,44 @@
             line-height: 1.8;
             font-size: 16px;
         }
+
+        .loading-wrapper {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #3970f5;
+        }
+
+        .loading-icon {
+            width: 130px;
+            animation: 1s ease-in-out infinite alternate loading;
+        }
+
+        @keyframes loading {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0.3;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .loading-icon {
+                width: 90px;
+            }
+
+        }
     </style>
 </head>
 
 <body>
-    <script type="module">
-        import init from "./wasm.js"
-            init()
-
-            console.info(hljs)
-            hljs.highlightAll();
-        </script>
+    <div class="loading-wrapper">
+        <img class="loading-icon" src="/images/zzhack_icon_light.svg" />
+    </div>
 </body>
 
 </html>
