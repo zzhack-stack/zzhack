@@ -55,7 +55,7 @@ pub struct Tab {
     pub name: &'static str,
 }
 
-const GITHUB_PROFILE: &'static str = "https://github.com/youncccat";
+const GITHUB_PROFILE: &'static str = "https://github.com/mistricky";
 
 fn get_github_oauth_url() -> String {
     let window = web_sys::window().unwrap();

@@ -96,7 +96,7 @@ impl ArticleService {
     fn new() -> ArticleService {
         ArticleService {
             base_path:
-                "https://api.github.com/search/issues?q=repo:youncccat/blog-database/+is:open",
+                "https://api.github.com/search/issues?q=repo:mistricky/blog-database/+is:open",
             articles: vec![],
         }
     }
