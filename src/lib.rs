@@ -12,21 +12,16 @@ use crate::services::api_service::Res;
 use crate::services::article_service::article_service;
 use crate::services::article_service::Article;
 use crate::services::article_service::QueryRes;
-use crate::services::ArticleService;
 use crate::services::ThemeService;
 use crate::store::StoreStates;
 use components::{Footer, Header};
 use css_in_rust::Style;
 use material_yew::drawer::{MatDrawer, MatDrawerAppContent};
-use material_yew::MatLinearProgress;
 use material_yew::MatList;
 use material_yew::MatListItem;
 use routes::app_routes::AppRoutes;
 use std::rc::Rc;
-use stdweb::js;
-use stdweb::Value::Number;
 use wasm_bindgen::prelude::*;
-use yew::agent::Context;
 use yew::format::Json;
 use yew::prelude::*;
 use yew::services::fetch::FetchTask;
@@ -138,11 +133,11 @@ impl Component for Root {
         html! {
             <div class=self.style.to_string()>
                 {
-                    if self.is_sync_data {
+                    // if self.is_sync_data {
                         self.render_root()
-                    } else {
-                        self.render_loading()
-                    }
+                    // } else {
+                        // self.render_loading()
+                    // }
                 }
             </div>
         }
