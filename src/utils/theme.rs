@@ -1,5 +1,7 @@
 use crate::console_log;
 use crate::services::theme_service::{ThemeService, DARK_THEME_KEY};
+use yew::prelude::*;
+use yew::virtual_dom::VNode;
 
 pub fn by_theme<T>(light: T, dark: T) -> T {
     let theme = ThemeService::get_theme();
@@ -18,6 +20,22 @@ pub fn is_on_mobile() -> bool {
         .unwrap()
         .unwrap()
         .matches()
+}
+
+pub fn only_render_on_pc(vnode: VNode) -> VNode {
+    if is_on_mobile() {
+        html! {}
+    } else {
+        vnode
+    }
+}
+
+pub fn only_render_on_mobile(vnode: VNode) -> VNode {
+    if is_on_mobile() {
+        vnode
+    } else {
+        html! {}
+    }
 }
 
 pub fn by_reactive<T>(mobile: T, pc: T) -> T {

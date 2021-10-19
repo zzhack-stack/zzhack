@@ -29,7 +29,7 @@ pub enum AppRoutes {
     Thinking,
     #[to = "/404"]
     NotFound,
-    // #[to = "/"; redirect = ""]
+    // #[to = "/";redirect = ""]
     // Home,
 }
 
