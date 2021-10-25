@@ -22,6 +22,8 @@ pub enum TechnologyMessage {
     UpdateRootMetadata(RootMetadata),
 }
 
+const GITHUB_HOMEPAGE: &'static str = "https://github.com/mistricky";
+
 impl Component for Technology {
     type Message = TechnologyMessage;
     type Properties = ();
@@ -93,12 +95,22 @@ impl Component for Technology {
 
             .posts__collection {
                 width: 100%;
-                padding: 33px 46px;
+                padding: 33px 36px;
                 box-sizing: border-box;
                 background: var(--base-color);
                 border-radius: 5px;
                 border: 1px solid var(--border-color);
                 margin-top: 25px;
+            }
+
+            .github_btn {
+                text-decoration: none;
+            }
+
+            .post-loading {
+                width: 100%;
+                height:100%;
+                text-align: center;
             }
 
             @media (max-width: 600px) {
@@ -108,6 +120,15 @@ impl Component for Technology {
 
                 .projects {
                     height: auto;
+                    width: auto;
+                }
+
+                .open-source__illustration {
+                    display: none;
+                }
+
+                .posts__collection {
+                    padding: 21px 22px;
                 }
             }
         "#,
@@ -186,10 +207,12 @@ impl Component for Technology {
                                 {"I will maintain some open source projects in my spare time, you can find more in my GitHub."}
                             </div>
                             <div class="open-source__goto">
-                                {"> start GitHub"}
+                                <a class="github_btn" target="_blank" href=GITHUB_HOMEPAGE>
+                                    {"> start GitHub"}
+                                </a>
                             </div>
                         </div>
-                        <img src="/images/open-source.svg" />
+                        <img class="open-source__illustration" src="/images/open-source.svg" />
                     </div>
                     <div class="posts">
                         <TechnologyTitle title="Posts" icon="/images/cake.svg" />
@@ -205,7 +228,9 @@ impl Component for Technology {
                                     }
                                 },
                                 None => html! {
-                                    <MatCircularProgressFourColor indeterminate=true />
+                                    <div class="post-loading">
+                                        <MatCircularProgressFourColor indeterminate=true />
+                                    </div>
                                 }
                             }}
                         </div>

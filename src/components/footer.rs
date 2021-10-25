@@ -57,6 +57,10 @@ impl Component for Footer {
                 .separator {
                     display: none;
                 }
+
+                .footer-info {
+                    flex-direction: column;
+                }
             }
         "#,
         )
