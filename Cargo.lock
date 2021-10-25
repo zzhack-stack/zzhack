@@ -1035,6 +1035,7 @@ name = "zzhack"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "base64",
  "chrono",
  "css-in-rust",
  "material-yew",

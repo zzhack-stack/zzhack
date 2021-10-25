@@ -16,7 +16,7 @@ impl Component for TechnologyTitle {
     type Message = ();
     type Properties = TechnologyTitleProps;
 
-    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
         let style = Style::create(
             "TechnologyTitle",
             r#"
@@ -39,7 +39,7 @@ impl Component for TechnologyTitle {
         Self { style, props }
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
         true
     }
 

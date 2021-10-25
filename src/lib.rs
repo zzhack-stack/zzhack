@@ -95,15 +95,15 @@ impl Component for Root {
 
     fn rendered(&mut self, first_render: bool) {
         if first_render {
-            unsafe {
-                self.task = Some(article_service.sync_articles(self.link.callback(
-                    |response: Res<QueryRes<Article>>| {
-                        let Json(data) = response.into_body();
-                        let articles = data.unwrap().items.clone();
-                        RootMessage::SyncArticles(articles)
-                    },
-                )));
-            }
+            // unsafe {
+            //     self.task = Some(article_service.sync_articles(self.link.callback(
+            //         |response: Res<QueryRes<Article>>| {
+            //             let Json(data) = response.into_body();
+            //             let articles = data.unwrap().items.clone();
+            //             RootMessage::SyncArticles(articles)
+            //         },
+            //     )));
+            // }
         }
     }
 

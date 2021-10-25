@@ -1,19 +1,32 @@
-use crate::components::{
-    technology::{project_card::ProjectCard, title::TechnologyTitle},
-    Banner,
-};
+use crate::components::technology::post_card::PostCard;
+use crate::components::technology::project_card::ProjectCard;
+use crate::components::{technology::title::TechnologyTitle, Banner};
+use crate::services::provider_service::RootMetadata;
+use crate::services::provider_service::{provider_service, PinnedProject, PinnedProjects};
+use crate::Footer;
 use css_in_rust::Style;
+use material_yew::MatCircularProgressFourColor;
 use yew::prelude::*;
+use yew::services::fetch::FetchTask;
 
 pub struct Technology {
     style: Style,
+    projects_fetch_task: FetchTask,
+    root_metadata_fetch_task: FetchTask,
+    pinned_projects: Vec<PinnedProject>,
+    root_metadata: Option<RootMetadata>,
+}
+
+pub enum TechnologyMessage {
+    UpdatePinnedProjects(PinnedProjects),
+    UpdateRootMetadata(RootMetadata),
 }
 
 impl Component for Technology {
-    type Message = ();
+    type Message = TechnologyMessage;
     type Properties = ();
 
-    fn create(_props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
         let style = Style::create(
             "Technology",
             r#"
@@ -21,20 +34,114 @@ impl Component for Technology {
 
             .projects {
                 margin-top: 43px;
+                width: 960px;
+                height: 386px;
             }
 
             .project-cards {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
 
+            .project-card-wrapper {
+                margin-top: 25px;
+            }
+
+            .open-source {
+                margin-top: 50px;
+                display: flex;
+            }
+
+            .open-source__title {
+                font-size: 30px;
+                font-weight: 500;
+                color: var(--base-text-color);
+                line-height: 42px;
+                margin-top: 17px;
+            }
+
+            .loading {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .open-source__goto {
+                width: 159px;
+                height: 41px;
+                background: var(--base-color);
+                border-radius: 5px;
+                border: 1px solid #979797;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                transition: all 0.3s;
+                margin-top: 20px;
+            }
+
+            .open-source__goto:hover {
+                background: rgba(94, 217, 192, 0.3);
+            }
+
+            .posts {
+                margin-top: 42px;
+            }
+
+            .posts__collection {
+                width: 100%;
+                padding: 33px 46px;
+                box-sizing: border-box;
+                background: var(--base-color);
+                border-radius: 5px;
+                border: 1px solid var(--border-color);
+                margin-top: 25px;
+            }
+
+            @media (max-width: 600px) {
+                .project-card-wrapper {
+                    width: 100%;
+                }
+
+                .projects {
+                    height: auto;
+                }
             }
         "#,
         )
         .unwrap();
+        let projects_fetch_task =
+            provider_service.get_pinned_projects(link.callback(|pinned_projects| {
+                TechnologyMessage::UpdatePinnedProjects(pinned_projects)
+            }));
+        let root_metadata_fetch_task = provider_service.get_root_metadata(
+            link.callback(|metadata| TechnologyMessage::UpdateRootMetadata(metadata)),
+        );
 
-        Self { style }
+        Self {
+            style,
+            projects_fetch_task,
+            pinned_projects: vec![],
+            root_metadata: None,
+            root_metadata_fetch_task,
+        }
     }
 
-    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
-        unimplemented!()
+    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+        match msg {
+            TechnologyMessage::UpdatePinnedProjects(pinned_projects) => {
+                self.pinned_projects = pinned_projects.projects;
+                true
+            }
+            TechnologyMessage::UpdateRootMetadata(root_metadata) => {
+                self.root_metadata = Some(root_metadata);
+                true
+            }
+            _ => false,
+        }
     }
 
     fn change(&mut self, _props: Self::Properties) -> ShouldRender {
@@ -49,9 +156,62 @@ impl Component for Technology {
                     <div class="projects">
                         <TechnologyTitle title="Projects" icon="/images/projects_icon.svg" />
                         <div class="project-cards">
+                            {
+                                if self.pinned_projects.len() == 0 {
+                                    html! {
+                                        <div class="loading">
+                                            <MatCircularProgressFourColor indeterminate=true />
+                                        </div>
+                                    }
+                                } else {
+                                    html! {
+                                        for self.pinned_projects.iter().map(|project| {
+                                            html! {
+                                                <div class="project-card-wrapper">
+                                                    <ProjectCard link=project.link.clone() title=project.title.clone() desc=project.desc.clone() />
+                                                </div>
+                                            }
+                                        })
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="open-source">
+                        <div class="open-source__info">
+                            <div class="open-source__title">
+                                {"Open source"}
+                            </div>
+                            <div class="open-source__desc">
+                                {"I will maintain some open source projects in my spare time, you can find more in my GitHub."}
+                            </div>
+                            <div class="open-source__goto">
+                                {"> start GitHub"}
+                            </div>
+                        </div>
+                        <img src="/images/open-source.svg" />
+                    </div>
+                    <div class="posts">
+                        <TechnologyTitle title="Posts" icon="/images/cake.svg" />
+                        <div class="posts__collection">
+                            {match self.root_metadata.clone() {
+                                Some(root_metadata) => {
+                                    html! {
+                                        for root_metadata.clone().categories.technology.iter().map(|post_metadata| {
+                                            html!{
+                                                <PostCard post_metadata=post_metadata.clone() />
+                                            }
+                                        })
+                                    }
+                                },
+                                None => html! {
+                                    <MatCircularProgressFourColor indeterminate=true />
+                                }
+                            }}
                         </div>
                     </div>
                 </div>
+                <Footer />
             </div>
         }
     }

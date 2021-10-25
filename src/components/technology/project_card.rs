@@ -5,6 +5,7 @@ use yew::prelude::*;
 pub struct ProjectCardProps {
     pub title: String,
     pub desc: String,
+    pub link: String,
 }
 
 pub struct ProjectCard {
@@ -21,10 +22,35 @@ impl Component for ProjectCard {
             "ProjectCard",
             r#"
             width: 300px;
-            height 150px;
+            height: 150px;
             background: var(--base-color);
             border-radius: 5px;
-            border: 1px solid rgba(27, 31, 35, 0.15);
+            border: 1px solid var(--border-color);
+            padding: 16px 20px 16px 20px;
+            box-sizing: border-box;
+            transition: all 0.3s;
+            cursor: pointer;
+
+            &:hover {
+                background: rgba(94, 217, 192, 0.3);
+            }
+
+            .desc {
+                font-size: 14px;
+                color: var(--sub-text-color);
+                line-height: 23px;
+            }
+
+            .title {
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--base-text-color);
+                line-height: 22px;
+            }
+
+            @media (max-width: 600px) {
+                width: 100%;
+            }
         "#,
         )
         .unwrap();
@@ -42,10 +68,12 @@ impl Component for ProjectCard {
 
     fn view(&self) -> Html {
         html! {
-            <div class=self.style.to_string()>
-                <div class="title">{self.props.title.clone()}</div>
-                <div class="desc">{self.props.desc.clone()}</div>
-            </div>
+            <a style="text-decoration: none;" target="_blank" href=self.props.link.clone()>
+                <div class=self.style.to_string()>
+                    <div class="title">{self.props.title.clone()}</div>
+                    <div class="desc">{self.props.desc.clone()}</div>
+                </div>
+            </a>
         }
     }
 }
