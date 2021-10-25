@@ -55,6 +55,11 @@ impl Component for PostCard {
                 color: var(--sub-text-color);
                 line-height: 20px;
                 margin-top: 8px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
             }
 
             .goto {
