@@ -14,6 +14,8 @@ pub enum FooterMessage {
     ChangeTheme,
 }
 
+const CONTACTS: [&'static str; 5] = ["github", "twitter", "discord", "mail", "wechat"];
+
 impl Component for Footer {
     type Message = FooterMessage;
     type Properties = ();
@@ -23,29 +25,30 @@ impl Component for Footer {
             "Footer",
             r#"
             width: 100%;
-            padding: 10px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: var(--base-color);
+            box-sizing: border-box;
+            padding-top: 33px;
+            padding-bottom: 16px;
 
-            .icon {
-                width: 30px;
+            .bee {
+
             }
 
-            .separator {
-                width: 1px;
-                height: 18px;
-                background: #636e72;
+            .contacts {
+                margin-top: 14px;
+            }
+
+            .contact-icon {
                 margin-right: 10px;
             }
 
-            .powered-by {
+            .footer-info {
                 display: flex;
-                align-items: center;
+                justify-content: space-between;
             }
 
-            .footer-text {
+            .copyright {
+                text-align: center;
+                margin-top: 23px;
             }
 
             @media (max-width: 600px){
@@ -75,21 +78,32 @@ impl Component for Footer {
 
     fn view(&self) -> Html {
         html! {
-            <div class=self.style.to_string()>
-                <div class="powered-by">
-                    <span class="text footer-text">
-                        {"Powered by"}
-                    </span>
-                    <a href="https://www.rust-lang.org/">
-                        <MatIconButton>
-                            <img class="icon" src=by_theme("/images/rust_icon_dark.svg", "/images/rust_icon_light.svg") />
-                        </MatIconButton>
-                    </a>
+            <div class="container">
+                <div class=self.style.to_string()>
+                    <div class="footer-info">
+                        <div>
+                            <div>
+                                {"Powered by Rust & Yew"}
+                            </div>
+                            <div>
+                                {"Illustration by Icons 8 from Ouch!"}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="contacts">
+                                {for CONTACTS.iter().map(|contact| {
+                                    html! {
+                                        <img class="contact-icon" src={format!("/images/{}_icon.svg", contact)} />
+                                    }
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="copyright">
+                        <img src="/images/bee.svg" class="bee" />
+                        {"Copyright © 2021 Mist"}
+                    </div>
                 </div>
-                <div class="separator" />
-                <span class="text footer-text">
-                    {"Copyright © 2021 ZhaoZhanHao"}
-                </span>
             </div>
         }
     }
