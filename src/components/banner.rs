@@ -6,6 +6,8 @@ use yew::prelude::*;
 pub struct BannerProps {
     pub bg_color: String,
     pub illustration: String,
+    #[prop_or_default]
+    pub illustration_style: Option<&'static str>,
 }
 
 pub struct Banner {
@@ -113,6 +115,11 @@ impl Component for Banner {
     }
 
     fn view(&self) -> Html {
+        let parsed_illustration_style = match self.props.illustration_style.clone() {
+            Some(style) => style,
+            None => "",
+        };
+
         html! {
             <div class=self.style.to_string() style=format!("background: {};", self.props.bg_color)>
                 <div class="container wrapper">
@@ -137,7 +144,7 @@ impl Component for Banner {
                             })}
                         </div>
                     </div>
-                    <img class="illustration" src={self.props.illustration.clone()} />
+                    <img style=parsed_illustration_style class="illustration" src={self.props.illustration.clone()} />
                 </div>
             </div>
         }

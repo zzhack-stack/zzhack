@@ -1,10 +1,9 @@
 use crate::article_service;
-use crate::console_log;
 use crate::pages::book::BookView;
 use crate::pages::oauth_redirect::OAuthRedirect;
 use crate::pages::{
-    about_me::AboutMe, article::ArticleView, articles::Articles, home::Home, not_found::NotFound,
-    technology::Technology,
+    about_me::AboutMe, article::ArticleView, not_found::NotFound, technology::Technology,
+    thinking::Thinking,
 };
 use yew::prelude::*;
 use yew_router::prelude::*;
@@ -39,6 +38,9 @@ pub fn switch(routes: AppRoutes) -> Html {
     match routes {
         AppRoutes::GitHubOAuthRedirect(redirect_url, code) => {
             html! {<OAuthRedirect code={code} redirect_url=redirect_url />}
+        }
+        AppRoutes::Thinking => {
+            html! {<Thinking />}
         }
         AppRoutes::About => {
             html! { <AboutMe />}

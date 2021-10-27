@@ -48,7 +48,7 @@ pub struct RootMetadata {
 impl ProviderService {
     pub fn new() -> ProviderService {
         ProviderService {
-            api: APIService::new("http://cdn.ahlele.com", None),
+            api: APIService::new("https://cdn.ahlele.com", None),
         }
     }
 
