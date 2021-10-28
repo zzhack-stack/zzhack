@@ -86,7 +86,7 @@ impl Component for Technology {
             }
 
             .open-source__goto:hover {
-                background: rgba(94, 217, 192, 0.3);
+                background: var(--technology-hover-color);
             }
 
             .posts {
