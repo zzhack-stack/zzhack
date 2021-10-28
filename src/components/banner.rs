@@ -46,7 +46,7 @@ impl Component for Banner {
                 margin-right: 13px;
                 font-size: 30px;
                 font-weight: 500;
-                color: var(--base-text-color);
+                color: var(--banner-text-color);
                 line-height: 42px;
             }
 
@@ -54,7 +54,7 @@ impl Component for Banner {
                 margin-top: 14px;
                 font-size: 14px;
                 font-weight: 300;
-                color: var(--sub-text-color);
+                color: var(--banner-text-color);
                 line-height: 20px;
                 width: 729px;
             }
@@ -62,7 +62,7 @@ impl Component for Banner {
             .contact-title {
                 font-size: 18px;
                 font-weight: 500;
-                color: #3F3D55;
+                color: var(--banner-text-color);
                 line-height: 25px;
                 padding-top: 14px;
             }

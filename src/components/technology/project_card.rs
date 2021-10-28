@@ -32,7 +32,7 @@ impl Component for ProjectCard {
             cursor: pointer;
 
             &:hover {
-                background: rgba(94, 217, 192, 0.3);
+                background: var(--technology-hover-color);
             }
 
             .desc {

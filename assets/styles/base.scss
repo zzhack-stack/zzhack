@@ -1,12 +1,15 @@
 :root {
     .light {
-        --base-text-color: #000;
+        --base-text-color: #404040;
+        --banner-text-color: #3F3D55;
         --sub-text-color: #3F3D55;
         --technology-banner-color: #5ed9c1;
         --undercover-color: #FBFBFB;
         --base-color: #fff;
         --border-color: rgba(27, 31, 35, 0.15);
         --thinking-banner-color: #AAC6FC;
+        --technology-hover-color: rgba(94, 217, 192, 0.3);
+        --mask-color: rgba(0, 0, 0, 0.2);
 
         // old
         --primary-color: #3970f5;
@@ -30,6 +33,17 @@
     }
     
     .dark {
+        --base-text-color: #fff;
+        --banner-text-color: #3F3D55;
+        --sub-text-color: #dfe6e9;
+        --technology-banner-color: #5ed9c1;
+        --undercover-color: #1f2223;
+        --base-color: #181a1b;
+        --border-color: #000;
+        --thinking-banner-color: #AAC6FC;
+        --technology-hover-color: rgba(94, 217, 192, 0.3);
+        --mask-color: rgba(0, 0, 0, 0.2);
+
         // old
         --header-color: #181a1b;
         --primary-color: #3970f5;
@@ -37,9 +51,7 @@
         --shallow-gray: #4e5969;
         --mdc-theme-primary: #3970f5;
         --mdc-theme-secondary:#ff7979;
-        --base-color: #181a1b;
         --category-color: #1b1e1f;
-        --undercover-color: #1f2223;
         --mdc-tab-text-label-color-default: #939293;
         --normal-text-color: white;
         --side-bar-color: #181a1b;
