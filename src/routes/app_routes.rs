@@ -1,6 +1,7 @@
 use crate::article_service;
 use crate::pages::book::BookView;
 use crate::pages::oauth_redirect::OAuthRedirect;
+use crate::pages::post::Post;
 use crate::pages::{
     about_me::AboutMe, article::ArticleView, not_found::NotFound, technology::Technology,
     thinking::Thinking,
@@ -12,6 +13,8 @@ use yew_router::prelude::*;
 pub enum AppRoutes {
     #[to = "/oauth/redirect?origin={url}&code={code}"]
     GitHubOAuthRedirect(String, String),
+    #[to = "/{category_name}/posts/{filename}"]
+    Post(String, String),
     #[to = "/articles/{number}"]
     Articles(u32),
     #[to = "/books/{book_number}/chapters/{chapter_number}/articles/{article_number}"]
@@ -38,6 +41,9 @@ pub fn switch(routes: AppRoutes) -> Html {
     match routes {
         AppRoutes::GitHubOAuthRedirect(redirect_url, code) => {
             html! {<OAuthRedirect code={code} redirect_url=redirect_url />}
+        }
+        AppRoutes::Post(category, filename) => {
+            html! {<Post filename={filename} category={category} />}
         }
         AppRoutes::Thinking => {
             html! {<Thinking />}

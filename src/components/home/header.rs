@@ -1,25 +1,13 @@
-use crate::article_service;
 use crate::console_log;
 use crate::routes::app_routes::AppRoutes;
-use crate::services::{
-    theme_service::{DARK_THEME_KEY, LIGHT_THEME_KEY},
-    ThemeService,
-};
+use crate::services::{theme_service::DARK_THEME_KEY, ThemeService};
 use crate::utils::theme::by_theme;
 use crate::utils::theme::{only_render_on_mobile, only_render_on_pc};
-use crate::workers::theme_agent::{ThemeAgent, ThemeAgentInput};
+use crate::workers::theme_agent::ThemeAgent;
 use crate::AppRouterAnchor;
-use crate::Article;
 use css_in_rust::style::Style;
-use material_yew::MatButton;
-use material_yew::{drawer::MatDrawerAppContent, MatDrawer, MatIconButton, MatTab, MatTabBar};
-use regex::Regex;
+use material_yew::MatIconButton;
 use yew::prelude::*;
-use yew_router::{
-    agent::{RouteAgent, RouteRequest::ChangeRoute},
-    route::Route,
-    service::RouteService,
-};
 
 #[derive(Properties, Clone)]
 pub struct HeaderProps {
@@ -38,12 +26,9 @@ pub struct Header {
 }
 
 pub enum HeaderMessage {
-    ChangeRoute(usize),
     SwitchTheme,
-    Nope,
     ChangeTheme,
     ToggleDrawer,
-    UpdateSearchResult(String),
 }
 
 #[derive(Clone)]
@@ -67,25 +52,25 @@ const TABS: [Tab; 3] = [
     },
 ];
 
-fn get_github_oauth_url() -> String {
-    let window = web_sys::window().unwrap();
-    let origin = window.location().href().unwrap();
+// fn get_github_oauth_url() -> String {
+//     let window = web_sys::window().unwrap();
+//     let origin = window.location().href().unwrap();
 
-    format!(
-        "https://github.com/login/oauth/authorize?client_id=20ac7165581dc3691b9d&redirect_uri=http://localhost:8080/oauth/redirect?origin={}",
-        origin
-    )
-}
+//     format!(
+//         "https://github.com/login/oauth/authorize?client_id=20ac7165581dc3691b9d&redirect_uri=http://localhost:8080/oauth/redirect?origin={}",
+//         origin
+//     )
+// }
 
-fn find_current_route_index(tabs: Vec<Tab>, current_route: Route) -> u32 {
-    match tabs.iter().position(|tab| {
-        let route: Route = tab.route.clone().into();
-        current_route.contains(route.as_str())
-    }) {
-        Some(i) => i as u32,
-        None => 0,
-    }
-}
+// fn find_current_route_index(tabs: Vec<Tab>, current_route: Route) -> u32 {
+//     match tabs.iter().position(|tab| {
+//         let route: Route = tab.route.clone().into();
+//         current_route.contains(route.as_str())
+//     }) {
+//         Some(i) => i as u32,
+//         None => 0,
+//     }
+// }
 
 impl Header {
     fn with_open_drawer_style(&self, style: &'static str) -> &'static str {
