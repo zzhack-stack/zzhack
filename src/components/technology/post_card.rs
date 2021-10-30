@@ -8,6 +8,7 @@ use yew::prelude::*;
 #[derive(Properties, Clone)]
 pub struct PostCardProps {
     pub post_metadata: PostMetadata,
+    pub category: &'static str,
 }
 
 pub struct PostCard {
@@ -88,7 +89,7 @@ impl Component for PostCard {
 
         html! {
                 <div class=self.style.to_string()>
-                    <AppRouterAnchor classes="goto" route={AppRoutes::Thinking}>
+                    <AppRouterAnchor classes="goto" route={AppRoutes::Post(String::from(self.props.category), self.props.post_metadata.filename.clone())}>
                         <div class="wrapper">
                             <div class="attach-info">
                                 {"Jul 22; Tags: help, life"}

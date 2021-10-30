@@ -222,7 +222,7 @@ impl Component for Technology {
                                     html! {
                                         for root_metadata.clone().categories.technology.iter().map(|post_metadata| {
                                             html!{
-                                                <PostCard post_metadata=post_metadata.clone() />
+                                                <PostCard post_metadata=post_metadata.clone() category="technology" />
                                             }
                                         })
                                     }

@@ -5,5 +5,6 @@ pub mod book;
 pub mod home;
 pub mod not_found;
 pub mod oauth_redirect;
+pub mod post;
 pub mod technology;
 pub mod thinking;

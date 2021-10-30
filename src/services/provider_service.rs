@@ -4,6 +4,8 @@ use crate::Res;
 use once_cell::sync::Lazy;
 use serde::de::DeserializeOwned;
 use serde::Deserialize;
+use std::ffi::OsStr;
+use std::path::Path;
 use yew::format::Json;
 use yew::services::FetchService;
 use yew::Callback;
@@ -31,6 +33,7 @@ pub struct PostMetadata {
     pub cover: String,
     pub create_at: i64,
     pub filename: String,
+    pub content: String,
 }
 
 #[derive(Deserialize, Clone)]
@@ -57,8 +60,8 @@ impl ProviderService {
         T: DeserializeOwned,
     {
         Callback::from(move |res: Res<T>| {
-            let Json(data) = res.into_body();
-            let data = data.unwrap();
+            let Json(body) = res.into_body();
+            let data = body.unwrap();
 
             callback.emit(data)
         })
@@ -74,6 +77,43 @@ impl ProviderService {
 
     pub fn get_root_metadata(&self, callback: Callback<RootMetadata>) -> FetchTask {
         let request = self.api.get(String::from("/metadata.json"));
+
+        FetchService::fetch(request, ProviderService::wrap_callback(callback)).unwrap()
+    }
+
+    fn get_post_filename<'a>(&self, filename: &'a str) -> &'a str {
+        let post_resolver = Path::new(filename);
+        match post_resolver.file_stem().and_then(OsStr::to_str) {
+            Some(filename) => filename,
+            None => panic!("Cannot find the name of this file."),
+        }
+    }
+
+    pub fn get_post_metadata<'a>(
+        &self,
+        category: &'a str,
+        post_filename: &'a str,
+        callback: Callback<PostMetadata>,
+    ) -> FetchTask {
+        let filename = self.get_post_filename(post_filename);
+        let request = self
+            .api
+            .get(format!("/posts/{}/{}/metadata.json", category, filename));
+
+        FetchService::fetch(request, ProviderService::wrap_callback(callback)).unwrap()
+    }
+
+    pub fn get_post_content<'a>(
+        &self,
+        category: &'a str,
+        post_filename: &'a str,
+        callback: Callback<String>,
+    ) -> FetchTask {
+        let filename = self.get_post_filename(post_filename);
+        let request = self.api.get(format!(
+            "/posts/{}/{}/{}",
+            category, filename, post_filename
+        ));
 
         FetchService::fetch(request, ProviderService::wrap_callback(callback)).unwrap()
     }
