@@ -84,6 +84,9 @@ impl Component for Banner {
 
 
             @media (max-width: 600px) {
+                height: auto;
+                padding-bottom: 10px;
+
                 .illustration {
                     display: none;
                 }
