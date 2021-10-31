@@ -242,16 +242,16 @@ impl Component for Header {
 
         html! {
             <div class=self.style.clone().to_string()>
-                <div onclick=self.link.callback(|_| HeaderMessage::ToggleDrawer) class="drawer-mask" style={self.with_open_drawer_style(open_drawer_mask_styles)}></div>
+                <div ontouchstart=self.link.callback(|_| HeaderMessage::ToggleDrawer) onclick=self.link.callback(|_| HeaderMessage::ToggleDrawer) class="drawer-mask" style={self.with_open_drawer_style(open_drawer_mask_styles)}></div>
                 <div class="drawer" style={self.with_open_drawer_style(open_drawer_styles)}>
                     {
                         for TABS.iter().map(|tab| {
                             html! {
-                                <div class="drawer-tab-item">
-                                    <AppRouterAnchor classes="drawer-tab-item__link" route={tab.route.clone()}>
+                                <AppRouterAnchor classes="drawer-tab-item__link" route={tab.route.clone()}>
+                                    <div class="drawer-tab-item">
                                         {tab.name}
-                                    </AppRouterAnchor>
-                                </div>
+                                    </div>
+                                </AppRouterAnchor>
                             }
                         })
                     }
