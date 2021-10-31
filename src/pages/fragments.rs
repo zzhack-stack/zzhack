@@ -77,6 +77,7 @@ impl Component for Fragments {
             @media (max-width: 600px) {
                 .fragment-card {
                     width: 100%;
+                    margin-top: 60px;
                 }
 
                 .fragment-cover {
