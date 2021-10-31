@@ -48,7 +48,7 @@ const TABS: [Tab; 3] = [
     },
     Tab {
         name: "Fragments",
-        route: AppRoutes::Technology,
+        route: AppRoutes::Fragments,
     },
 ];
 

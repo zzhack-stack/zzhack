@@ -1,5 +1,6 @@
 use crate::article_service;
 use crate::pages::book::BookView;
+use crate::pages::fragments::Fragments;
 use crate::pages::oauth_redirect::OAuthRedirect;
 use crate::pages::post::Post;
 use crate::pages::{
@@ -23,6 +24,8 @@ pub enum AppRoutes {
     BooksWithChapter(u32, u32),
     #[to = "/books/{number}"]
     Books(u32),
+    #[to = "/fragments"]
+    Fragments,
     #[to = "/about"]
     About,
     #[to = "/technology"]
@@ -44,6 +47,9 @@ pub fn switch(routes: AppRoutes) -> Html {
         }
         AppRoutes::Post(category, filename) => {
             html! {<Post filename={filename} category={category} />}
+        }
+        AppRoutes::Fragments => {
+            html! {<Fragments />}
         }
         AppRoutes::Thinking => {
             html! {<Thinking />}

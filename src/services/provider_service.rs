@@ -48,6 +48,18 @@ pub struct RootMetadata {
     pub categories: Categories,
 }
 
+#[derive(Deserialize, Clone)]
+pub struct Fragment {
+    pub cover: String,
+    pub create_at: i64,
+    pub content: String,
+}
+
+#[derive(Deserialize, Clone)]
+pub struct Fragments {
+    pub fragments: Vec<Fragment>,
+}
+
 impl ProviderService {
     pub fn new() -> ProviderService {
         ProviderService {
@@ -103,17 +115,8 @@ impl ProviderService {
         FetchService::fetch(request, ProviderService::wrap_callback(callback)).unwrap()
     }
 
-    pub fn get_post_content<'a>(
-        &self,
-        category: &'a str,
-        post_filename: &'a str,
-        callback: Callback<String>,
-    ) -> FetchTask {
-        let filename = self.get_post_filename(post_filename);
-        let request = self.api.get(format!(
-            "/posts/{}/{}/{}",
-            category, filename, post_filename
-        ));
+    pub fn get_fragments(&self, callback: Callback<Fragments>) -> FetchTask {
+        let request = self.api.get(String::from("/fragments.json"));
 
         FetchService::fetch(request, ProviderService::wrap_callback(callback)).unwrap()
     }

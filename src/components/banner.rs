@@ -130,7 +130,7 @@ impl Component for Banner {
                         <img src="/images/avatar.svg" />
                     </div>
                     <div class="desc">
-                        {"<Web /> & Block chain & Native developer, Passionate C++, Python, TypeScript, Golang, Rust developer, like math also Haskell. Remote worker."}
+                        {"<Web /> & Block chain & Native developer, Passionate C++, Python, TypeScript, Golang. And I'm one of Rustaceans, like math also Haskell. Remote worker."}
                     </div>
                     <div class="contact-wrapper">
                         <div class="contact-title">
