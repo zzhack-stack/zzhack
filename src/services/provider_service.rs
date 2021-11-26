@@ -34,13 +34,13 @@ pub struct PostMetadata {
     pub create_at: i64,
     pub filename: String,
     pub content: String,
+    pub issue_id: u32,
 }
 
 #[derive(Deserialize, Clone)]
 pub struct Categories {
     pub technology: Vec<PostMetadata>,
     pub thinking: Vec<PostMetadata>,
-    pub fragments: Vec<PostMetadata>,
 }
 
 #[derive(Deserialize, Clone)]
