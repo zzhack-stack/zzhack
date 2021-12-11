@@ -140,7 +140,3 @@ impl Component for ArticleCard {
         }
     }
 }
-
-// fn trim_body(body: String) -> String {
-// body.
-// }

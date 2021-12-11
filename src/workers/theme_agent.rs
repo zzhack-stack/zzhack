@@ -1,4 +1,3 @@
-use crate::console_log;
 use crate::services::theme_service::Theme;
 use crate::ThemeService;
 use yew::worker::Agent;

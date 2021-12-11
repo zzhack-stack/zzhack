@@ -1,3 +1,4 @@
+use crate::components::common::{Popup, PopupTrigger};
 use crate::workers::theme_agent::ThemeAgent;
 use css_in_rust::Style;
 use yew::prelude::*;
@@ -20,7 +21,25 @@ pub enum BannerMessage {
     ChangeTheme,
 }
 
-const CONTACTS: [&'static str; 5] = ["github", "twitter", "discord", "mail", "wechat"];
+struct ContactInfo {
+    name: &'static str,
+    url: &'static str,
+}
+
+const CONTACTS: [ContactInfo; 3] = [
+    ContactInfo {
+        name: "github",
+        url: "https://github.com/mistricky",
+    },
+    ContactInfo {
+        name: "twitter",
+        url: "https://twitter.com/_mistricky",
+    },
+    ContactInfo {
+        name: "mail",
+        url: "Mailto:mist.zzh@gmail.com",
+    },
+];
 
 impl Component for Banner {
     type Message = BannerMessage;
@@ -69,6 +88,8 @@ impl Component for Banner {
 
             .contacts {
                 margin-top: 14px;
+                display: flex;
+                align-items: center;
             }
 
             .contact-icon {
@@ -82,6 +103,14 @@ impl Component for Banner {
                 right: -50px;
             }
 
+            .wechat-qr-code {
+                width: 200px;
+                height: 200px;
+            }
+
+            .discord-popup-body {
+                width: 106px;
+            }
 
             @media (max-width: 600px) {
                 height: auto;
@@ -141,10 +170,24 @@ impl Component for Banner {
                         </div>
                         <div class="contacts">
                             {for CONTACTS.iter().map(|contact| {
-                                html! {
-                                    <img class="contact-icon" src={format!("/images/{}_icon.svg", contact)} />
-                                }
+                                html!{<a href={contact.url}><img class="contact-icon" src={format!("/images/{}_icon.svg", contact.name)} /></a>}
                             })}
+                            <Popup
+                                offset=(20, 0)
+                                has_default_padding=true
+                                bind=html!{<img class="contact-icon" src="/images/discord_icon.svg" />}
+                                trigger={PopupTrigger::Click}
+                            >
+                                <div class="discord-popup-body">{"<Mist />#5667"}</div>
+                            </Popup>
+                            <Popup
+                                has_default_padding=false
+                                offset=(20, 0)
+                                bind=html!{<img class="contact-icon" src="/images/wechat_icon.svg" />}
+                                trigger={PopupTrigger::Click}
+                            >
+                                <img class="wechat-qr-code" src="/images/wechat_qr_code.svg" alt="wechat QR code" />
+                            </Popup>
                         </div>
                     </div>
                     <img style=parsed_illustration_style class="illustration" src={self.props.illustration.clone()} />
