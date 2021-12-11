@@ -1,6 +1,7 @@
 pub mod article_card;
 pub mod avatar;
 pub mod banner;
+pub mod common;
 pub mod footer;
 pub mod home;
 pub mod technology;
