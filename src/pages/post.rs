@@ -1,14 +1,14 @@
 use crate::components::Banner;
-use crate::services::provider_service::provider_service;
+use crate::services::post_service::PostService;
 use crate::services::provider_service::PostMetadata;
 use crate::services::MarkdownService;
 use crate::utils::theme::by_theme;
+use crate::utils::time::format_timestamp;
 use crate::Footer;
 use css_in_rust::Style;
 use material_yew::MatCircularProgressFourColor;
 use web_sys::Element;
 use yew::prelude::*;
-use yew::services::fetch::FetchTask;
 
 #[derive(Properties, Clone)]
 pub struct PostProps {
@@ -21,7 +21,6 @@ pub struct Post {
     link: ComponentLink<Post>,
     props: PostProps,
     post_metadata: Option<PostMetadata>,
-    post_metadata_fetch_task: Option<FetchTask>,
     parsed_content: Option<Element>,
 }
 
@@ -93,7 +92,6 @@ impl Component for Post {
             link,
             post_metadata: None,
             parsed_content: None,
-            post_metadata_fetch_task: None,
         }
     }
 
@@ -128,14 +126,12 @@ impl Component for Post {
             return;
         }
 
-        self.post_metadata_fetch_task = Some(
-            provider_service.get_post_metadata(
-                &self.props.category,
-                &self.props.filename,
-                self.link
-                    .callback(|metadata| PostMessage::UpdatePostMetadata(metadata)),
-            ),
-        );
+        let post_service = PostService::new();
+        let post_metadata =
+            post_service.get_post_metadata(&self.props.category, &self.props.filename);
+
+        self.link
+            .send_message(PostMessage::UpdatePostMetadata(post_metadata))
     }
 
     fn view(&self) -> Html {
@@ -157,7 +153,7 @@ impl Component for Post {
                                 <div class="post-cover" style=format!("background-image: url({});", parsed_metadata.cover)></div>
                                 <div class="post-title">{parsed_metadata.title}</div>
                                 <div class="post-info">
-                                    <span class="post-date">{"2021/10/15"}</span>
+                                    <span class="post-date">{format_timestamp(parsed_metadata.create_at, "%Y/%m/%d")}</span>
                                     <span>{"Mist"}</span>
                                 </div>
 

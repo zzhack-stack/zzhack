@@ -1,9 +1,10 @@
 use crate::services::APIService;
 use crate::FetchTask;
 use crate::Res;
+use core::ops::Index;
 use once_cell::sync::Lazy;
 use serde::de::DeserializeOwned;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::ffi::OsStr;
 use std::path::Path;
 use yew::format::Json;
@@ -26,24 +27,24 @@ pub struct PinnedProjects {
     pub projects: Vec<PinnedProject>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Serialize)]
 pub struct PostMetadata {
     pub title: String,
     pub summary: String,
     pub cover: String,
-    pub create_at: i64,
+    pub create_at: u64,
     pub filename: String,
     pub content: String,
     pub issue_id: u32,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Serialize)]
 pub struct Categories {
     pub technology: Vec<PostMetadata>,
     pub thinking: Vec<PostMetadata>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Serialize)]
 pub struct RootMetadata {
     pub categories: Categories,
 }
@@ -51,13 +52,27 @@ pub struct RootMetadata {
 #[derive(Deserialize, Clone)]
 pub struct Fragment {
     pub cover: String,
-    pub create_at: i64,
+    pub create_at: u64,
     pub content: String,
 }
 
 #[derive(Deserialize, Clone)]
 pub struct Fragments {
     pub fragments: Vec<Fragment>,
+}
+
+impl Index<&'_ str> for Categories {
+    type Output = Vec<PostMetadata>;
+    fn index(&self, category_name: &str) -> &Vec<PostMetadata> {
+        match category_name {
+            "technology" => &self.technology,
+            "thinking" => &self.thinking,
+            _ => panic!(format!(
+                "Cannot find the {} of value from the categories",
+                category_name
+            )),
+        }
+    }
 }
 
 impl ProviderService {

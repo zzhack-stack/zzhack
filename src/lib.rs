@@ -12,6 +12,9 @@ use crate::services::api_service::Res;
 use crate::services::article_service::article_service;
 use crate::services::article_service::Article;
 use crate::services::article_service::QueryRes;
+use crate::services::provider_service::provider_service;
+use crate::services::provider_service::RootMetadata;
+use crate::services::CacheService;
 use crate::services::ThemeService;
 use crate::store::StoreStates;
 use components::{Footer, Header};
@@ -39,6 +42,7 @@ struct Root {
     state: Rc<StoreStates>,
     dispatch: Dispatch<BasicStore<StoreStates>>,
     task: Option<FetchTask>,
+    root_metadata_fetch_task: FetchTask,
 }
 
 pub enum RootMessage {
@@ -46,6 +50,7 @@ pub enum RootMessage {
     SwitchDrawer,
     StoreState(Rc<StoreStates>),
     SyncArticles(Vec<Article>),
+    UpdateRootMetadata(RootMetadata),
 }
 
 type AppRouter = Router<AppRoutes>;
@@ -79,7 +84,8 @@ impl Component for Root {
         )
         .unwrap();
         let dispatch = Dispatch::bridge_state(link.callback(RootMessage::StoreState));
-
+        let root_metadata_fetch_task = provider_service
+            .get_root_metadata(link.callback(|metadata| RootMessage::UpdateRootMetadata(metadata)));
         Self {
             link,
             is_open_drawer: false,
@@ -90,6 +96,7 @@ impl Component for Root {
             state: Default::default(),
             dispatch,
             task: None,
+            root_metadata_fetch_task,
         }
     }
 
@@ -121,6 +128,10 @@ impl Component for Root {
                 }
                 self.is_sync_data = true
             }
+            RootMessage::UpdateRootMetadata(metadata) => {
+                CacheService::new().set_root_metadata(metadata);
+                self.is_sync_data = true;
+            }
         }
         true
     }
@@ -133,11 +144,11 @@ impl Component for Root {
         html! {
             <div class=self.style.to_string()>
                 {
-                    // if self.is_sync_data {
+                    if self.is_sync_data {
                         self.render_root()
-                    // } else {
-                        // self.render_loading()
-                    // }
+                    } else {
+                        self.render_loading()
+                    }
                 }
             </div>
         }

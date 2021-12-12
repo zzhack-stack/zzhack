@@ -1,6 +1,7 @@
 use crate::components::Banner;
 use crate::services::provider_service::provider_service;
 use crate::services::provider_service::Fragments as FragmentsData;
+use crate::utils::time::format_timestamp;
 use crate::Footer;
 use css_in_rust::Style;
 use material_yew::MatCircularProgressFourColor;
@@ -145,7 +146,7 @@ impl Component for Fragments {
                                                 <div class="fragment-content">
                                                     {&fragment.content}
                                                 </div>
-                                                <div class="fragment-time">{"2021/10/31"}</div>
+                                                <div class="fragment-time">{format_timestamp(fragment.create_at, "%Y/%m/%d")}</div>
                                             </div>
                                         </div>
                                     }
