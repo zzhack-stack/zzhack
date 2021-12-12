@@ -3,6 +3,7 @@ use crate::components::technology::project_card::ProjectCard;
 use crate::components::{technology::title::TechnologyTitle, Banner};
 use crate::services::provider_service::RootMetadata;
 use crate::services::provider_service::{provider_service, PinnedProject, PinnedProjects};
+use crate::CacheService;
 use crate::Footer;
 use css_in_rust::Style;
 use material_yew::MatCircularProgressFourColor;
@@ -12,14 +13,12 @@ use yew::services::fetch::FetchTask;
 pub struct Technology {
     style: Style,
     projects_fetch_task: FetchTask,
-    root_metadata_fetch_task: FetchTask,
     pinned_projects: Vec<PinnedProject>,
-    root_metadata: Option<RootMetadata>,
+    root_metadata: RootMetadata,
 }
 
 pub enum TechnologyMessage {
     UpdatePinnedProjects(PinnedProjects),
-    UpdateRootMetadata(RootMetadata),
 }
 
 const GITHUB_HOMEPAGE: &'static str = "https://github.com/mistricky";
@@ -138,16 +137,13 @@ impl Component for Technology {
             provider_service.get_pinned_projects(link.callback(|pinned_projects| {
                 TechnologyMessage::UpdatePinnedProjects(pinned_projects)
             }));
-        let root_metadata_fetch_task = provider_service.get_root_metadata(
-            link.callback(|metadata| TechnologyMessage::UpdateRootMetadata(metadata)),
-        );
+        let root_metadata = CacheService::new().get_root_metadata();
 
         Self {
             style,
             projects_fetch_task,
             pinned_projects: vec![],
-            root_metadata: None,
-            root_metadata_fetch_task,
+            root_metadata,
         }
     }
 
@@ -155,10 +151,6 @@ impl Component for Technology {
         match msg {
             TechnologyMessage::UpdatePinnedProjects(pinned_projects) => {
                 self.pinned_projects = pinned_projects.projects;
-                true
-            }
-            TechnologyMessage::UpdateRootMetadata(root_metadata) => {
-                self.root_metadata = Some(root_metadata);
                 true
             }
             _ => false,
@@ -217,22 +209,13 @@ impl Component for Technology {
                     <div class="posts">
                         <TechnologyTitle title="Posts" icon="/images/cake.svg" />
                         <div class="posts__collection">
-                            {match self.root_metadata.clone() {
-                                Some(root_metadata) => {
-                                    html! {
-                                        for root_metadata.clone().categories.technology.iter().map(|post_metadata| {
-                                            html!{
-                                                <PostCard post_metadata=post_metadata.clone() category="technology" />
-                                            }
-                                        })
+                            {
+                                for self.root_metadata.clone().categories.technology.iter().map(|post_metadata| {
+                                    html!{
+                                        <PostCard post_metadata=post_metadata.clone() category="technology" />
                                     }
-                                },
-                                None => html! {
-                                    <div class="post-loading">
-                                        <MatCircularProgressFourColor indeterminate=true />
-                                    </div>
-                                }
-                            }}
+                                })
+                            }
                         </div>
                     </div>
                 </div>

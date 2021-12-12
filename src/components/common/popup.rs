@@ -66,12 +66,12 @@ impl Component for Popup {
         )
         .unwrap();
 
-        return Self {
+        Self {
             style,
             props,
             link,
             is_open_popup: false,
-        };
+        }
     }
 
     fn change(&mut self, _: <Self as yew::Component>::Properties) -> bool {
@@ -91,16 +91,18 @@ impl Component for Popup {
     fn view(&self) -> Html {
         let bind = &self.props.bind;
         let offset = self.props.offset;
+        let animation_factor = if self.is_open_popup { 1 } else { 0 };
         let popup_body_styles = format!(
-            "transform: scale({}); transform-origin: {}px {}px; padding: {}px;",
-            if self.is_open_popup { 1 } else { 0 },
+            "transform: scale({}); transform-origin: {}px {}px; padding: {}px; opacity: {};",
+            animation_factor,
             offset.0,
             offset.1,
             if self.props.has_default_padding {
                 15
             } else {
                 0
-            }
+            },
+            animation_factor
         );
         let popup_mask_styles = format!(
             "display: {}",
