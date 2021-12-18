@@ -1,3 +1,4 @@
+use crate::components::comments::Comments;
 use crate::components::Banner;
 use crate::services::post_service::PostService;
 use crate::services::provider_service::PostMetadata;
@@ -160,6 +161,15 @@ impl Component for Post {
                                 {Html::VRef(self.parsed_content.clone().unwrap().into())}
                             </div>
                         }
+                    }
+                }
+                {
+                    if let Some(post_metadata) = &self.post_metadata  {
+                        html! {
+                            <Comments issue_number={post_metadata.issue_id.clone()} />
+                        }
+                    } else {
+                        html! {<></>}
                     }
                 }
                 <Footer />

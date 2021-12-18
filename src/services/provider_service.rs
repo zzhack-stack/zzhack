@@ -35,7 +35,7 @@ pub struct PostMetadata {
     pub create_at: u64,
     pub filename: String,
     pub content: String,
-    pub issue_id: u32,
+    pub issue_id: i32,
 }
 
 #[derive(Deserialize, Clone, Serialize)]

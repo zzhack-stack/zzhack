@@ -52,26 +52,6 @@ const TABS: [Tab; 3] = [
     },
 ];
 
-// fn get_github_oauth_url() -> String {
-//     let window = web_sys::window().unwrap();
-//     let origin = window.location().href().unwrap();
-
-//     format!(
-//         "https://github.com/login/oauth/authorize?client_id=20ac7165581dc3691b9d&redirect_uri=http://localhost:8080/oauth/redirect?origin={}",
-//         origin
-//     )
-// }
-
-// fn find_current_route_index(tabs: Vec<Tab>, current_route: Route) -> u32 {
-//     match tabs.iter().position(|tab| {
-//         let route: Route = tab.route.clone().into();
-//         current_route.contains(route.as_str())
-//     }) {
-//         Some(i) => i as u32,
-//         None => 0,
-//     }
-// }
-
 impl Header {
     fn with_open_drawer_style(&self, style: &'static str) -> &'static str {
         if self.is_open_drawer {
@@ -132,6 +112,7 @@ impl Component for Header {
             .logo {
                 display: flex;
                 align-items: center;
+                cursor: pointer;
             }
 
             .logo-icon {
@@ -259,10 +240,12 @@ impl Component for Header {
                 <div class="container" >
                     <div class="header-wrapper">
                         <div class="left">
-                            <div class="logo">
-                                <img class="logo-icon" src=by_theme("/images/zzhack_icon_light.svg", "/images/zzhack_icon_dark.svg") />
-                                <span class="zzhack-text">{"ZZHACK"}</span>
-                            </div>
+                            <AppRouterAnchor classes="tab-item" route={AppRoutes::Technology}>
+                                <div class="logo">
+                                    <img class="logo-icon" src=by_theme("/images/zzhack_icon_light.svg", "/images/zzhack_icon_dark.svg") />
+                                    <span class="zzhack-text">{"ZZHACK"}</span>
+                                </div>
+                            </AppRouterAnchor>
                             {
                                 only_render_on_pc(html! {
                                     <div class="tabs">
