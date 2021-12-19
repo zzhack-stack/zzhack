@@ -52,13 +52,13 @@ impl GitHubService {
         GitHubService {
             github_api: APIService::new("https://api.github.com", None),
             github_raw_api: APIService::new("https://github.com", None),
-            oauth_server_api: APIService::new("http://101.37.83.146:9999", None),
+            oauth_server_api: APIService::new("https://zzhack-oauth.vercel.app", None),
         }
     }
 
     pub fn fetch_token(&mut self, code: &str, callback: Callback<Option<String>>) -> FetchTask {
         let request = self.oauth_server_api.get(format!(
-            "?code={}&client_id={}",
+            "/api/access_token?code={}&client_id={}",
             code, GITHUB_OAUTH_CLIENT_ID
         ));
 
