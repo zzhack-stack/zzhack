@@ -42,12 +42,7 @@ impl Component for CommentItem {
                 padding: 17px 0;
             }
 
-            .comment-item__updated_at {
-                font-size: 14px;
-                color: var(--attach-text-color);
-            }
-
-            .comment-item__created-at {
+            .comment-item__updated-at {
                 font-size: 14px;
                 color: var(--attach-text-color);
             }
@@ -71,6 +66,21 @@ impl Component for CommentItem {
             .comment-item__header__user {
                 display: flex;
                 align-items: center;
+            }
+
+            @media (max-width: 600px) {
+                .comment-item__avatar {
+                    width: 30px;
+                    height: 30px;
+                }
+
+                .comment-item__updated-at {
+                    font-size: 12px;
+                }
+
+                .comment-item__login {
+                    font-size: 15px;
+                }
             }
         "#,
         )
@@ -99,7 +109,7 @@ impl Component for CommentItem {
                     <img class="comment-item__avatar" src=comment.user.avatar_url.clone() />
                     <span class="comment-item__login">{&comment.user.login}</span>
                     </div>
-                    <span class="comment-item__created-at">
+                    <span class="comment-item__updated-at">
                         {format!("Latest updated at {}", format_time(&comment.created_at))}
                     </span>
                 </div>

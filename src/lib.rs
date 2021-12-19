@@ -5,6 +5,7 @@ mod services;
 mod store;
 mod utils;
 mod workers;
+use crate::components::common::Snackbar;
 use crate::components::home::header::Tab;
 use crate::routes::app_routes::switch;
 use crate::routes::app_routes::AppRouterAnchor;
@@ -189,6 +190,7 @@ impl Root {
                         tabs=self.tabs.clone()
                         on_menu_click=self.link.callback(|_| RootMessage::SwitchDrawer)
                     />
+                    <Snackbar />
                     <AppRouter redirect=Router::redirect(|_| AppRoutes::Technology) render = Router::render(switch) />
                 </MatDrawerAppContent>
             </MatDrawer>

@@ -1,11 +1,12 @@
 use crate::components::comments::CommentItem;
-use crate::console_log;
 use crate::services::github_service::GitHubIssueComment;
 use crate::services::github_service::{GitHubIssueComments, GitHubProfile};
+use crate::services::snackbar_service::SnackbarService;
 use crate::services::GitHubService;
 use crate::CacheService;
 use css_in_rust::Style;
 use material_yew::MatButton;
+use material_yew::MatCircularProgressFourColor;
 use yew::prelude::*;
 use yew::services::fetch::FetchTask;
 use yew::ChangeData::Value;
@@ -26,6 +27,8 @@ pub struct Comments {
     create_issue_task: Option<FetchTask>,
     fetch_comments_task: Option<FetchTask>,
     comments: GitHubIssueComments,
+    snackbar_service: SnackbarService,
+    is_loading: bool,
 }
 
 pub enum CommentsMessage {
@@ -54,6 +57,7 @@ impl Component for Comments {
                 justify-content: center;
                 align-items: center;
                 overflow: hidden;
+                position: relative;
             }
 
             .sign-with-github {
@@ -109,6 +113,25 @@ impl Component for Comments {
                 min-height: 50px;
                 margin-top: 50px;
             }
+
+            .loading-block {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 200px;
+                background: var(--base-color);
+                opacity: 0.8;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            @media (max-width: 600px) {
+                .comment-list {
+                    padding-top: 10px;            
+                }
+            }
         "#,
         )
         .unwrap();
@@ -116,6 +139,7 @@ impl Component for Comments {
         let cache_service = CacheService::new();
         let access_token = cache_service.get_github_access_key();
         let github_profile = cache_service.get_github_profile();
+        let snackbar_service = SnackbarService::new();
 
         Self {
             style,
@@ -128,19 +152,26 @@ impl Component for Comments {
             create_issue_task: None,
             fetch_comments_task: None,
             comments: vec![],
+            snackbar_service,
+            is_loading: false,
         }
     }
     fn update(&mut self, msg: <Self as yew::Component>::Message) -> bool {
         match msg {
             CommentsMessage::UpdateContent(content) => {
                 self.comment_content = content;
-                false
+                true
             }
             CommentsMessage::ReceivePublishCommentResponse(issue) => {
                 self.comments.insert(0, issue);
+                self.comment_content = "".to_string();
+                self.is_loading = false;
+                self.snackbar_service.send("Comment successful 🎉!");
+
                 true
             }
             CommentsMessage::PublishComment => {
+                self.is_loading = true;
                 self.create_issue_task =
                     Some(self.github_service.create_issue(
                         self.props.issue_number,
@@ -195,10 +226,23 @@ impl Component for Comments {
                                 }
                             } else {
                                 html! {
-                                    <textarea onchange=self.link.callback(|content: ChangeData| CommentsMessage::UpdateContent(match content {
-                                        Value(content) => content,
-                                        _ => String::from("")
-                                    })) class="comments-input" />
+                                    <>
+                                        <textarea value=self.comment_content.clone() onchange=self.link.callback(|content: ChangeData| CommentsMessage::UpdateContent(match content {
+                                            Value(content) => content,
+                                            _ => String::from("")
+                                        })) class="comments-input" />
+                                        {
+                                            if self.is_loading {
+                                                html! {
+                                                    <div class="loading-block">
+                                                        <MatCircularProgressFourColor indeterminate=true />
+                                                    </div>
+                                                }
+                                            } else {
+                                                html! {}
+                                            }
+                                        }
+                                    </>
                                 }
                             }
                         }
@@ -217,7 +261,7 @@ impl Component for Comments {
                         }
                     }
                 </div>
-                <div class="comment-list">
+                <div class="comment-list container">
                     {
                         for self.comments.iter().map(|comment| {
                             html! {
