@@ -150,7 +150,7 @@ impl GitHubService {
         let href = web_sys::window().unwrap().location().href().unwrap();
 
         format!(
-            "https://github.com/login/oauth/authorize?redirect_uri=http://zzhack.fun/oauth/redirect?origin={}&client_id={}&scope=public_repo",
+            "https://github.com/login/oauth/authorize?redirect_uri=https://zzhack.fun/oauth/redirect?origin={}&client_id={}&scope=public_repo",
             href, GITHUB_OAUTH_CLIENT_ID
         )
     }
