@@ -52,7 +52,7 @@ impl GitHubService {
         GitHubService {
             github_api: APIService::new("https://api.github.com", None),
             github_raw_api: APIService::new("https://github.com", None),
-            oauth_server_api: APIService::new("http://localhost:9999", None),
+            oauth_server_api: APIService::new("http://101.37.83.146:9999", None),
         }
     }
 
