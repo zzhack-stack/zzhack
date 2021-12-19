@@ -31,6 +31,7 @@ impl Component for Snackbar {
         let style = Style::create(
             "Snackbar",
             r#"
+            position: absolute;
         "#,
         )
         .unwrap();
