@@ -63,6 +63,17 @@ pub fn render_github_render_block(github_render_block: GitHubRenderBlock) -> Str
     )
 }
 
+pub fn render_spotlight(text: &str) -> String {
+    format!(
+        "<div class='markdown-spotlight'>
+        <img class='markdown-spotlight__icon' src='/images/light.svg' />
+        <div class='markdown-spotlight__content'>{}</div>
+        <img class='markdown-spotlight__icon' src='/images/light.svg' />
+    </div>",
+        text
+    )
+}
+
 pub fn render_code(code: String) -> String {
     format!("<span class='markdown-code'>{}</span>", code)
 }

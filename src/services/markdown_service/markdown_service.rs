@@ -2,6 +2,7 @@ use crate::console_log;
 use crate::services::markdown_service::elements::render_code;
 use crate::services::markdown_service::elements::render_github_render_block;
 use crate::services::markdown_service::elements::render_heading;
+use crate::services::markdown_service::elements::render_spotlight;
 use crate::services::markdown_service::elements::GitHubRenderBlock;
 use crate::services::markdown_service::elements::{render_code_block, render_image};
 use core::future::Future;
@@ -23,6 +24,7 @@ pub struct MarkdownService {
 
 #[derive(Clone)]
 enum TraverseKind {
+    Spotlight,
     CodeBlock(SyntaxReference),
     GitHubRenderBlock,
     Image(String),
@@ -79,6 +81,11 @@ impl MarkdownService {
                         return Event::Start(Tag::CodeBlock(kind));
                     };
 
+                    if language == "spotlight" {
+                        traverse_kind = TraverseKind::Spotlight;
+                        return Event::Start(Tag::CodeBlock(kind));
+                    }
+
                     let syntax = match ss.find_syntax_by_name(language.as_str()) {
                         Some(syntax) => syntax,
                         None => ss.find_syntax_by_extension("rs").unwrap(),
@@ -105,6 +112,10 @@ impl MarkdownService {
                             // console_log!("{} asdasd", github_render_block.url);
                             Event::Html(render_github_render_block(github_render_block).into())
                         }
+                        TraverseKind::Spotlight => {
+                            console_log!("{}", parsed_code);
+                            Event::Html(render_spotlight(parsed_code.as_str()).into())
+                        }
                         _ => Event::End(Tag::CodeBlock(code)),
                     };
 
@@ -124,7 +135,9 @@ impl MarkdownService {
 
                             empty_str_event
                         }
-                        TraverseKind::CodeBlock(_) | TraverseKind::GitHubRenderBlock => {
+                        TraverseKind::CodeBlock(_)
+                        | TraverseKind::GitHubRenderBlock
+                        | TraverseKind::Spotlight => {
                             codes.push(parsed_text);
 
                             empty_str_event
