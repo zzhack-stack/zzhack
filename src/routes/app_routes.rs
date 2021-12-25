@@ -4,8 +4,8 @@ use crate::pages::fragments::Fragments;
 use crate::pages::oauth_redirect::OAuthRedirect;
 use crate::pages::post::Post;
 use crate::pages::{
-    about_me::AboutMe, article::ArticleView, not_found::NotFound, technology::Technology,
-    thinking::Thinking,
+    about_me::AboutMe, article::ArticleView, links::Links, not_found::NotFound,
+    technology::Technology, thinking::Thinking,
 };
 use yew::prelude::*;
 use yew_router::prelude::*;
@@ -24,6 +24,8 @@ pub enum AppRoutes {
     BooksWithChapter(u32, u32),
     #[to = "/books/{number}"]
     Books(u32),
+    #[to = "/links"]
+    Links,
     #[to = "/fragments"]
     Fragments,
     #[to = "/about"]
@@ -34,8 +36,6 @@ pub enum AppRoutes {
     Thinking,
     #[to = "/404"]
     NotFound,
-    // #[to = "/";redirect = ""]
-    // Home,
 }
 
 pub type AppRouterAnchor = RouterAnchor<AppRoutes>;
@@ -47,6 +47,9 @@ pub fn switch(routes: AppRoutes) -> Html {
         }
         AppRoutes::Post(category, filename) => {
             html! {<Post filename={filename} category={category} />}
+        }
+        AppRoutes::Links => {
+            html! {<Links />}
         }
         AppRoutes::Fragments => {
             html! {<Fragments />}

@@ -61,16 +61,26 @@ pub struct Fragments {
     pub fragments: Vec<Fragment>,
 }
 
+#[derive(Deserialize, Clone)]
+pub struct Link {
+    pub name: String,
+    pub link: String,
+    pub desc: String,
+    pub logo: String,
+}
+
+pub type Links = Vec<Link>;
+
 impl Index<&'_ str> for Categories {
     type Output = Vec<PostMetadata>;
     fn index(&self, category_name: &str) -> &Vec<PostMetadata> {
         match category_name {
             "technology" => &self.technology,
             "thinking" => &self.thinking,
-            _ => panic!(format!(
+            _ => panic!(
                 "Cannot find the {} of value from the categories",
                 category_name
-            )),
+            ),
         }
     }
 }
@@ -92,6 +102,12 @@ impl ProviderService {
 
             callback.emit(data)
         })
+    }
+
+    pub fn fetch_links(&self, callback: Callback<Links>) -> FetchTask {
+        let request = self.api.get(String::from("/constants/links.json"));
+
+        FetchService::fetch(request, ProviderService::wrap_callback(callback)).unwrap()
     }
 
     pub fn get_pinned_projects(&self, callback: Callback<PinnedProjects>) -> FetchTask {

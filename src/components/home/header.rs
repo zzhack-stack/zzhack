@@ -37,7 +37,7 @@ pub struct Tab {
     pub name: &'static str,
 }
 
-const TABS: [Tab; 3] = [
+const TABS: [Tab; 4] = [
     Tab {
         name: "Technology",
         route: AppRoutes::Technology,
@@ -49,6 +49,10 @@ const TABS: [Tab; 3] = [
     Tab {
         name: "Fragments",
         route: AppRoutes::Fragments,
+    },
+    Tab {
+        name: "Links",
+        route: AppRoutes::Links,
     },
 ];
 
