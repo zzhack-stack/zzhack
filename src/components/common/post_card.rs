@@ -29,6 +29,7 @@ impl Component for PostCard {
             width: 280px;
             border-radius: 5px;
             overflow: hidden;
+            margin: 0 30px;
             border: 1px solid var(--border-color);
             cursor: pointer;
 
@@ -70,6 +71,8 @@ impl Component for PostCard {
 
             @media (max-width: 600px) {
                 width: 100%;
+                margin: 0;
+                margin-bottom: 30px;
             }
         "#,
         )

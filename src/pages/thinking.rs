@@ -23,9 +23,8 @@ impl Component for Thinking {
             r#"
             
             .thinking-posts {
-                margin: 60px auto;
+                margin: 60px -30px;
                 display: flex;
-                justify-content: space-between;
             }
 
             .thinking-post__goto {
@@ -33,7 +32,10 @@ impl Component for Thinking {
             }
 
             @media (max-width: 600px) {
-
+                .thinking-posts {
+                    flex-direction: column;
+                    margin: 60px 0;
+                }
             }
         "#,
         )
@@ -59,16 +61,18 @@ impl Component for Thinking {
         html! {
             <div class=self.style.to_string()>
                 <Banner illustration_style="top: 15px;right: -145px;" bg_color="var(--thinking-banner-color)" illustration="/images/thinking_illustration.svg" />
-                <div class="thinking-posts container">
-                    {
-                        for self.thinking_posts.clone().iter().map(|metadata| {
-                            html! {
-                                <AppRouterAnchor classes="thinking-post__goto" route={AppRoutes::Post(String::from("thinking"), metadata.filename.clone())}>
-                                    <PostCard cover=metadata.cover.clone() title=metadata.title.clone() summary=metadata.summary.clone() create_at=metadata.create_at />
-                                </AppRouterAnchor>
-                            }
-                        })
-                    }
+                <div class="container">
+                    <div class="thinking-posts">
+                        {
+                            for self.thinking_posts.clone().iter().map(|metadata| {
+                                html! {
+                                    <AppRouterAnchor classes="thinking-post__goto" route={AppRoutes::Post(String::from("thinking"), metadata.filename.clone())}>
+                                        <PostCard cover=metadata.cover.clone() title=metadata.title.clone() summary=metadata.summary.clone() create_at=metadata.create_at />
+                                    </AppRouterAnchor>
+                                }
+                            })
+                        }
+                    </div>
                 </div>
                 <Footer />
             </div>
