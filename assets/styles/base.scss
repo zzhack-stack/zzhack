@@ -105,6 +105,17 @@
   padding: 10px 15px;
 }
 
+.card {
+  border: 1px solid var(--border-color);
+  transition: box-shadow 0.3s;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 0px 0px;
+
+  &:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    border-color: transparent;
+  }
+}
+
 @media (max-width: 600px) {
   .container {
     width: 100%;
@@ -119,4 +130,8 @@
     padding: 10px 30px;
     box-sizing: border-box;
   }
+}
+
+* {
+  transition: background-color 0.1s;
 }

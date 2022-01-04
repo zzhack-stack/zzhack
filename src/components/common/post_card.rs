@@ -30,7 +30,6 @@ impl Component for PostCard {
             border-radius: 5px;
             overflow: hidden;
             margin: 0 30px;
-            border: 1px solid var(--border-color);
             cursor: pointer;
 
             .post-card__cover {
@@ -91,7 +90,7 @@ impl Component for PostCard {
         let cover_styles = format!("background-image: url({})", self.props.cover);
 
         html! {
-            <div class=self.style.to_string()>
+            <div class=format!("{} card", self.style.to_string())>
                 <div class="post-card__cover" style=cover_styles></div>
                 <div class="post-card__body">
                     <div class="post-card__body__title">

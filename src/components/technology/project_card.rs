@@ -25,7 +25,6 @@ impl Component for ProjectCard {
             height: 150px;
             background: var(--base-color);
             border-radius: 5px;
-            border: 1px solid var(--border-color);
             padding: 16px 20px 16px 20px;
             box-sizing: border-box;
             transition: all 0.3s;
@@ -69,7 +68,7 @@ impl Component for ProjectCard {
     fn view(&self) -> Html {
         html! {
             <a style="text-decoration: none;" target="_blank" href=self.props.link.clone()>
-                <div class=self.style.to_string()>
+                <div class=format!("{} card", self.style.to_string())>
                     <div class="title">{self.props.title.clone()}</div>
                     <div class="desc">{self.props.desc.clone()}</div>
                 </div>
