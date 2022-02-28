@@ -28,7 +28,7 @@ impl Component for Links {
             "Links",
             r#"
             .link__banner {
-                height: 600px;
+                height: 400px;
                 width: 100%;    
                 background: var(--links-banner-color);
                 display: flex;
@@ -44,7 +44,7 @@ impl Component for Links {
             }
 
             .link__banner__img {
-                width: 600px;
+                width: 500px;
                 position: relative;
                 right: -100px;
             }
