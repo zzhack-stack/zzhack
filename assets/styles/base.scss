@@ -10,6 +10,7 @@
     --thinking-banner-color: #aac6fc;
     --technology-hover-color: rgba(94, 217, 192, 0.3);
     --mask-color: rgba(0, 0, 0, 0.2);
+    --deep-mask-color: rgba(0, 0, 0, 0.85);
     --post-banner-color: #a7d99a;
     --title-color: #1d2129;
     --attach-text-color: #cecece;
@@ -37,6 +38,7 @@
   }
 
   .dark {
+    --deep-mask-color: rgba(0, 0, 0, 0.85);
     --comment-item-color: #1f2223;
     --base-text-color: #fff;
     --banner-text-color: #3f3d55;

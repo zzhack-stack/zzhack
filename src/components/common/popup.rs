@@ -62,6 +62,38 @@ impl Component for Popup {
                     top: 0;
                     z-index: 3;
                 }
+
+                .close-btn {
+                    display: none;       
+                }
+
+                @media (max-width: 600px) {
+                    .popup-body {
+                        position: fixed;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100vh;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background: var(--deep-mask-color);
+                        transition: 0.3s opacity;
+                    }
+
+                    .close-btn {
+                        display: block;
+                        position: absolute;
+                        top: 30px;
+                        left: 30px;
+                        width: 25px;
+                        height: 25px;
+                        padding: 10px;
+                        border-radius: 50%;
+                        background: white;
+                        cursor: pointer;
+                    }
+                }
             "#,
         )
         .unwrap();
@@ -116,6 +148,9 @@ impl Component for Popup {
                     {bind.clone()}
                 </div>
                 <div class="popup-body" style=popup_body_styles>
+                    <div class="close-btn" onclick=self.link.callback(|_| PopupMessage::TriggerPopup)>
+                        <img src="/images/close.svg"/>
+                    </div>
                     {self.props.children.clone()}
                 </div>
             </div>
