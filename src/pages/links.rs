@@ -90,6 +90,7 @@ impl Component for Links {
                 display: flex;
                 align-items: center;
                 transition: box-shadow 0.3s;
+                margin-bottom: 25px;
             }
 
             .link-item:hover {
