@@ -16,6 +16,7 @@
     --attach-text-color: #cecece;
     --comment-item-color: #fff;
     --links-banner-color: #a29bfe;
+    --post-undercover-color: #ecf0f1;
 
     // old
     --primary-color: #3970f5;
@@ -38,14 +39,15 @@
   }
 
   .dark {
+    --post-undercover-color: #181a1b;
     --deep-mask-color: rgba(0, 0, 0, 0.85);
     --comment-item-color: #1f2223;
     --base-text-color: #fff;
     --banner-text-color: #3f3d55;
     --sub-text-color: #dfe6e9;
     --technology-banner-color: #5ed9c1;
-    --undercover-color: #1f2223;
-    --base-color: #181a1b;
+    --undercover-color: #181a1b;
+    --base-color: #1f2223;
     --border-color: #000;
     --thinking-banner-color: #aac6fc;
     --technology-hover-color: rgba(94, 217, 192, 0.3);
@@ -90,6 +92,11 @@
   margin: auto;
 }
 
+.mini-container {
+  width: 600px;
+  margin: auto;
+}
+
 .article-container {
   width: 760px;
   margin: auto;
@@ -119,7 +126,7 @@
 }
 
 @media (max-width: 600px) {
-  .container {
+  .container, .mini-container {
     width: 100%;
     overflow: hidden;
     padding: 0 20px;

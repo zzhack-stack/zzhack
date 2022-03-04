@@ -47,10 +47,14 @@ impl Component for Comments {
             r#"
             margin-top: 60px;
 
+            .comments-container {
+                margin: auto;
+            }
+
             .comments-wrapper {
                 width: 100%;
                 height: 200px;
-                background: var(--undercover-color);
+                background: var(--base-color);
                 border: 1px solid var(--border-color);
                 border-radius: 5px;
                 display: flex;
@@ -208,7 +212,7 @@ impl Component for Comments {
     fn view(&self) -> yew::virtual_dom::VNode {
         html! {
             <div class=self.style.to_string()>
-                <div class="container">
+                <div class="comments-container mini-container">
                     <div class="comments-header">
                         <div class="comments-title">{"Comments"}</div>
                         <div class="comments-desc">{"The data source of comments comes from GitHub issues."}</div>

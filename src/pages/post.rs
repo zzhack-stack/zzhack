@@ -38,7 +38,15 @@ impl Component for Post {
         let style = Style::create(
             "Post",
             r#"
-            background: var(--base-color);
+            background: var(--post-undercover-color);
+
+            .post-container {
+                box-sizing: border-box;
+                padding: 20px;
+                background: var(--base-color);
+                border-radius: 5px;
+                margin: 30px auto 0 auto;
+            }
 
             .posts-loading {
                 width: 100%;
@@ -55,7 +63,6 @@ impl Component for Post {
                 border-radius: 6px;
                 background-repeat: no-repeat;
                 background-position: 50%;
-                margin-top: 41px;
                 background-size: cover;
             }
 
@@ -150,7 +157,7 @@ impl Component for Post {
                         let parsed_metadata = self.post_metadata.clone().unwrap();
 
                         html! {
-                            <div class="container">
+                            <div class="post-container mini-container">
                                 <div class="post-cover" style=format!("background-image: url({});", parsed_metadata.cover)></div>
                                 <div class="post-title">{parsed_metadata.title}</div>
                                 <div class="post-info">
