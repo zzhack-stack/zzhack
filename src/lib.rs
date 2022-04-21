@@ -79,6 +79,11 @@ impl Component for Root {
             "Root",
             r#"
             height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 33px;
         "#,
         )
         .unwrap();
@@ -142,13 +147,7 @@ impl Component for Root {
     fn view(&self) -> Html {
         html! {
             <div class=self.style.to_string()>
-                {
-                    if self.is_sync_data {
-                        self.render_root()
-                    } else {
-                        self.render_loading()
-                    }
-                }
+                {"🚧 Refactoring is underway."}
             </div>
         }
     }
