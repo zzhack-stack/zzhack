@@ -1,25 +1,29 @@
-use crate::console_log;
 use crate::services::markdown_service::elements::render_code;
 use crate::services::markdown_service::elements::render_github_render_block;
 use crate::services::markdown_service::elements::render_heading;
 use crate::services::markdown_service::elements::render_spotlight;
 use crate::services::markdown_service::elements::GitHubRenderBlock;
 use crate::services::markdown_service::elements::{render_code_block, render_image};
-use core::future::Future;
+use pulldown_cmark::CodeBlockKind;
 use pulldown_cmark::CodeBlockKind::{Fenced, Indented};
 use pulldown_cmark::{html, Event, Options, Parser, Tag};
+use serde::Deserialize;
 use serde_json;
 use syntect::highlighting::ThemeSet;
 use syntect::html::highlighted_html_for_string;
 use syntect::parsing::SyntaxReference;
 use syntect::parsing::SyntaxSet;
-use wasm_bindgen::JsValue;
 use web_sys::Element;
-use yew::Callback;
 
 #[derive(Clone)]
 pub struct MarkdownService {
     value: String,
+}
+
+#[derive(Deserialize)]
+pub struct PostMetadata {
+    pub cover: String,
+    pub tag: Vec<String>,
 }
 
 #[derive(Clone)]
@@ -27,6 +31,7 @@ enum TraverseKind {
     Spotlight,
     CodeBlock(SyntaxReference),
     GitHubRenderBlock,
+    Metadata,
     Image(String),
     Heading(u32),
     Nope,
@@ -37,14 +42,57 @@ impl MarkdownService {
         return MarkdownService { value: input };
     }
 
-    pub fn parse(&self, input: &str, theme: &'static str) -> String {
+    fn parse_code_block_language_kind(kind: &CodeBlockKind) -> String {
+        match kind {
+            Indented => "rust".to_string(),
+            Fenced(language) => language.to_string(),
+        }
+    }
+
+    pub fn extract_metadata(&self) -> Option<PostMetadata> {
+        let mut metadata: Vec<String> = vec![];
+        let mut traverse_kind = TraverseKind::Nope;
+        let parser = Parser::new_ext(&self.value, Options::empty());
+
+        parser.for_each(|event| match event {
+            Event::Start(Tag::CodeBlock(kind)) => {
+                let language = MarkdownService::parse_code_block_language_kind(&kind);
+
+                if language == "metadata" {
+                    traverse_kind = TraverseKind::Metadata;
+                }
+            }
+            Event::End(Tag::CodeBlock(_)) => {
+                if let TraverseKind::Metadata = traverse_kind {
+                    traverse_kind = TraverseKind::Nope;
+                }
+            }
+            Event::Text(text) => {
+                if let TraverseKind::Metadata = traverse_kind {
+                    metadata.push(text.to_string())
+                }
+            }
+            _ => {}
+        });
+
+        if metadata.len() == 0 {
+            return None;
+        }
+
+        let parsed_metadata = metadata.join("");
+        let metadata: PostMetadata = serde_json::from_str(parsed_metadata.as_str()).unwrap();
+
+        return Some(metadata);
+    }
+
+    pub fn parse(&self, theme: &'static str) -> String {
         let mut traverse_kind = TraverseKind::Nope;
 
         let mut codes: Vec<String> = Vec::new();
         let ss = SyntaxSet::load_defaults_newlines();
         let ts = ThemeSet::load_defaults();
         let theme = &ts.themes[theme];
-        let parser = Parser::new_ext(input, Options::empty())
+        let parser = Parser::new_ext(&self.value, Options::empty())
             .map(|event| match event {
                 Event::Start(Tag::Image(..)) => {
                     traverse_kind = TraverseKind::Image("".into());
@@ -71,10 +119,7 @@ impl MarkdownService {
                 }
                 Event::Code(code) => Event::Html(render_code(code.to_string()).into()),
                 Event::Start(Tag::CodeBlock(kind)) => {
-                    let language = match kind.clone() {
-                        Indented => String::from("rust"),
-                        Fenced(language) => language.to_string(),
-                    };
+                    let language = MarkdownService::parse_code_block_language_kind(&kind);
 
                     if language == "github" {
                         traverse_kind = TraverseKind::GitHubRenderBlock;
@@ -86,7 +131,7 @@ impl MarkdownService {
                         return Event::Start(Tag::CodeBlock(kind));
                     }
 
-                    let syntax = match ss.find_syntax_by_name(language.as_str()) {
+                    let syntax = match ss.find_syntax_by_name(language.as_ref()) {
                         Some(syntax) => syntax,
                         None => ss.find_syntax_by_extension("rs").unwrap(),
                     };
@@ -109,11 +154,9 @@ impl MarkdownService {
                         TraverseKind::GitHubRenderBlock => {
                             let github_render_block: GitHubRenderBlock =
                                 serde_json::from_str(parsed_code.as_str()).unwrap();
-                            // console_log!("{} asdasd", github_render_block.url);
                             Event::Html(render_github_render_block(github_render_block).into())
                         }
                         TraverseKind::Spotlight => {
-                            console_log!("{}", parsed_code);
                             Event::Html(render_spotlight(parsed_code.as_str()).into())
                         }
                         _ => Event::End(Tag::CodeBlock(code)),
@@ -157,7 +200,7 @@ impl MarkdownService {
                 _ => true,
             });
 
-        let mut html_output: String = String::with_capacity(input.len() * 3 / 2);
+        let mut html_output: String = String::with_capacity(self.value.len() * 3 / 2);
 
         html::push_html(&mut html_output, parser);
 
@@ -166,7 +209,7 @@ impl MarkdownService {
 
     pub fn parse_to_element(&self, theme: &'static str) -> Element {
         let div = yew::utils::document().create_element("div").unwrap();
-        let parsed_html = self.parse(self.value.as_str(), theme);
+        let parsed_html = self.parse(theme);
 
         div.set_inner_html(parsed_html.as_str());
 
