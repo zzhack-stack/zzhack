@@ -1041,6 +1041,7 @@ dependencies = [
  "chrono",
  "css-in-rust",
  "js-sys",
+ "lazy_static",
  "material-yew",
  "once_cell",
  "pulldown-cmark",
