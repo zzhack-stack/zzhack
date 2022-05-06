@@ -9,11 +9,11 @@ use pulldown_cmark::CodeBlockKind::{Fenced, Indented};
 use pulldown_cmark::{html, Event, Options, Parser, Tag};
 use serde::Deserialize;
 use serde_json;
-use stdweb::web::document;
 use syntect::highlighting::ThemeSet;
 use syntect::html::highlighted_html_for_string;
 use syntect::parsing::SyntaxReference;
 use syntect::parsing::SyntaxSet;
+use web_sys::window;
 use web_sys::Element;
 
 #[derive(Clone)]
@@ -209,7 +209,8 @@ impl MarkdownService {
     }
 
     pub fn parse_to_element(&self, theme: &'static str) -> Element {
-        let div = document().create_element("div").unwrap();
+        let window = window().unwrap();
+        let div = window.document().unwrap().create_element("div").unwrap();
         let parsed_html = self.parse(theme);
 
         div.set_inner_html(parsed_html.as_str());

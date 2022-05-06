@@ -1,1 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><rect fill="none" height="24" width="24"/><path d="M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36c-0.98,1.37-2.58,2.26-4.4,2.26 c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>dark_mode</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="light/V5_home" transform="translate(-1312.000000, -243.000000)">
+            <g id="switch" transform="translate(1294.000000, 133.000000)">
+                <g id="dark_mode" transform="translate(15.000000, 107.000000)">
+                    <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+                    <path d="M12,3 C7.03,3 3,7.03 3,12 C3,16.97 7.03,21 12,21 C16.97,21 21,16.97 21,12 C21,11.54 20.96,11.08 20.9,10.64 C19.92,12.01 18.32,12.9 16.5,12.9 C13.52,12.9 11.1,10.48 11.1,7.5 C11.1,5.69 11.99,4.08 13.36,3.1 C12.92,3.04 12.46,3 12,3 L12,3 Z" id="Path" fill="#000000" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
