@@ -1,4 +1,4 @@
-[[hooks]]
-stage = "pre_build"
-command = "echo"
-command_arguments = ["Hello", "Trunk!"]
+# [[hooks]]
+# stage = "pre_build"
+# command = "echo"
+# command_arguments = ["Hello", "Trunk!"]

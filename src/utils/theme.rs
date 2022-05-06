@@ -1,11 +1,13 @@
-use crate::services::theme_service::{ThemeService, DARK_THEME_KEY};
+use crate::global::theme_context::Theme;
+use crate::services::theme_service::ThemeService;
 use yew::prelude::*;
 use yew::virtual_dom::VNode;
 
 pub fn by_theme<T>(light: T, dark: T) -> T {
-    let theme = ThemeService::get_theme();
+    let theme_service = ThemeService::from_storage();
+    let theme = theme_service.get_theme();
 
-    if theme == DARK_THEME_KEY {
+    if theme == &Theme::Dark {
         dark
     } else {
         light
