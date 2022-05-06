@@ -1,4 +1,3 @@
-use crate::console_log;
 use crate::services::theme_service::{ThemeService, DARK_THEME_KEY};
 use yew::prelude::*;
 use yew::virtual_dom::VNode;
