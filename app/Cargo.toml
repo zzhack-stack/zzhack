@@ -34,3 +34,9 @@ home = {path = "../home"}
 about = {path = "../about"}
 not_found = {path = "../not_found"}
 projects = {path = "../projects"}
+
+[profile.release]
+lto = true
+panic = 'abort'
+codegen-units = 1
+
