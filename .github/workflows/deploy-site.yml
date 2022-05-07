@@ -1,5 +1,8 @@
 name: deploy-site
-on: [push]
+on: 
+  push:
+    branches:
+      - main
 
 jobs:
   cargo-build:
@@ -24,7 +27,7 @@ jobs:
           version: 'latest'
 
       - name: build
-        run: trunk build --release
+        run: cd app && trunk build --release -d ../dist
 
       - uses: amondnet/vercel-action@v20
         with:
