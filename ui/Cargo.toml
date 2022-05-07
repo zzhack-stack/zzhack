@@ -1,0 +1,13 @@
+[package]
+name = "ui"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+yew = "0.19"
+stylist = {version = "0.10", features = ["yew_integration"]}
+utils = {path = "../utils"}
+global = {path = "../global"}
+services = {path = "../services"}
