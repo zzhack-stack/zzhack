@@ -1,6 +1,6 @@
 use super::{footer::Footer, header::Header};
 use crate::common::switch::ThemeSwitchBar;
-use crate::use_style;
+use crate::container::Container;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
@@ -10,15 +10,13 @@ pub struct BaseLayoutProps {
 
 #[function_component(BaseLayout)]
 pub fn base_layout(props: &BaseLayoutProps) -> Html {
-    let style = use_style!(r#""#);
-
     html! {
         <>
             <Header/>
             <ThemeSwitchBar />
-            <div classes={style}>
+            <Container>
                 { props.children.clone() }
-            </div>
+            </Container>
             <Footer />
         </>
     }
