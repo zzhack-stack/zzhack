@@ -407,6 +407,7 @@ checksum = "ab5ef0d4909ef3724cc8cce6ccc8572c5c817592e9285f5464f8e86f8bd3726e"
 name = "home"
 version = "0.1.0"
 dependencies = [
+ "ui",
  "yew",
 ]
 
@@ -905,6 +906,7 @@ dependencies = [
 name = "services"
 version = "0.1.0"
 dependencies = [
+ "material-yew",
  "once_cell",
  "pulldown-cmark",
  "regex",
@@ -912,6 +914,7 @@ dependencies = [
  "serde_json",
  "syntect",
  "web-sys",
+ "yew",
 ]
 
 [[package]]
@@ -1118,9 +1121,13 @@ name = "ui"
 version = "0.1.0"
 dependencies = [
  "global",
+ "log",
+ "material-yew",
  "services",
  "stylist",
  "utils",
+ "wasm-logger",
+ "web-sys",
  "yew",
 ]
 

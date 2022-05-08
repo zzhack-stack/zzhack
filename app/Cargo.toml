@@ -30,10 +30,10 @@ services = {path = "../services"}
 global = {path = "../global"}
 utils = {path = "../utils"}
 ui = {path = "../ui"}
-home = {path = "../home"}
-about = {path = "../about"}
-not_found = {path = "../not_found"}
-projects = {path = "../projects"}
+home = {path = "../pages/home"}
+about = {path = "../pages/about"}
+not_found = {path = "../pages/not_found"}
+projects = {path = "../pages/projects"}
 
 [profile.release]
 lto = true

@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 yew = "0.19"
+ui = {path = "../../ui"}

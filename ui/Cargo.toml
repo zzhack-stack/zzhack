@@ -11,3 +11,7 @@ stylist = {version = "0.10", features = ["yew_integration"]}
 utils = {path = "../utils"}
 global = {path = "../global"}
 services = {path = "../services"}
+web-sys = { version = "0.3", features = ["HtmlMetaElement", "Document", "Element", "DocumentFragment", "HtmlTemplateElement", "MediaQueryList"] }
+wasm-logger = "0.2.0"
+log = "0.4.17"
+material-yew = { git = "https://github.com/hamza1311/material-yew", features = ["full"] }

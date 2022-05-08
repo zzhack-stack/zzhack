@@ -3,10 +3,11 @@
 members = [
     "app",
     "ui",
-    "home",
-    "about",
-    "not_found",
     "utils",
     "services",
     "global",
+    "pages/home",
+    "pages/projects",
+    "pages/not_found",
+    "pages/home",
 ]
