@@ -1,6 +1,10 @@
 :root {
   --mdc-theme-primary: #7ECCB4;
 
+  mwc-icon-button::part("mdc-icon-button") {
+    background: red;
+  }
+
   .light {
     --primary-color: #7ECCB4;
     --base-color: #fff;
