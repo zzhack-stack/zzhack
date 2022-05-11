@@ -6,8 +6,8 @@ use yew::prelude::*;
 
 #[styled_component(ThemeSwitchBar)]
 pub fn theme_switch_bar() -> Html {
-    let ctx = use_context::<ThemeContext>().unwrap();
-    let sliding_bar_offset_pos = if &ctx.theme == &Theme::Dark {
+    let theme_ctx = use_context::<ThemeContext>().unwrap();
+    let sliding_bar_offset_pos = if &theme_ctx.theme == &Theme::Dark {
         "50%"
     } else {
         "0"
@@ -64,7 +64,7 @@ pub fn theme_switch_bar() -> Html {
     );
 
     let handle_switch_bar_click = |theme: Theme| -> Callback<MouseEvent> {
-        Callback::from(move |_| ctx.dispatch(ThemeAction::UpdateTheme(theme.clone())))
+        Callback::from(move |_| theme_ctx.dispatch(ThemeAction::UpdateTheme(theme.clone())))
     };
 
     html! {
