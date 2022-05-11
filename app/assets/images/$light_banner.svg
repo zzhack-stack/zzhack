@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1020px" height="353px" viewBox="0 0 1020 353" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 4</title>
+    <defs>
+        <radialGradient cx="104.307787%" cy="111.952154%" fx="104.307787%" fy="111.952154%" r="303.959988%" gradientTransform="translate(1.043078,1.119522),scale(0.346078,1.000000),rotate(-161.920088),translate(-1.043078,-1.119522)" id="radialGradient-1">
+            <stop stop-color="#FECDC9" offset="0%"></stop>
+            <stop stop-color="#BFF7F2" offset="63.6434655%"></stop>
+            <stop stop-color="#A8C4FB" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="light/V5_home" transform="translate(-210.000000, -133.000000)">
+            <g id="Group-4" transform="translate(210.000000, 133.000000)">
+                <rect id="Rectangle" fill="url(#radialGradient-1)" x="0" y="0" width="1020" height="353" rx="15"></rect>
+                <text id="Do-more-useless-thin" font-family="JCfg, PilGi" font-size="40" font-weight="normal" fill="#FFFFFF">
+                    <tspan x="311" y="188">Do more useless things</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>
