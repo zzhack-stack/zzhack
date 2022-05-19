@@ -7,10 +7,15 @@ use yew::prelude::*;
 #[styled_component(ThemeSwitchBar)]
 pub fn theme_switch_bar() -> Html {
     let theme_ctx = use_context::<ThemeContext>().unwrap();
-    let sliding_bar_offset_pos = if &theme_ctx.theme == &Theme::Dark {
-        "50%"
+    let mobile_sliding_bar_offset_pos = if &theme_ctx.theme == &Theme::Dark {
+        "100%"
     } else {
         "0"
+    };
+    let pc_sliding_bar_offset_pos = if &theme_ctx.theme == &Theme::Dark {
+        "-100%"
+    } else {
+        "-190%"
     };
     let style = css!(
         r#"
@@ -23,7 +28,7 @@ pub fn theme_switch_bar() -> Html {
 
         .sliding-block {
             position: absolute;
-            top: ${offset};
+            transform: translateY(${pc_offset});
             left: 0;
             width: 54px;
             height: 86px;
@@ -47,20 +52,23 @@ pub fn theme_switch_bar() -> Html {
             height: 43px;
             display: flex;
             align-items: center;
+            margin-top: 33px;
 
             .switch-bar {
                 width: 50%;
+                height: 100%;
             }
 
             .sliding-block {
                 width: 50%;
                 top: 0;
                 height: 100%;
-                left: ${offset};
+                transform: translateX(${mobile_offset});
             }
         }
     "#,
-        offset = sliding_bar_offset_pos
+        pc_offset = pc_sliding_bar_offset_pos,
+        mobile_offset = mobile_sliding_bar_offset_pos
     );
 
     let handle_switch_bar_click = |theme: Theme| -> Callback<MouseEvent> {
