@@ -46,3 +46,11 @@ pub fn by_reactive<T>(mobile: T, pc: T) -> T {
         pc
     }
 }
+
+pub fn with_reactive_source(source: String) -> String {
+    if is_on_mobile() {
+        format!("$mobile_{}", source)
+    } else {
+        source
+    }
+}

@@ -2,6 +2,7 @@ use global::theme_context::ThemeContext;
 use material_yew::MatIconButton;
 use stylist::{style, yew::styled_component};
 use utils::resource::{with_assets, with_assets_by_theme};
+use utils::theme::with_reactive_source;
 use yew::prelude::*;
 
 #[derive(Properties, Clone, PartialEq)]
@@ -11,6 +12,8 @@ pub struct ImageProps {
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct ThemeImageProps {
+    #[prop_or(false)]
+    pub is_reactive: bool,
     pub source: &'static str,
 }
 
@@ -22,6 +25,8 @@ pub struct IconProps {
     pub size: i32,
     #[prop_or(String::from(""))]
     pub style: String,
+    #[prop_or_default]
+    pub onclick: Option<Callback<MouseEvent>>,
 }
 
 #[derive(Properties, Clone, PartialEq)]
@@ -29,6 +34,8 @@ pub struct BaseImageProps {
     pub source: &'static str,
     #[prop_or(false)]
     pub has_theme: bool,
+    #[prop_or(false)]
+    pub is_reactive: bool,
     #[prop_or(String::from(""))]
     pub style: String,
 }
@@ -36,10 +43,15 @@ pub struct BaseImageProps {
 #[function_component(BaseImage)]
 fn base_image(props: &BaseImageProps) -> Html {
     let theme_ctx = use_context::<ThemeContext>().unwrap();
-    let source = if props.has_theme {
-        with_assets_by_theme(props.source, &theme_ctx.theme)
+    let source = if props.is_reactive {
+        with_reactive_source(props.source.to_string())
     } else {
-        with_assets(props.source)
+        props.source.to_string()
+    };
+    let source = if props.has_theme {
+        with_assets_by_theme(&source, &theme_ctx.theme)
+    } else {
+        with_assets(&source)
     };
 
     html! {
@@ -57,7 +69,7 @@ pub fn image(props: &ImageProps) -> Html {
 #[function_component(ThemeImage)]
 pub fn theme_image(props: &ThemeImageProps) -> Html {
     html! {
-        <BaseImage source={props.source} has_theme=true />
+        <BaseImage source={props.source} has_theme=true is_reactive={props.is_reactive} />
     }
 }
 
@@ -79,9 +91,13 @@ pub fn icon(props: &IconProps) -> Html {
         size = props.size,
     )
     .unwrap();
+    let onclick_callback = match props.onclick.clone() {
+        Some(callback) => callback,
+        None => Callback::noop(),
+    };
 
     html! {
-        <div class={vec![wrapper_style.get_class_name().to_string(), props.style.clone()]}>
+        <div onclick={onclick_callback} class={vec![wrapper_style.get_class_name().to_string(), props.style.clone()]}>
             <MatIconButton>
                 <BaseImage has_theme={props.has_theme} source={props.source} style={style.to_string()} />
             </MatIconButton>

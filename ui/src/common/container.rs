@@ -19,7 +19,10 @@ pub fn container(props: &ContainerProps) -> Html {
         }
 
         @media (max-width: 600px) {
-            width: 100%;
+            .container-box {
+                width: 100%;
+                padding: 0 22px;
+            }
         }
    "
     );
