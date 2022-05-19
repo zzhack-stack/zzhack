@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="331px" height="223px" viewBox="0 0 331 223" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 2</title>
+    <defs>
+        <radialGradient cx="104.307787%" cy="111.952154%" fx="104.307787%" fy="111.952154%" r="175.869609%" gradientTransform="translate(1.043078,1.119522),scale(0.673716,1.000000),rotate(-147.562852),translate(-1.043078,-1.119522)" id="radialGradient-1">
+            <stop stop-color="#FECDC9" stop-opacity="0.8" offset="0%"></stop>
+            <stop stop-color="#BFF7F2" stop-opacity="0.7" offset="63.4670017%"></stop>
+            <stop stop-color="#A8C4FB" stop-opacity="0.6" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="dark/V4_home_mobile" transform="translate(-22.000000, -184.000000)">
+            <g id="Group-2" transform="translate(22.000000, 184.000000)">
+                <rect id="Rectangle" fill="url(#radialGradient-1)" x="0" y="0" width="331" height="223" rx="15"></rect>
+                <text id="Do-more-useless-thin" font-family="JCfg, PilGi" font-size="28" font-weight="normal" fill="#3F3D55">
+                    <tspan x="26" y="116">Do more useless things</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>
