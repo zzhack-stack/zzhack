@@ -13,16 +13,20 @@
     --card-color: #fff;
     --mask-color: rgba(0, 0, 0, 0.45);
     --shallow-gray: rgba(112, 112, 112, 0.06);
+    --sub-text-color: rgba(63, 61, 85, 0.63);
+    --primary-shadow-color: rgb(127 214 194 / 22%);
   }
 
   .dark {
     --primary-color: #7ECCB4;
+    --primary-shadow-color: rgb(127 214 194 / 22%);
     --base-color: #31363F;
     --underlay-color: #24292E;
     --text-color: #D6D8DA;
     --card-color: #31363F;
     --mask-color: rgba(0, 0, 0, 0.83);
     --shallow-gray: rgba(216, 216, 216, 0.08);
+    --sub-text-color: #57606A;
   }
 }
 
