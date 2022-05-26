@@ -1,3 +1,4 @@
+use crate::image::Icon;
 use crate::modal::{
     modal_action::{ModalAction, ModalActionProps},
     modal_content::{ModalContent, ModalContentProps},
@@ -70,6 +71,8 @@ pub struct ModalProps {
     pub children: ChildrenRenderer<ModalVariant>,
     pub is_visible: UseStateHandle<bool>,
     pub title: &'static str,
+    #[prop_or_default]
+    pub subtitle: Option<&'static str>,
 }
 
 #[styled_component(Modal)]
@@ -94,14 +97,14 @@ pub fn modal(props: &ModalProps) -> Html {
         position: absolute;
         left: 0;
         top: 0;
-        z-index: 2;
+        z-index: 10;
         display: flex;
         justify-content: center;
         align-items: center;
         transition:1s opacity ease-out;
         opacity: ${opacity};
 
-        .modal_box {
+        .modal-box {
             background: var(--card-color);
             border-radius: 10px;
             width: fit-content;
@@ -109,6 +112,7 @@ pub fn modal(props: &ModalProps) -> Html {
             min-width: 240px;
             position: relative;
             z-index: 3;
+            position: relative;
         }
 
         .modal-title, .modal-content {
@@ -120,6 +124,20 @@ pub fn modal(props: &ModalProps) -> Html {
             justify-content: flex-end;
         }
 
+        .close-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 10;
+            display: none;
+        }
+
+        .modal-subtitle {
+            font-size: 14px;
+            color: var(--sub-text-color);
+            font-weight: 400;
+        }
+
         .mask {
             display: ${display} !important;
             width: 100%;
@@ -129,23 +147,48 @@ pub fn modal(props: &ModalProps) -> Html {
             top: 0;
             background: var(--mask-color);
         }
+
+        @media (max-width: 600px) {
+            .modal-box {
+                margin: 0 30px;
+            }
+
+            .modal-subtitle {
+                font-size: 12px;
+            }
+
+            .close-btn {
+                display: block;
+            }
+        }
     "#,
         opacity = if *props.is_visible { 1 } else { 0 },
         display = if *props.is_visible { "flex" } else { "none" },
     );
-
     let handle_mask_click = {
         let visible = props.is_visible.clone();
 
         Callback::from(move |_| visible.set(false))
     };
+    let render_subtitle = match props.subtitle {
+        Some(subtitle) => html! {
+            <div class="modal-subtitle">
+                {subtitle}
+            </div>
+        },
+        None => html! {},
+    };
 
     let render_component = html! {
         <div class={wrapper_style}>
-            <div class="mask" onclick={handle_mask_click} />
-            <div class="modal_box" onclick={Callback::from(|e:MouseEvent| e.prevent_default())}>
+            <div class="mask" onclick={handle_mask_click.clone()} />
+            <div class="modal-box" onclick={Callback::from(|e:MouseEvent| e.prevent_default())}>
+                <div class="close-btn">
+                    <Icon source="close_btn.svg" size={20} onclick={handle_mask_click.clone()} />
+                </div>
                 <h2 class="modal-title">
                     {props.title}
+                    {render_subtitle}
                 </h2>
                 <div class="modal-content">
                     { get_single_ele_from_vec_by_default(&nodes, "content") }

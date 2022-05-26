@@ -19,7 +19,11 @@ impl Reducible for ThemeState {
         match action {
             ThemeAction::UpdateTheme(theme) => {
                 ThemeService::from_storage().set_theme(&theme);
-                Rc::from(ThemeState { theme })
+
+                // If the theme is auto, convert auto to actually theme before dispatch theme in components tree
+                Rc::from(ThemeState {
+                    theme: ThemeService::convert_auto_to_actually_theme(theme),
+                })
             }
         }
     }
@@ -37,7 +41,9 @@ pub fn theme_provider(props: &ThemeProviderProps) -> Html {
     let theme = use_reducer_eq(|| {
         let theme = ThemeService::from_storage().get_theme().clone();
 
-        ThemeState { theme }
+        ThemeState {
+            theme: ThemeService::convert_auto_to_actually_theme(theme),
+        }
     });
 
     html! {

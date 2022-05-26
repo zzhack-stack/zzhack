@@ -2,6 +2,7 @@
 pub enum Theme {
     Dark,
     Light,
+    Auto,
 }
 
 impl Theme {
@@ -9,6 +10,7 @@ impl Theme {
         match self {
             Theme::Dark => "dark",
             Theme::Light => "light",
+            Theme::Auto => "auto",
         }
     }
 
@@ -16,6 +18,7 @@ impl Theme {
         match theme {
             "dark" => Theme::Dark,
             "light" => Theme::Light,
+            "auto" => Theme::Auto,
             _ => Theme::Light,
         }
     }

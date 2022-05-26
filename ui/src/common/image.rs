@@ -15,6 +15,8 @@ pub struct ThemeImageProps {
     #[prop_or(false)]
     pub is_reactive: bool,
     pub source: &'static str,
+    #[prop_or(String::from(""))]
+    pub style: String,
 }
 
 #[derive(Properties, Clone, PartialEq)]
@@ -69,7 +71,7 @@ pub fn image(props: &ImageProps) -> Html {
 #[function_component(ThemeImage)]
 pub fn theme_image(props: &ThemeImageProps) -> Html {
     html! {
-        <BaseImage source={props.source} has_theme=true is_reactive={props.is_reactive} />
+        <BaseImage source={props.source} has_theme=true is_reactive={props.is_reactive} style={props.style.clone()} />
     }
 }
 

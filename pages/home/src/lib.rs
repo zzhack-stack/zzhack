@@ -7,9 +7,14 @@ pub fn home() -> Html {
     let style = use_style!(
         r"
         .banner {
+            width: 100%;
             display: flex;
             justify-content: center;
             margin-top: 63px;
+        }
+
+        .banner > img {
+            width: 100%;
         }
 
         @media (max-width: 600px) {

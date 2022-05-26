@@ -30,7 +30,7 @@ impl ThemeService {
 
         body.set_class_name(self.pool.theme.clone().into_str());
     }
-    pub fn get_theme_from_OS() -> Theme {
+    pub fn get_theme_follow_os_from_storage() -> Theme {
         let is_dark_theme = web_sys::window()
             .unwrap()
             .match_media("(prefers-color-scheme: dark)")
@@ -45,13 +45,19 @@ impl ThemeService {
         }
     }
 
+    pub fn convert_auto_to_actually_theme(theme: Theme) -> Theme {
+        match theme {
+            Theme::Auto => ThemeService::get_theme_follow_os_from_storage(),
+            _ => theme,
+        }
+    }
+
     pub fn get_theme_from_storage() -> Theme {
         let local_storage = web_sys::window().unwrap().local_storage().unwrap().unwrap();
 
         match local_storage.get_item(THEME_KEY).unwrap() {
             Some(theme_literal) => Theme::from(&theme_literal),
             None => {
-                // TODO: following OS theme by default
                 local_storage
                     .set_item(THEME_KEY, Theme::Light.into_str())
                     .unwrap();
@@ -67,7 +73,7 @@ impl ThemeService {
 
     fn update_theme(&mut self) {
         let theme = ThemeService::get_theme_from_storage();
-        self.pool.theme = theme;
+        self.pool.theme = ThemeService::convert_auto_to_actually_theme(theme);
         self.mount_on_dom();
     }
 
@@ -81,7 +87,8 @@ impl ThemeService {
 }
 
 pub static mut THEME_POOL: Lazy<ThemePool> = Lazy::new(|| {
-    let theme = ThemeService::get_theme_from_storage();
+    let theme =
+        ThemeService::convert_auto_to_actually_theme(ThemeService::get_theme_from_storage());
 
     ThemePool { theme }
 });
