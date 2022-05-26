@@ -251,7 +251,9 @@ dependencies = [
 name = "global"
 version = "0.1.0"
 dependencies = [
+ "log",
  "services",
+ "wasm-logger",
  "yew",
 ]
 
