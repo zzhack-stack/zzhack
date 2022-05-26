@@ -8,3 +8,5 @@ edition = "2021"
 [dependencies]
 yew = "0.19"
 services = {path = "../services"}
+wasm-logger = "0.2.0"
+log = "0.4.17"
