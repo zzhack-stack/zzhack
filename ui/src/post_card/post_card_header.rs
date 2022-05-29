@@ -1,0 +1,43 @@
+use crate::label::Label;
+use utils::use_style;
+use yew::prelude::*;
+
+#[function_component(PostCardHeader)]
+pub fn post_card_header() -> Html {
+    let style = use_style!(
+        r"
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+        }
+
+        .author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-name {
+            font-weight: bold;
+            font-size: 22px;
+            color: var(--text-color);
+            margin-left: 8px;
+        }
+    "
+    );
+
+    html! {
+        <div class={style}>
+            <div class="author">
+                <img src="images/avatar.png" class="avatar" alt="avatar" />
+                <span class="author-name">{"Mist"}</span>
+            </div>
+            <Label text="foo" />
+        </div>
+    }
+}

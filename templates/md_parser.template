@@ -1,0 +1,5 @@
+use std::*;
+
+pub static POSTS: &[&'static str; {{TRAVERSE_COUNT}}] = &[
+    {{TEMPLATE}}
+];

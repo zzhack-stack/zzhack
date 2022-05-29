@@ -26,6 +26,13 @@ pub fn footer() -> Html {
         .text {
             font-size: 14px;
         }
+
+        @media (max-width: 600px) {
+            .contacts {
+                height: auto;
+                padding-bottom: 30px;
+            }
+        }
     "
     );
 

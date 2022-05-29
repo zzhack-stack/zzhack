@@ -10,3 +10,4 @@ yew = "0.19"
 ui = {path = "../../ui"}
 utils = {path = "../../utils"}
 stylist = {version = "0.10", features = ["yew_integration"]}
+services = {path = "../../services"}
