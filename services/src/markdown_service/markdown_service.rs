@@ -9,6 +9,7 @@ use pulldown_cmark::CodeBlockKind::{Fenced, Indented};
 use pulldown_cmark::{html, Event, Options, Parser, Tag};
 use serde::Deserialize;
 use serde_json;
+use std::path::Path;
 use syntect::highlighting::ThemeSet;
 use syntect::html::highlighted_html_for_string;
 use syntect::parsing::SyntaxReference;
@@ -21,10 +22,11 @@ pub struct MarkdownService {
     value: String,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone, Debug, PartialEq)]
 pub struct PostMetadata {
     pub cover: String,
-    pub tag: Vec<String>,
+    pub tag: String,
+    pub title: String,
 }
 
 #[derive(Clone)]
@@ -50,6 +52,23 @@ impl MarkdownService {
         }
     }
 
+    fn parse_source_path(path: &str) -> String {
+        let path = Path::new(path);
+        let filename = path.file_name().unwrap().to_str().unwrap();
+
+        format!("sources/{}", filename)
+    }
+
+    /**
+     * The post metadata is looks like:
+     *
+     * ```metadata
+     * {
+     * "cover": "https://zzhack.fun",
+     * "tag": ["zzhack", "zzhack.fun"]
+     * }
+     * ```
+     */
     pub fn extract_metadata(&self) -> Option<PostMetadata> {
         let mut metadata: Vec<String> = vec![];
         let mut traverse_kind = TraverseKind::Nope;
@@ -81,7 +100,9 @@ impl MarkdownService {
         }
 
         let parsed_metadata = metadata.join("");
-        let metadata: PostMetadata = serde_json::from_str(parsed_metadata.as_str()).unwrap();
+        let mut metadata: PostMetadata = serde_json::from_str(parsed_metadata.as_str()).unwrap();
+
+        metadata.cover = MarkdownService::parse_source_path(&metadata.cover);
 
         return Some(metadata);
     }
