@@ -22,20 +22,20 @@ pub fn theme_switch_bar() -> Html {
     };
     let style = css!(
         r#"
-        width: 54px;
-        height: 162px;
+        width: 43px;
+        height: 130px;
         background: var(--primary-color);
         box-shadow: 0px 8px 24px 0px rgba(149, 157, 165, 0.5);
-        border-radius: 16px;
+        border-radius: 13px;
         position: relative;
 
         .sliding-block {
             position: absolute;
             transform: translateY(${pc_offset});
             left: 0;
-            width: 54px;
-            height: 86px;
-            border-radius: 16px;
+            width: 43px;
+            height: 69px;
+            border-radius: 13px;
             background: #fff;
             transition: all 0.3s ease-out;
         }
@@ -48,6 +48,16 @@ pub fn theme_switch_bar() -> Html {
             justify-content: center;
             align-items: center;
             cursor: pointer;
+        }
+
+        .light-mode {
+            width: 25px;
+            height: 25px;
+        }
+
+        .dark-mode {
+            width: 14.3px;
+            height: 14.3px;
         }
 
         @media (max-width: 600px) {
@@ -83,10 +93,10 @@ pub fn theme_switch_bar() -> Html {
     html! {
         <div class={style}>
             <div onclick={handle_switch_bar_click.clone()(Theme::Light)} class="light-bar switch-bar">
-                <img src="/images/light_mode.svg" />
+                <img class="light-mode" src="/images/light_mode.svg" />
             </div>
             <div onclick={handle_switch_bar_click(Theme::Dark)} class="dark-bar switch-bar">
-                <img src="/images/dark_mode.svg" />
+                <img class="dark-mode" src="/images/dark_mode.svg" />
             </div>
             <div class="sliding-block" />
         </div>

@@ -15,7 +15,7 @@ pub fn container(props: &ContainerProps) -> Html {
         justify-content: center;
 
         .container-box {
-            min-width: 1020px;
+            width: 816px;
         }
 
         @media (max-width: 600px) {

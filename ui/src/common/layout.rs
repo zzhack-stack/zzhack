@@ -24,7 +24,7 @@ pub fn base_layout(props: &BaseLayoutProps) -> Html {
         }
 
         .page-outlet {
-            min-height: calc(100vh - 209px);
+            min-height: calc(100vh - 100px);
         }
 
         @media (max-width: 600px) {

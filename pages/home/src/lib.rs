@@ -12,7 +12,7 @@ pub fn home() -> Html {
             width: 100%;
             display: flex;
             justify-content: center;
-            margin-top: 63px;
+            margin-top: 40px;
         }
 
         .banner > img {

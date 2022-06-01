@@ -1,3 +1,4 @@
+use post::Post;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -10,6 +11,8 @@ use projects::Projects;
 enum RootRoutes {
     #[at("/home")]
     Home,
+    #[at("/posts/:title")]
+    Post { title: String },
     #[at("/")]
     Root,
     #[at("/projects")]
@@ -26,6 +29,7 @@ fn switch(routes: &RootRoutes) -> Html {
         RootRoutes::Home | RootRoutes::Root => html! { <Home /> },
         RootRoutes::Projects => html! { <Projects /> },
         RootRoutes::About => html! { <About /> },
+        RootRoutes::Post { title } => html! {<Post encoded_title={title.clone()} />},
         RootRoutes::NotFound => html! { <NotFound />},
     }
 }
