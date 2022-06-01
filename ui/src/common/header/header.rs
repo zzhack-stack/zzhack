@@ -17,7 +17,7 @@ pub fn header() -> Html {
         width: 100%;
 
         .wrapper {
-            height: 70px;
+            height: 56px;
             justify-content: space-between;
         }
 
@@ -31,6 +31,7 @@ pub fn header() -> Html {
         }
 
         .tab {
+            font-size: 14px;
             margin: 0 15px;
         }
 
@@ -39,7 +40,7 @@ pub fn header() -> Html {
         }
 
         .header {
-            height: 70px;
+            height:56px;
             width: 100%;
             background: var(--base-color);
             position: relative;
@@ -104,21 +105,21 @@ pub fn header() -> Html {
                             <ThemeImage source="zzhack_logo.svg" />
                             <div class="tabs">
                                 <div class="tab">
-                                    <Link href="">{"Posts"}</Link>
+                                    <Link href="/home">{"Posts"}</Link>
                                 </div>
                                 <div class="tab">
-                                    <Link href="">{"Projects"}</Link>
+                                    <Link href="/projects">{"Projects"}</Link>
                                 </div>
                                 <div class="tab">
-                                    <Link href="">{"About"}</Link>
+                                    <Link href="/about">{"About"}</Link>
                                 </div>
                             </div>
                         </div>
                         <div class="right">
-                            <Icon source="setting.svg" size=30 onclick={handle_setting_click} />
-                            <Icon source="github.svg" size=30 />
+                            <Icon source="setting.svg" size=26 onclick={handle_setting_click} />
+                            <Icon source="github.svg" size=26 />
                             {only_render_on_mobile(html! {
-                                <Icon source="drawer.svg" size=30 onclick={handle_drawer_click} />
+                                <Icon source="drawer.svg" size=26 onclick={handle_drawer_click} />
                             })}
                         </div>
                     </div>

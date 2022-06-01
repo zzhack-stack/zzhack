@@ -7,9 +7,9 @@ use yew::prelude::*;
 pub fn footer() -> Html {
     let style = use_style!(
         r"
-        height: 139px;
         width: 100%;
         background: var(--base-color);
+        padding-bottom: 18px;
 
         .contacts {
             margin-top: 31px;

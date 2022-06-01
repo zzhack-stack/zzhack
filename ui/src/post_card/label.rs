@@ -10,22 +10,22 @@ pub struct LabelProps {
 pub fn label(props: &LabelProps) -> Html {
     let style = use_style!(
         r"
-        padding: 8px 11px;
+        padding: 7px 10px;
         background: var(--label-color);
-        height: 39px;
+        height: 31px;
         border-radius: 8px;
         box-sizing: border-box;
         display: flex;
         align-items: center;
 
         .label-icon {
-            width: 17px;
-            height: 17px;
+            width: 13.9px;
+            height: 13.9px;
             margin-right: 9px;
         }
 
         .label-text {
-            font-size: 16px;
+            font-size: 12.48px;
             color: var(--text-color);
         }
     "

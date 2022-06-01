@@ -13,8 +13,8 @@ pub fn post_card_header() -> Html {
 
 
         .avatar {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
         }
 
         .author {
@@ -24,7 +24,7 @@ pub fn post_card_header() -> Html {
 
         .author-name {
             font-weight: bold;
-            font-size: 22px;
+            font-size: 17px;
             color: var(--text-color);
             margin-left: 8px;
         }
