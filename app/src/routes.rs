@@ -1,4 +1,5 @@
 use post::Post;
+use ui::layout::BaseLayout;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -6,23 +7,7 @@ use about::About;
 use home::Home;
 use not_found::NotFound;
 use projects::Projects;
-
-#[derive(Clone, Routable, PartialEq, Debug)]
-enum RootRoutes {
-    #[at("/home")]
-    Home,
-    #[at("/posts/:title")]
-    Post { title: String },
-    #[at("/")]
-    Root,
-    #[at("/projects")]
-    Projects,
-    #[at("/about")]
-    About,
-    #[not_found]
-    #[at("/404")]
-    NotFound,
-}
+use router::RootRoutes;
 
 fn switch(routes: &RootRoutes) -> Html {
     match routes {
@@ -38,7 +23,9 @@ fn switch(routes: &RootRoutes) -> Html {
 pub fn route_outlet() -> Html {
     html! {
         <BrowserRouter>
-            <Switch<RootRoutes> render={Switch::render(switch)} />
+            <BaseLayout>
+                <Switch<RootRoutes> render={Switch::render(switch)} />
+            </BaseLayout>
         </BrowserRouter>
     }
 }
