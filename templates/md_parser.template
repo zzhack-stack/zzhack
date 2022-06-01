@@ -1,5 +1,10 @@
 use std::*;
 
-pub static POSTS: &[&'static str; {{TRAVERSE_COUNT}}] = &[
+pub struct PostFile {
+    pub content: &'static str,
+    pub modified_time: u128
+}
+
+pub static POSTS: &[PostFile; {{TRAVERSE_COUNT}}] = &[
     {{TEMPLATE}}
 ];
