@@ -27,8 +27,9 @@ pub fn footer() -> Html {
             font-size: 14px;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 600px) {            
             .contacts {
+                flex-direction: column;
                 height: auto;
                 padding-bottom: 30px;
             }

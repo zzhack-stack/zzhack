@@ -28,10 +28,6 @@ pub fn render_code_block(code_block: String) -> String {
     )
 }
 
-pub fn render_text(text: String) -> String {
-    format!("<span class='markdown-text'>{}</span>", text)
-}
-
 pub fn render_image(url: String, alt: String) -> String {
     format!(
         "<div class='markdown-img-container'>

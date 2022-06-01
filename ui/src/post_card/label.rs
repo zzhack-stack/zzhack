@@ -33,7 +33,7 @@ pub fn label(props: &LabelProps) -> Html {
 
     html! {
         <div class={style}>
-            <img class="label-icon" src="images/label.png" />
+            <img class="label-icon" src="/images/label.png" />
             <span class="label-text">
                 {props.text}
             </span>

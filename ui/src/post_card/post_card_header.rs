@@ -34,7 +34,7 @@ pub fn post_card_header() -> Html {
     html! {
         <div class={style}>
             <div class="author">
-                <img src="images/avatar.png" class="avatar" alt="avatar" />
+                <img src="/images/avatar.png" class="avatar" alt="avatar" />
                 <span class="author-name">{"Mist"}</span>
             </div>
             <Label text="foo" />

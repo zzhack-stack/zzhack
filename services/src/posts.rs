@@ -8,7 +8,7 @@ pub struct PostFile {
 pub static POSTS: &[PostFile; 1] = &[
     PostFile {
     content: include_str!("../../posts/foo.md"),
-    modified_time: 1653646586941
+    modified_time: 1654077362624
 },
 
 ];

@@ -1,7 +1,9 @@
 use crate::markdown_service::markdown_service::{MarkdownService, PostMetadata};
 use crate::posts::POSTS;
-use chrono::{NaiveDateTime, Utc};
+use chrono::NaiveDateTime;
+use once_cell::sync::Lazy;
 use regex::Regex;
+use urlencoding::encode;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Post {
@@ -11,11 +13,23 @@ pub struct Post {
     pub modified_time: String,
 }
 
-pub struct PostService;
+pub struct PostService {
+    posts: Vec<Post>,
+}
 
 const MAX_DESC_LENGTH: usize = 200;
 
 impl PostService {
+    pub fn new() -> PostService {
+        let posts = PostService::read_posts_into_memo();
+
+        PostService { posts }
+    }
+
+    pub fn get_posts(&self) -> Vec<Post> {
+        self.posts.clone()
+    }
+
     pub fn trim_useless_symbol(content: &'static str) -> String {
         Regex::new(r#"[^\u4E00-\u9FFFa-zA-Z]"#)
             .unwrap()
@@ -23,7 +37,13 @@ impl PostService {
             .into_owned()
     }
 
-    pub fn get_posts() -> Vec<Post> {
+    pub fn find_post_by_encoded_title(&self, title: &str) -> Option<&Post> {
+        self.posts
+            .iter()
+            .find(|post| encode(post.metadata.title.as_str()) == title)
+    }
+
+    fn read_posts_into_memo() -> Vec<Post> {
         POSTS
             .into_iter()
             .map(|post| {
@@ -53,3 +73,5 @@ impl PostService {
             .collect::<Vec<Post>>()
     }
 }
+
+pub static POST_SERVICE: Lazy<PostService> = Lazy::new(|| PostService::new());

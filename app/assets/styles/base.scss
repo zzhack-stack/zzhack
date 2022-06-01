@@ -18,9 +18,11 @@
     --card-shadow-color: rgba(149, 157, 165, 0.2);
     --label-color: rgba(126, 204, 180, 0.36);
     --tip-color: rgba(63, 61, 85, 0.39);
+    --code-block-bg: #282c34;
   }
 
   .dark {
+    --code-block-bg: #282c34;
     --label-color: rgba(126, 204, 180, 0.36);
     --card-shadow-color: rgba(149, 157, 165, 0);
     --primary-color: #7ECCB4;

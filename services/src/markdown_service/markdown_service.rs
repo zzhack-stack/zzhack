@@ -54,9 +54,9 @@ impl MarkdownService {
 
     fn parse_source_path(path: &str) -> String {
         let path = Path::new(path);
-        let filename = path.file_name().unwrap().to_str().unwrap();
+        let filename = path.file_name().expect("Cannot parse filename of image, please make sure the image has a valid extension and file stem.").to_str().unwrap();
 
-        format!("sources/{}", filename)
+        format!("/sources/{}", filename)
     }
 
     /**
@@ -131,8 +131,15 @@ impl MarkdownService {
                 Event::End(Tag::Image(kind, url, title)) => {
                     if let TraverseKind::Image(alt) = traverse_kind.clone() {
                         traverse_kind = TraverseKind::Nope;
+                        let stringify_url = url.to_string();
 
-                        return Event::Html(render_image(url.to_string(), alt).into());
+                        return Event::Html(
+                            render_image(
+                                MarkdownService::parse_source_path(stringify_url.as_str()),
+                                alt,
+                            )
+                            .into(),
+                        );
                     }
 
                     traverse_kind = TraverseKind::Nope;
@@ -147,6 +154,11 @@ impl MarkdownService {
                         traverse_kind = TraverseKind::GitHubRenderBlock;
                         return Event::Start(Tag::CodeBlock(kind));
                     };
+
+                    if language == "metadata" {
+                        traverse_kind = TraverseKind::Metadata;
+                        return Event::Start(Tag::CodeBlock(kind));
+                    }
 
                     if language == "spotlight" {
                         traverse_kind = TraverseKind::Spotlight;
@@ -173,6 +185,7 @@ impl MarkdownService {
                             );
                             Event::Html(render_code_block(html).into())
                         }
+                        TraverseKind::Metadata => Event::Text("".into()),
                         TraverseKind::GitHubRenderBlock => {
                             let github_render_block: GitHubRenderBlock =
                                 serde_json::from_str(parsed_code.as_str()).unwrap();
@@ -210,6 +223,7 @@ impl MarkdownService {
                         TraverseKind::Heading(level) => {
                             Event::Html(render_heading(parsed_text, level).into())
                         }
+                        TraverseKind::Metadata => Event::Text("".into()),
                         _ => Event::Text(text),
                     }
                 }

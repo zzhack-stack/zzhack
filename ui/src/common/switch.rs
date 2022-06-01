@@ -1,7 +1,5 @@
 use global::theme_context::ThemeAction;
 use global::theme_context::ThemeContext;
-use services::post_service::PostService;
-use services::posts::POSTS;
 use services::theme_service::Theme;
 use stylist::yew::styled_component;
 use yew::prelude::*;
@@ -87,8 +85,6 @@ pub fn theme_switch_bar() -> Html {
     let handle_switch_bar_click = |theme: Theme| -> Callback<MouseEvent> {
         Callback::from(move |_| theme_ctx.dispatch(ThemeAction::UpdateTheme(theme.clone())))
     };
-
-    log::info!("{:?}", PostService::get_posts());
 
     html! {
         <div class={style}>
