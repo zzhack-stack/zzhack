@@ -813,6 +813,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "afab94fb28594581f62d981211a9a4d53cc8130bbcbbb89a0440d9b8e81a7746"
 
 [[package]]
+name = "router"
+version = "0.1.0"
+dependencies = [
+ "yew-router",
+]
+
+[[package]]
 name = "rustc_version"
 version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1142,6 +1149,7 @@ dependencies = [
  "global",
  "log",
  "material-yew",
+ "router",
  "services",
  "stylist",
  "urlencoding",
@@ -1149,6 +1157,7 @@ dependencies = [
  "wasm-logger",
  "web-sys",
  "yew",
+ "yew-router",
 ]
 
 [[package]]
@@ -1452,6 +1461,7 @@ dependencies = [
  "projects",
  "pulldown-cmark",
  "regex",
+ "router",
  "serde",
  "serde_json",
  "services",

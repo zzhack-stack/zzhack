@@ -10,6 +10,6 @@ web-sys = { version = "0.3", features = ["HtmlMetaElement", "Document", "Element
 js-sys = "0.3.55"
 global = {path = "../global"}
 services = {path = "../services"}
-yew = "0.19"
+yew = "0.19.3"
 chrono = "0.4.19"
 wasm-bindgen = "0.2.80"

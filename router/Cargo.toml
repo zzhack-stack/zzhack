@@ -1,12 +1,9 @@
 [package]
-name = "global"
+name = "router"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-yew = "0.19.3"
-services = {path = "../services"}
-wasm-logger = "0.2.0"
-log = "0.4.17"
+yew-router = "0.16.0"
