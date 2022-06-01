@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-yew = "0.19"
+yew = "0.19.3"
 stylist = {version = "0.10", features = ["yew_integration"]}
 utils = {path = "../utils"}
 global = {path = "../global"}
@@ -16,3 +16,5 @@ wasm-logger = "0.2.0"
 log = "0.4.17"
 material-yew = { git = "https://github.com/hamza1311/material-yew", features = ["full"] }
 urlencoding = "2.1.0"
+router = {path = "../router"}
+yew-router = "0.16.0"

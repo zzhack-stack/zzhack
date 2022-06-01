@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-yew = "0.19"
+yew = "0.19.3"
 stylist = {version = "0.10", features = ["yew_integration"]}
 ui = {path = "../../ui"}
 services = {path = "../../services"}
