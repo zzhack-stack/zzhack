@@ -1,10 +1,11 @@
 use crate::link::Link;
+use router::RootRoutes;
 use utils::use_style;
 use yew::prelude::*;
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct DrawerProps {
-    pub lnk: &'static str,
+    pub lnk: RootRoutes,
     pub children: Children,
 }
 
@@ -18,7 +19,7 @@ pub fn drawer_item(props: &DrawerProps) -> Html {
 
     html! {
         <div class={style}>
-            <Link href={props.lnk}>{props.children.clone()}</Link>
+            <Link href={props.lnk.clone()}>{props.children.clone()}</Link>
         </div>
     }
 }

@@ -16,7 +16,6 @@ where
                 console_log!("{}", err);
                 panic!("{}", err)
             }
-            _ => panic!("foo"),
         }
     }
 }

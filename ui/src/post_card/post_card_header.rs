@@ -2,8 +2,13 @@ use crate::label::Label;
 use utils::use_style;
 use yew::prelude::*;
 
+#[derive(Properties, Clone, PartialEq)]
+pub struct PostCardHeaderProps {
+    pub label: String,
+}
+
 #[function_component(PostCardHeader)]
-pub fn post_card_header() -> Html {
+pub fn post_card_header(props: &PostCardHeaderProps) -> Html {
     let style = use_style!(
         r"
         display: flex;
@@ -37,7 +42,7 @@ pub fn post_card_header() -> Html {
                 <img src="/images/avatar.png" class="avatar" alt="avatar" />
                 <span class="author-name">{"Mist"}</span>
             </div>
-            <Label text="foo" />
+            <Label text={props.label.clone()} />
         </div>
     }
 }

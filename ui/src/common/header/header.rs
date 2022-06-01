@@ -5,6 +5,7 @@ use crate::image::{Icon, ThemeImage};
 use crate::link::Link;
 use crate::modal::{modal::Modal, modal_content::ModalContent};
 use crate::theme_selector::ThemeSelector;
+use router::RootRoutes;
 use utils::resource::with_assets;
 use utils::theme::only_render_on_mobile;
 use utils::use_style;
@@ -34,12 +35,9 @@ pub fn header() -> Html {
             margin-left: 88px;
         }
 
-        .tab {
-            margin: 0 15px;
-        }
-
-        .tab a {
+        .tabs a {
             font-size: 14px;
+            margin: 0 15px;
         }
 
         .setting-icon {
@@ -101,25 +99,21 @@ pub fn header() -> Html {
     html! {
         <div class={style}>
             <Drawer is_open={is_open_drawer_handle}>
-                <DrawerItem lnk="/">{"Posts"}</DrawerItem>
-                <DrawerItem lnk="/projects">{"Projects"}</DrawerItem>
-                <DrawerItem lnk="/about">{"About"}</DrawerItem>
+                <DrawerItem lnk={RootRoutes::Home}>{"Posts"}</DrawerItem>
+                <DrawerItem lnk={RootRoutes::Projects}>{"Projects"}</DrawerItem>
+                <DrawerItem lnk={RootRoutes::About}>{"About"}</DrawerItem>
             </Drawer>
             <div class="header">
                 <Container>
                     <div class="wrapper">
                         <div class="left">
-                            <ThemeImage source="zzhack_logo.svg" />
+                            <Link href={RootRoutes::Home}>
+                                <ThemeImage source="zzhack_logo.svg" />
+                            </Link>
                             <div class="tabs">
-                                <div class="tab">
-                                    <Link href="/home">{"Posts"}</Link>
-                                </div>
-                                <div class="tab">
-                                    <Link href="/projects">{"Projects"}</Link>
-                                </div>
-                                <div class="tab">
-                                    <Link href="/about">{"About"}</Link>
-                                </div>
+                                <Link href={RootRoutes::Home}>{"Posts"}</Link>
+                                <Link href={RootRoutes::Projects}>{"Projects"}</Link>
+                                <Link href={RootRoutes::About}>{"About"}</Link>
                             </div>
                         </div>
                         <div class="right">

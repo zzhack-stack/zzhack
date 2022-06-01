@@ -17,6 +17,12 @@ pub struct PostService {
     posts: Vec<Post>,
 }
 
+#[derive(Clone)]
+pub enum FilterTag {
+    All,
+    Tag(String),
+}
+
 const MAX_DESC_LENGTH: usize = 200;
 
 impl PostService {
@@ -41,6 +47,32 @@ impl PostService {
         self.posts
             .iter()
             .find(|post| encode(post.metadata.title.as_str()) == title)
+    }
+
+    pub fn get_tags(&self) -> Vec<String> {
+        let mut tags = vec![];
+
+        self.posts.iter().for_each(|post| {
+            let is_exist = tags.contains(&post.metadata.tag);
+
+            if !is_exist {
+                tags.push(post.metadata.tag.clone());
+            }
+        });
+
+        tags
+    }
+
+    pub fn filter_post_by_tag(&self, tag: FilterTag) -> Vec<Post> {
+        let posts = self.posts.clone();
+
+        match tag {
+            FilterTag::All => posts,
+            FilterTag::Tag(tag) => posts
+                .into_iter()
+                .filter(|post| post.metadata.tag == tag)
+                .collect::<Vec<Post>>(),
+        }
     }
 
     fn read_posts_into_memo() -> Vec<Post> {

@@ -15,7 +15,7 @@ pub fn post(props: &PostProps) -> Html {
         .find_post_by_encoded_title(&props.encoded_title)
         .unwrap();
     let style = style!(
-        r"
+        r#"
         width: 660px;
         height: 100%;
         padding: 63px 0;
@@ -39,7 +39,7 @@ pub fn post(props: &PostProps) -> Html {
         .cover {
             width: 660px;
             height: 258px;
-            background-image: ${cover};
+            background-image: url("${cover}");
             background-repeat: no-repeat;
             background-size: cover;
             background-position: 50% 50%;
@@ -48,8 +48,17 @@ pub fn post(props: &PostProps) -> Html {
             transition: all 0.2s ease-in;
             box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;        
         }
-    ",
-        cover = format!("url(\"{}\")", post.metadata.cover)
+
+        @media (max-width: 600px) {
+            width: 100%;
+
+            .cover {
+                width: 100%;
+                height: 180px;
+            }
+        }
+    "#,
+        cover = post.metadata.cover.clone()
     )
     .unwrap();
     let post_body = MarkdownService::new(post.raw_content.clone().to_string());
@@ -58,7 +67,7 @@ pub fn post(props: &PostProps) -> Html {
     html! {
         <div class={style}>
             <div class="post-header">
-                <PostCardHeader />
+                <PostCardHeader label={post.metadata.tag.clone()} />
             </div>
             <div class="modified-at">{&post.modified_time}</div>
             <div class="cover" />
