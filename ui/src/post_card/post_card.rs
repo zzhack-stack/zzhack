@@ -1,8 +1,9 @@
 use crate::link::Link;
 use crate::post_card_header::PostCardHeader;
+use router::RootRoutes;
 use services::post_service::Post;
+use stylist::style;
 use urlencoding::encode;
-use utils::use_style;
 use yew::prelude::*;
 
 #[derive(Properties, Clone, PartialEq)]
@@ -12,10 +13,10 @@ pub struct PostCardProps {
 
 #[function_component(PostCard)]
 pub fn post_card(props: &PostCardProps) -> Html {
-    let style = use_style!(
-        r"
+    let style = style!(
+        r#"
         width: 250px;
-        height: 340px;
+        height: 350px;
         background: var(--base-color);
         box-shadow: 0px 7px 43px 0px var(--card-shadow-color);
         border-radius: 17.33px;
@@ -23,6 +24,7 @@ pub fn post_card(props: &PostCardProps) -> Html {
         padding: 18px;
         margin-bottom: 79px;
         cursor: pointer;
+        margin-right: 38px;
 
         .cover {
             width: 236px;
@@ -30,6 +32,10 @@ pub fn post_card(props: &PostCardProps) -> Html {
             border-radius: 10px;
             margin: 13px -11px;
             margin-bottom: 0;
+            background-image: url("${cover}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 50% 50%;
         }
 
         .post-preview__title {
@@ -37,6 +43,7 @@ pub fn post_card(props: &PostCardProps) -> Html {
             font-weight: bold;
             color: var(--text-color);
             line-height: 26px;
+            margin-top: 17px;
         }
 
         .post-preview__body {
@@ -59,16 +66,28 @@ pub fn post_card(props: &PostCardProps) -> Html {
             line-height: 15px;
             margin-top: 10px;
         }
-    "
-    );
+
+        @media (max-width: 600px) {
+            width: 100%;
+            margin-bottom: 33px;
+
+            .cover {
+                width: 100%;
+                margin: 13px 0;
+            }
+        }
+    "#,
+        cover = props.post.metadata.cover.clone()
+    )
+    .unwrap();
     let post_encoded_title = encode(props.post.metadata.title.as_str());
 
     html! {
         <div class={style}>
-            <Link dynamic_href={format!("/posts/{}", post_encoded_title)}>
+            <Link href={RootRoutes::Post{title: post_encoded_title.to_string()}}>
                 <div class="wrapper">
-                    <PostCardHeader />
-                    <img class="cover" src={props.post.metadata.cover.clone()} />
+                    <PostCardHeader label={props.post.metadata.tag.clone()} />
+                    <div class="cover" />
                     <div class="post-preview">
                         <div class="post-preview__title">
                             {&props.post.metadata.title}

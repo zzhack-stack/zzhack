@@ -1,7 +1,7 @@
 ```metadata
 {
     "cover": "../app/assets/images/into_the_wild.jpg",
-    "tag": "genesis",
+    "tag": "asd",
     "title": "My life foo bar"
 }
 ```

@@ -1,5 +1,4 @@
 use services::theme_service::Theme;
-use services::theme_service::ThemeService;
 use stylist::style;
 use yew::prelude::*;
 

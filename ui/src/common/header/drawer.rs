@@ -34,7 +34,7 @@ pub fn drawer(props: &DrawerProps) -> Html {
             background: var(--shallow-gray);
         }
     ",
-        translate = if *props.is_open { "70px" } else { "-100%" },
+        translate = if *props.is_open { "56px" } else { "-100%" },
     );
     let mask_style = css!(
         r"

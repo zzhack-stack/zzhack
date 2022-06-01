@@ -3,7 +3,7 @@ use yew::prelude::*;
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct LabelProps {
-    pub text: &'static str,
+    pub text: String,
 }
 
 #[function_component(Label)]
@@ -35,7 +35,7 @@ pub fn label(props: &LabelProps) -> Html {
         <div class={style}>
             <img class="label-icon" src="/images/label.png" />
             <span class="label-text">
-                {props.text}
+                {&props.text}
             </span>
         </div>
     }
