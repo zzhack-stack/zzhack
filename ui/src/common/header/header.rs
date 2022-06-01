@@ -1,7 +1,7 @@
 use crate::container::Container;
 use crate::header::drawer::Drawer;
 use crate::header::drawer_item::DrawerItem;
-use crate::image::{Icon, Image, ThemeImage};
+use crate::image::{Icon, ThemeImage};
 use crate::link::Link;
 use crate::modal::{modal::Modal, modal_content::ModalContent};
 use crate::theme_selector::ThemeSelector;
@@ -26,13 +26,20 @@ pub fn header() -> Html {
             align-items: center;
         }
 
+        .left img {
+            height: 16px;
+        }
+
         .tabs {
             margin-left: 88px;
         }
 
         .tab {
-            font-size: 14px;
             margin: 0 15px;
+        }
+
+        .tab a {
+            font-size: 14px;
         }
 
         .setting-icon {

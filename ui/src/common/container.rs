@@ -16,6 +16,7 @@ pub fn container(props: &ContainerProps) -> Html {
 
         .container-box {
             width: 816px;
+            box-sizing: border-box;
         }
 
         @media (max-width: 600px) {

@@ -14,17 +14,17 @@ struct ThemeItemData {
 
 static THEME_ITEMS: &[ThemeItemData; 3] = &[
     ThemeItemData {
-        source: "images/light_mode_skeleton.png",
+        source: "/images/light_mode_skeleton.png",
         text: "Light",
         theme: Theme::Light,
     },
     ThemeItemData {
-        source: "images/dark_mode_skeleton.png",
+        source: "/images/dark_mode_skeleton.png",
         text: "Dark",
         theme: Theme::Dark,
     },
     ThemeItemData {
-        source: "images/auto_mode_skeleton.png",
+        source: "/images/auto_mode_skeleton.png",
         text: "Follow OS",
         theme: Theme::Auto,
     },

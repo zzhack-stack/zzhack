@@ -1,4 +1,4 @@
-use services::post_service::PostService;
+use services::post_service::POST_SERVICE;
 use ui::image::ThemeImage;
 use ui::post_card::post_card::PostCard;
 use utils::use_style;
@@ -33,6 +33,12 @@ pub fn home() -> Html {
                 width: 100%;
                 margin-top: 32px;
             }
+
+            .posts {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
         }
     "
     );
@@ -45,11 +51,13 @@ pub fn home() -> Html {
             <div class="labels">
             </div>
             <div class="posts">
-                {PostService::get_posts().into_iter().map(|post| {
-                    html! {
-                        <PostCard post={post} />
-                    }
-                }).collect::<Html>()}
+                {
+                    POST_SERVICE.get_posts().iter().map(|post| {
+                        html! {
+                            <PostCard post={post.clone()} />
+                        }
+                    }).collect::<Html>()
+                }
             </div>
         </div>
     }

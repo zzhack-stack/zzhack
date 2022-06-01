@@ -7,13 +7,6 @@
     &:hover {
         color: var(--mdc-theme-primary);
     }
-
-    &:hover::before {
-        content: '#';
-        position: absolute;
-        right: 100%;
-        margin-right: 10px;
-    }
 }
 
 .markdown-heading-anchor {
