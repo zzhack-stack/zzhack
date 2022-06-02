@@ -4,6 +4,7 @@ use crate::markdown_service::elements::render_heading;
 use crate::markdown_service::elements::render_spotlight;
 use crate::markdown_service::elements::GitHubRenderBlock;
 use crate::markdown_service::elements::{render_code_block, render_image};
+use crate::post_service::post_card_size::PostCardSize;
 use pulldown_cmark::CodeBlockKind;
 use pulldown_cmark::CodeBlockKind::{Fenced, Indented};
 use pulldown_cmark::{html, Event, Options, Parser, Tag};
@@ -23,10 +24,19 @@ pub struct MarkdownService {
 }
 
 #[derive(Deserialize, Clone, Debug, PartialEq)]
+pub struct RawPostMetadata {
+    pub cover: String,
+    pub tag: String,
+    pub title: String,
+    pub size: Option<String>,
+}
+
+#[derive(Clone, Debug, PartialEq)]
 pub struct PostMetadata {
     pub cover: String,
     pub tag: String,
     pub title: String,
+    pub size: PostCardSize,
 }
 
 #[derive(Clone)]
@@ -100,9 +110,18 @@ impl MarkdownService {
         }
 
         let parsed_metadata = metadata.join("");
-        let mut metadata: PostMetadata = serde_json::from_str(parsed_metadata.as_str()).unwrap();
+        let mut metadata: RawPostMetadata = serde_json::from_str(parsed_metadata.as_str()).unwrap();
 
         metadata.cover = MarkdownService::parse_source_path(&metadata.cover);
+        let metadata = PostMetadata {
+            cover: metadata.cover,
+            tag: metadata.tag,
+            title: metadata.title,
+            size: match metadata.size {
+                Some(size) => PostCardSize::from(size),
+                None => PostCardSize::Small,
+            },
+        };
 
         return Some(metadata);
     }

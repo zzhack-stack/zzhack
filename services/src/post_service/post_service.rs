@@ -23,7 +23,7 @@ pub enum FilterTag {
     Tag(String),
 }
 
-const MAX_DESC_LENGTH: usize = 200;
+const MAX_DESC_LENGTH: usize = 600;
 
 impl PostService {
     pub fn new() -> PostService {
@@ -76,7 +76,11 @@ impl PostService {
     }
 
     fn read_posts_into_memo() -> Vec<Post> {
-        POSTS
+        let mut posts = POSTS.clone();
+
+        posts.sort_by(|a, b| b.modified_time.cmp(&a.modified_time));
+
+        posts
             .into_iter()
             .map(|post| {
                 let markdown_service = MarkdownService::new(post.content.to_string());

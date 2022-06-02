@@ -1,10 +1,11 @@
 use std::*;
 
+#[derive(Clone)]
 pub struct PostFile {
     pub content: &'static str,
     pub modified_time: u128
 }
 
-pub static POSTS: &[PostFile; {{TRAVERSE_COUNT}}] = &[
+pub static POSTS: [PostFile; {{TRAVERSE_COUNT}}] = [
     {{TEMPLATE}}
 ];
