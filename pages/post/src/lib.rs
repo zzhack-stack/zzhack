@@ -1,5 +1,5 @@
 use services::markdown_service::markdown_service::MarkdownService;
-use services::post_service::POST_SERVICE;
+use services::post_service::post_service::POST_SERVICE;
 use stylist::style;
 use ui::post_card_header::PostCardHeader;
 use yew::prelude::*;

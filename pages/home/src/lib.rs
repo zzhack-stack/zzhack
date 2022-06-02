@@ -1,4 +1,4 @@
-use services::post_service::{FilterTag, POST_SERVICE};
+use services::post_service::post_service::{FilterTag, POST_SERVICE};
 use ui::image::ThemeImage;
 use ui::label::Label;
 use ui::link::Link;
@@ -37,6 +37,7 @@ pub fn home() -> Html {
             margin-top: 39px;
             display: flex;
             flex-wrap: wrap;
+            margin: 39px -18px 45px -18px;
         }
 
         @media (max-width: 600px) {
@@ -49,6 +50,7 @@ pub fn home() -> Html {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                margin: 39px 0 45px 0;
             }
         }
     "
@@ -88,7 +90,7 @@ pub fn home() -> Html {
                 {
                     posts.iter().map(|post| {
                         html! {
-                            <PostCard post={post.clone()} />
+                            <PostCard size={post.metadata.size.clone()} post={post.clone()} />
                         }
                     }).collect::<Html>()
                 }
