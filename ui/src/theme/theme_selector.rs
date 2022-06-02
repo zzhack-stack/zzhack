@@ -70,6 +70,14 @@ pub fn theme_selector() -> Html {
             theme_ctx.dispatch(ThemeAction::UpdateTheme(theme.clone()));
         })
     };
+    use_effect({
+        let current_theme = current_theme.clone();
+
+        move || {
+            current_theme.set(ThemeService::get_theme_from_storage());
+            || ()
+        }
+    });
 
     html! {
         <div class={style}>
