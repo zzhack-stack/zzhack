@@ -2,7 +2,7 @@
 {
     "cover": "../app/assets/images/into_the_wild.jpg",
     "tag": "genesis",
-    "title": "My life foo bar"
+    "title": "My life foo bar2"
 }
 ```
 

@@ -1,0 +1,20 @@
+{
+    "projects": [
+        {
+            "name": "zzhack",
+            "addr": "https://github.com/mistricky",
+            "desc": "⚙️ 🦀️ My personal blog site"
+        },
+        {
+            "name": "Archie",
+            "addr": "https://github.com/mistricky",
+            "desc": "GraphQL API server for @wizardoc/wizard, powered by @gin, Git-based document management, timely notification for document changes."
+        },
+        {
+            "name": "Archie",
+            "addr": "https://github.com/mistricky",
+            "desc": "GraphQL API server for @wizardoc/wizard, powered by @gin, Git-based document management, timely notification for document changes.",
+            "post": "asd"
+        }
+    ]
+}

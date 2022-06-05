@@ -37,7 +37,7 @@ pub fn home() -> Html {
             margin-top: 39px;
             display: flex;
             flex-wrap: wrap;
-            margin: 39px -18px 45px -18px;
+            margin: 30px -18px 45px -18px;
         }
 
         @media (max-width: 600px) {
