@@ -43,7 +43,7 @@ pub struct BaseImageProps {
 }
 
 #[function_component(BaseImage)]
-fn base_image(props: &BaseImageProps) -> Html {
+pub fn base_image(props: &BaseImageProps) -> Html {
     let theme_ctx = use_context::<ThemeContext>().unwrap();
     let source = if props.is_reactive {
         with_reactive_source(props.source.to_string())

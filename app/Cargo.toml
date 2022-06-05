@@ -35,6 +35,7 @@ home = {path = "../pages/home"}
 about = {path = "../pages/about"}
 not_found = {path = "../pages/not_found"}
 projects = {path = "../pages/projects"}
+links = {path = "../pages/links"}
 router = {path = "../router"}
 
 [profile.release]

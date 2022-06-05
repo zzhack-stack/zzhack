@@ -10,6 +10,8 @@ pub enum RootRoutes {
     Root,
     #[at("/projects")]
     Projects,
+    #[at("/links")]
+    Links,
     #[at("/about")]
     About,
     #[not_found]
