@@ -714,6 +714,10 @@ dependencies = [
 name = "projects"
 version = "0.1.0"
 dependencies = [
+ "services",
+ "stylist",
+ "ui",
+ "utils",
  "yew",
 ]
 

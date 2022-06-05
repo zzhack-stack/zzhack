@@ -43,9 +43,14 @@ impl PostService {
             .into_owned()
     }
 
-    pub fn find_post_by_encoded_title(&self, title: &str) -> Option<&Post> {
+    pub fn find_post_by_title(&self, title: &str) -> Option<Post> {
+        self.find_post_by_encoded_title(encode(title).to_string().as_str())
+    }
+
+    pub fn find_post_by_encoded_title(&self, title: &str) -> Option<Post> {
         self.posts
-            .iter()
+            .clone()
+            .into_iter()
             .find(|post| encode(post.metadata.title.as_str()) == title)
     }
 
