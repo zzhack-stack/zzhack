@@ -5,6 +5,7 @@ use yew_router::prelude::*;
 
 use about::About;
 use home::Home;
+use links::Links;
 use not_found::NotFound;
 use projects::Projects;
 use router::RootRoutes;
@@ -16,6 +17,7 @@ fn switch(routes: &RootRoutes) -> Html {
         RootRoutes::About => html! { <About /> },
         RootRoutes::Post { title } => html! {<Post encoded_title={title.clone()} />},
         RootRoutes::NotFound => html! { <NotFound />},
+        RootRoutes::Links => html! {<Links />},
     }
 }
 

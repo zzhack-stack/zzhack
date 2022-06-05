@@ -102,6 +102,7 @@ pub fn header() -> Html {
                 <DrawerItem lnk={RootRoutes::Home}>{"Posts"}</DrawerItem>
                 <DrawerItem lnk={RootRoutes::Projects}>{"Projects"}</DrawerItem>
                 <DrawerItem lnk={RootRoutes::About}>{"About"}</DrawerItem>
+                <DrawerItem lnk={RootRoutes::Links}>{"Links"}</DrawerItem>
             </Drawer>
             <div class="header">
                 <Container>
@@ -114,6 +115,7 @@ pub fn header() -> Html {
                                 <Link href={RootRoutes::Home}>{"Posts"}</Link>
                                 <Link href={RootRoutes::Projects}>{"Projects"}</Link>
                                 <Link href={RootRoutes::About}>{"About"}</Link>
+                                <Link href={RootRoutes::Links}>{"Links"}</Link>
                             </div>
                         </div>
                         <div class="right">
