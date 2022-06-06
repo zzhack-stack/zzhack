@@ -6,6 +6,10 @@ version = 3
 name = "about"
 version = "0.1.0"
 dependencies = [
+ "services",
+ "stylist",
+ "ui",
+ "utils",
  "yew",
 ]
 

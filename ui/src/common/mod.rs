@@ -1,6 +1,7 @@
 pub mod contact;
 pub mod container;
 pub mod footer;
+pub mod gradient_title;
 pub mod header;
 pub mod image;
 pub mod layout;
