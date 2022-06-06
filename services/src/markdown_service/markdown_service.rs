@@ -29,6 +29,7 @@ pub struct RawPostMetadata {
     pub tag: String,
     pub title: String,
     pub size: Option<String>,
+    pub pined: Option<bool>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -37,6 +38,7 @@ pub struct PostMetadata {
     pub tag: String,
     pub title: String,
     pub size: PostCardSize,
+    pub pined: bool,
 }
 
 #[derive(Clone)]
@@ -120,6 +122,10 @@ impl MarkdownService {
             size: match metadata.size {
                 Some(size) => PostCardSize::from(size),
                 None => PostCardSize::Small,
+            },
+            pined: match metadata.pined {
+                Some(pined) => pined,
+                None => false,
             },
         };
 

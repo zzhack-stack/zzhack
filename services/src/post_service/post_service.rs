@@ -3,6 +3,7 @@ use crate::posts::POSTS;
 use chrono::NaiveDateTime;
 use once_cell::sync::Lazy;
 use regex::Regex;
+use std::cmp::Ordering;
 use urlencoding::encode;
 
 #[derive(Clone, Debug, PartialEq)]
@@ -81,11 +82,8 @@ impl PostService {
     }
 
     fn read_posts_into_memo() -> Vec<Post> {
-        let mut posts = POSTS.clone();
-
-        posts.sort_by(|a, b| b.modified_time.cmp(&a.modified_time));
-
-        posts
+        let mut posts = POSTS
+            .clone()
             .into_iter()
             .map(|post| {
                 let markdown_service = MarkdownService::new(post.content.to_string());
@@ -111,7 +109,17 @@ impl PostService {
                     modified_time,
                 }
             })
-            .collect::<Vec<Post>>()
+            .collect::<Vec<Post>>();
+
+        posts.sort_by(|a, b| {
+            if a.metadata.pined {
+                Ordering::Less
+            } else {
+                a.modified_time.cmp(&b.modified_time)
+            }
+        });
+
+        posts
     }
 }
 
