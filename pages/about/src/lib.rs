@@ -19,6 +19,12 @@ pub fn about() -> Html {
             margin: 20px 0;
             border-radius: 20px;
         }
+
+        @media (max-width: 600px) {
+            .illustrate {
+                width: 100%;
+            }
+        }
     "
     )
     .unwrap();
@@ -29,7 +35,7 @@ pub fn about() -> Html {
                 <GradientTitle>{"zzhack 的诞生"}</GradientTitle>
                 <div>
                     <p>
-                        {"嗨！欢迎来到我的应用 zzhack 😎，这是一个兴趣使然的项目，zzhack 被设计为一个注重信息展示的应用，它的作用是将我的思想序列化到互联网中，沉淀下来。"}
+                        {"嗨！欢迎来到我的应用 zzhack 😎，这是一个兴趣使然的项目，zzhack 被设计为一个注重信息展示的应用，它是序列化和沉淀我思想的地方。"}
                     </p>
                     <p>
                        {"如你所见的 zzhack 已是第五个大版本，它已经经过了两次大规模的重构以及 5 次重新设计，最后回归纯真，专注信息展示。"}
