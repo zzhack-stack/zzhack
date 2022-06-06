@@ -38,7 +38,7 @@ impl PostService {
     }
 
     pub fn trim_useless_symbol(content: &'static str) -> String {
-        Regex::new(r#"[^\u4E00-\u9FFFa-zA-Z]"#)
+        Regex::new(r#"([\n]|```[^`]+```|`[^`]+`)"#)
             .unwrap()
             .replace_all(content, "")
             .into_owned()
