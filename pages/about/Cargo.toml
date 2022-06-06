@@ -7,3 +7,8 @@ edition = "2021"
 
 [dependencies]
 yew = "0.19.3"
+ui = {path = "../../ui"}
+utils = {path = "../../utils"}
+stylist = {version = "0.10", features = ["yew_integration"]}
+services = {path = "../../services"}
+

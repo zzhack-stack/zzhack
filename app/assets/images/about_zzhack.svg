@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="814px" height="268px" viewBox="0 0 814 268" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="light/V5_about" transform="translate(-313.000000, -350.000000)">
+            <g id="Group" transform="translate(313.000000, 350.000000)">
+                <rect id="Rectangle" fill="#7ECCB4" x="0" y="0" width="814" height="268" rx="15"></rect>
+                <text id="Version-5" font-family="PingFangSC-Regular, PingFang SC" font-size="15" font-weight="normal" fill="#FFFFFF">
+                    <tspan x="483.015" y="182">Version 5</tspan>
+                </text>
+                <text id="zzhack" font-family="Phosphate-Solid, Phosphate" font-size="80" font-weight="normal" fill="#FFFFFF">
+                    <tspan x="265.92" y="161">zzhack</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

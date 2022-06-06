@@ -3,7 +3,8 @@
     "cover": "../app/assets/images/into_the_wild.jpg",
     "tag": "asd",
     "title": "asd",
-    "size": "large"
+    "size": "large",
+    "pined": true
 }
 ```
 
