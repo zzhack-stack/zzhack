@@ -47,8 +47,8 @@ pub fn post_card_large(props: &PostCardLargeProps) -> Html {
             word-break: break-all;
             font-size: 14.48px;
             color: var(--sub-text-color);
-            line-height: 17px;
-            -webkit-line-clamp: 9;
+            line-height: 25px;
+            -webkit-line-clamp: 6;
             -webkit-box-orient: vertical;
             overflow: hidden;
             height: 156px;

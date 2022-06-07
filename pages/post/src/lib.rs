@@ -46,7 +46,6 @@ pub fn post(props: &PostProps) -> Html {
             border-radius: 5px;
             margin: 30px 0;
             transition: all 0.2s ease-in;
-            box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;        
         }
 
         @media (max-width: 600px) {
