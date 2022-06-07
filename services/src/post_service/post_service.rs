@@ -26,6 +26,19 @@ pub enum FilterTag {
 
 const MAX_DESC_LENGTH: usize = 600;
 
+pub fn find_char_boundary(s: &str, index: usize) -> usize {
+    if s.len() <= index {
+        return index;
+    }
+
+    let mut new_index = index;
+    while !s.is_char_boundary(new_index) {
+        new_index += 1;
+    }
+
+    new_index
+}
+
 impl PostService {
     pub fn new() -> PostService {
         let posts = PostService::read_posts_into_memo();
@@ -97,7 +110,8 @@ impl PostService {
                 } else {
                     parsed_content_length
                 };
-                let desc = parsed_content[..slice_desc_length].to_string();
+                let desc = parsed_content[..find_char_boundary(&parsed_content, slice_desc_length)]
+                    .to_string();
                 let modified_secs = (post.modified_time / 1000) as i64;
                 let modified_time = NaiveDateTime::from_timestamp(modified_secs, 0);
                 let modified_time = modified_time.format("%a, %b %e %Y").to_string();
