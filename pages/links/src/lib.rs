@@ -1,3 +1,4 @@
+use router::RootRoutes;
 use services::links_service::links_service::LINKS_SERVICE;
 use stylist::style;
 use ui::image::BaseImage;
@@ -87,7 +88,7 @@ pub fn links() -> Html {
                 <div class="banner__links">
                     <div class="banner__links-title">{"友情链接"}</div>
                     <div class="banner__links-desc">{"这里放置大家的博客 & 个人网站，拒绝广告，欢迎各类应用，如果你想跟我交换友情链接，直接戳 "}
-                        <Link>{"这里"}</Link>
+                        <Link href={RootRoutes::Post {title: String::from("如何申请友情链接")}}>{"这里"}</Link>
                     {" 来进行交换吧。"}</div>
                 </div>
             </div>
