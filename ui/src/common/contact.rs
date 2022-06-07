@@ -1,4 +1,5 @@
 use super::image::Icon;
+use crate::link::Link;
 use utils::use_style;
 use yew::prelude::*;
 
@@ -70,7 +71,11 @@ pub fn contacts(props: &ContactsProps) -> Html {
         .iter()
         .map(|contact| {
             let source: &'static str = contact.into();
-            html! {<Icon source={source} size={contact.into_size()} has_theme={contact.has_theme()} />}
+            html! {
+                <Link out_href={contact.into_lnk()}>
+                    <Icon source={source} size={contact.into_size()} has_theme={contact.has_theme()} />
+                </Link>
+            }
         })
         .collect::<Html>();
 

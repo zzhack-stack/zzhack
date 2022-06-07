@@ -1,3 +1,4 @@
+use crate::contact::ContactType;
 use crate::container::Container;
 use crate::header::drawer::Drawer;
 use crate::header::drawer_item::DrawerItem;
@@ -120,7 +121,9 @@ pub fn header() -> Html {
                         </div>
                         <div class="right">
                             <Icon source="setting.svg" size=26 onclick={handle_setting_click} />
-                            <Icon source="github.svg" size=26 />
+                            <Link out_href={ContactType::GitHub.into_lnk()}>
+                                <Icon source="github.svg" size=26 />
+                            </Link>
                             {only_render_on_mobile(html! {
                                 <Icon source="drawer.svg" size=26 onclick={handle_drawer_click} />
                             })}
