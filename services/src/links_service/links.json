@@ -23,6 +23,12 @@
             "addr": "https://forevergubei.gitee.io/myblod/",
             "desc": "一个追寻大佬脚步的小白",
             "logo": "https://forevergubei.gitee.io/myblod/logo.png"
+        },
+        {
+            "name": "MrDJun's Blog",
+            "addr": "https://mrdjun.gitee.io/",
+            "desc": "Just an ordinary JAVA programmer",
+            "logo": "https://mrdjun.gitee.io/images/avatar.png"
         }
     ]
 }
