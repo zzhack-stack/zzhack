@@ -2,19 +2,43 @@
     "projects": [
         {
             "name": "zzhack",
-            "addr": "https://github.com/mistricky",
+            "addr": "https://github.com/zzhack-stack/zzhack",
             "desc": "⚙️ 🦀️ My personal blog site"
         },
         {
             "name": "Archie",
-            "addr": "https://github.com/mistricky",
+            "addr": "https://github.com/wizardoc/archie",
             "desc": "GraphQL API server for @wizardoc/wizard, powered by @gin, Git-based document management, timely notification for document changes."
         },
         {
-            "name": "Archie",
-            "addr": "https://github.com/mistricky",
-            "desc": "GraphQL API server for @wizardoc/wizard, powered by @gin, Git-based document management, timely notification for document changes.",
-            "post": "asd"
+            "name": "Chelli",
+            "addr": "https://github.com/mistricky/chelli",
+            "desc": "🖖🏻Chelli is a function set that implements command-line parsing using Zsh Shell. And the name of Chelli means that combination Shell and CLI."
+        },
+        {
+            "name": "Arrow Cache",
+            "addr": "https://github.com/wizardoc/arrow-cache",
+            "desc": "🏹️Cache mechanism base on Web Worker, help us build high performance webApp."
+        },
+        {
+            "name": "postcss-relaxed-unit",
+            "addr": "https://github.com/mistricky/postcss-relaxed-unit",
+            "desc": "🍮Postcss-relaxed-unit is a postcss plugin for unit tranformation and make write css easier with custom unit."
+        },
+        {
+            "name": "Fence",
+            "addr": "https://github.com/wizardoc/fence",
+            "desc": "🐟Fence is an operator-based request library that provide a serises of APIs to help you more easily manipulate the request flow"
+        },
+        {
+            "name": "Wizard",
+            "addr": "https://github.com/wizardoc/wizard",
+            "desc": "🍳Wizardoc is a WEBAPP for managing documents and knowledge."
+        },
+        {
+            "name": "Flat",
+            "addr": "https://github.com/mistlang/Flat",
+            "desc": "🍪Lightweight MVVM framework base on TypeScript."
         }
     ]
 }
