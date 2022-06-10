@@ -94,7 +94,7 @@ pub fn modal(props: &ModalProps) -> Html {
         display: ${display} !important;
         width: 100%;
         height: 100vh;
-        position: absolute;
+        position: fixed;
         left: 0;
         top: 0;
         z-index: 10;
