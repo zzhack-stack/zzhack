@@ -128,6 +128,8 @@ impl PostService {
         posts.sort_by(|a, b| {
             if a.metadata.pined {
                 Ordering::Less
+            } else if b.metadata.pined {
+                Ordering::Greater
             } else {
                 a.modified_time.cmp(&b.modified_time)
             }

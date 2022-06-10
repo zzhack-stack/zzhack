@@ -680,10 +680,12 @@ dependencies = [
 name = "post"
 version = "0.1.0"
 dependencies = [
+ "gloo-timers",
  "services",
  "stylist",
  "ui",
  "utils",
+ "web-sys",
  "yew",
 ]
 
@@ -951,6 +953,7 @@ version = "0.1.0"
 dependencies = [
  "chrono",
  "lazy_static",
+ "log",
  "material-yew",
  "once_cell",
  "pulldown-cmark",
@@ -959,6 +962,7 @@ dependencies = [
  "serde_json",
  "syntect",
  "urlencoding",
+ "wasm-logger",
  "web-sys",
  "yew",
 ]

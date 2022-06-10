@@ -1,6 +1,6 @@
 ```metadata
 {
-    "cover": "../app/assets/sources/links_cover.png",
+    "cover": "../app/assets/sources/links_cover.svg",
     "tag": "help",
     "title": "如何申请友情链接"
 }

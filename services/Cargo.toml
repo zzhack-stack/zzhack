@@ -17,6 +17,8 @@ material-yew = { git = "https://github.com/hamza1311/material-yew", features = [
 lazy_static = "1.4.0"
 chrono = "0.4"
 urlencoding = "2.1.0"
+wasm-logger = "0.2.0"
+log = "0.4.17"
 
 [dependencies.syntect]
 version = "4.5"

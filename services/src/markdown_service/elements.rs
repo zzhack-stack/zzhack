@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use urlencoding::encode;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct GitHubRenderBlock {
@@ -9,8 +10,8 @@ pub struct GitHubRenderBlock {
 
 pub fn render_heading(content: String, level: u32) -> String {
     format!(
-        "<a class='markdown-heading-anchor' href='#{}'><h{} class='markdown-heading' id={}>{}</h{}></a>",
-        content, level, content, content, level
+        "<a class='markdown-heading-anchor' href='#{}'><h{} class='markdown-heading' id='{}'>{}</h{}></a>",
+        content, level, encode(content.as_str()).to_string(), content, level
     )
 }
 

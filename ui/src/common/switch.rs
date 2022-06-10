@@ -7,7 +7,6 @@ use yew::prelude::*;
 #[styled_component(ThemeSwitchBar)]
 pub fn theme_switch_bar() -> Html {
     let theme_ctx = use_context::<ThemeContext>().unwrap();
-    log::info!("{}", &theme_ctx.theme.into_str());
     let mobile_sliding_bar_offset_pos = if &theme_ctx.theme == &Theme::Dark {
         "100%"
     } else {

@@ -11,3 +11,5 @@ stylist = {version = "0.10", features = ["yew_integration"]}
 ui = {path = "../../ui"}
 services = {path = "../../services"}
 utils = {path = "../../utils"}
+web-sys = { version = "0.3", features = ["HtmlMetaElement", "Document", "Element", "DocumentFragment", "HtmlTemplateElement", "MediaQueryList"] }
+gloo-timers = "0.2.4"

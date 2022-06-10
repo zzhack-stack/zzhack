@@ -1,3 +1,4 @@
+use gloo_timers::callback::Timeout;
 use services::markdown_service::markdown_service::MarkdownService;
 use services::post_service::post_service::POST_SERVICE;
 use stylist::style;
@@ -63,6 +64,16 @@ pub fn post(props: &PostProps) -> Html {
     let post_body = MarkdownService::new(post.raw_content.clone().to_string());
     let post_body = post_body.parse_to_element("base16-ocean.dark");
 
+    use_effect(move || {
+        let timeout = Timeout::new(500, move || {
+            position_heading_by_anchor();
+        });
+
+        || {
+            timeout.forget();
+        }
+    });
+
     html! {
         <div class={style}>
             <div class="post-header">
@@ -78,4 +89,14 @@ pub fn post(props: &PostProps) -> Html {
             </div>
         </div>
     }
+}
+
+fn position_heading_by_anchor() {
+    let window = web_sys::window().unwrap();
+    let document = window.document().unwrap();
+    let location = document.location().unwrap();
+    let hash = location.hash().unwrap();
+    let heading_ele = document.get_element_by_id(&hash[1..]).unwrap();
+
+    heading_ele.scroll_into_view();
 }
