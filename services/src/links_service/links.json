@@ -1,34 +1,34 @@
 {
-    "links": [
-        {
-            "name": "Busyops博客",
-            "addr": "https://busyops.com/",
-            "desc": "Hello Moon",
-            "logo": "https://busyops.com/images/avatar.jpg"
-        },
-        {
-            "name": "Clay 的技术博客",
-            "addr": "https://www.techgrow.cn",
-            "desc": "用进废退 | 艺不压身",
-            "logo": "https://www.techgrow.cn/img/head.jpg"
-        },
-        {
-            "name": "Christine的博客",
-            "desc": "虽然我不够优秀，但我从未放弃过努力。",
-            "logo": "https://christine-only.github.io/blog/logo.png",
-            "addr": "https://christine-only.github.io/blog/"
-        },
-        {
-            "name": "Forever丿顾北博客",
-            "addr": "https://forevergubei.gitee.io/myblod/",
-            "desc": "一个追寻大佬脚步的小白",
-            "logo": "https://forevergubei.gitee.io/myblod/logo.png"
-        },
-        {
-            "name": "MrDJun's Blog",
-            "addr": "https://mrdjun.gitee.io/",
-            "desc": "Just an ordinary JAVA programmer",
-            "logo": "https://mrdjun.gitee.io/images/avatar.png"
-        }
-    ]
+  "links": [
+    {
+      "name": "Busyops博客",
+      "addr": "https://busyops.com/",
+      "desc": "Hello Moon",
+      "logo": "https://busyops.com/images/avatar.jpg"
+    },
+    {
+      "name": "Clay 的技术博客",
+      "addr": "https://www.techgrow.cn",
+      "desc": "用进废退 | 艺不压身",
+      "logo": "https://www.techgrow.cn/img/head.jpg"
+    },
+    {
+      "name": "Christine的博客",
+      "desc": "虽然我不够优秀，但我从未放弃过努力。",
+      "logo": "https://christine-only.github.io/blog/logo.png",
+      "addr": "https://christine-only.github.io/blog/"
+    },
+    {
+      "name": "Forever丿顾北博客",
+      "addr": "https://forevergubei.gitee.io/myblod/",
+      "desc": "一个追寻大佬脚步的小白",
+      "logo": "https://forevergubei.gitee.io/myblod/logo.png"
+    },
+    {
+      "name": "one-thing-one-world的blog",
+      "addr": "https://www.flyfrag.cn/",
+      "desc": "太阳强烈，水波温柔",
+      "logo": "https://avatars.githubusercontent.com/u/53332638?v=4"
+    }
+  ]
 }
