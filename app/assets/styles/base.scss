@@ -21,9 +21,13 @@
     --code-block-bg: #282c34;
     --alert-color: rgba(32, 136, 255, 0.2);
     --blue: #4794FE;
+    --code-color: var(--text-color);
+    --code-bg: rgba(126, 204, 180, 0.35);
   }
 
   .dark {
+    --code-bg: rgba(126, 204, 180, 0.35);
+    --code-color: var(--text-color);
     --blue: #4794FE;
     --alert-color: rgba(32, 136, 255, 0.2);
     --code-block-bg: #282c34;

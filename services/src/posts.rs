@@ -13,7 +13,7 @@ pub static POSTS: [PostFile; 2] = [
 },
 PostFile {
     content: include_str!("../../posts/add_links.md"),
-    modified_time: 1654844161322
+    modified_time: 1654855461934
 },
 
 ];

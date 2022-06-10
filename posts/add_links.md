@@ -6,18 +6,12 @@
 }
 ```
 
-Hii，欢迎来到我的站点，我很乐意跟你交换友情链接，你可以向我发起一个 PR 来进行友情链接的添加，你的网站将会被陈列在 [这里](/links)。
+Hii，欢迎来到我的站点，我很乐意跟你连接，你可以向我发起一个 PR 来进行友情链接的添加，你的网站将会被陈列在 [这里](/links)。
 
 跟随以下几个步骤来将你的网站添加到 [友情链接](/links) 吧！
 
-#### 1. Clone zzhack 到本地
-```shell
-git clone https://github.com/zzhack-stack/zzhack
-```
-
-#### 2. 添加你的网站信息
-通过修改 `/services/links_service/links.json` 添加你的网站信息。
-
+#### 1. Fork & Update links
+Fork `zzhack` 到你的 GitHub，修改 `/services/links_service/links.json` 添加你的网站信息。
 ```json
 {
     "links": [
@@ -56,10 +50,8 @@ git clone https://github.com/zzhack-stack/zzhack
 }
 ```
 
-#### 3. 提交修改
+#### 2. 提交修改
 通过 GitHub 创建一个 PR 合并到 `main`，等待 merge 后就能在 [友情链接](/links) 看到你的站点了。
-
-![PR](../app/assets/sources/add_link_guide.png)
 
 #### Final
 如果你嫌上述步骤太麻烦也不要紧，将你的网站信息通过 [Email](mailto:mist.zzh@gmail.com) 发给我，我会在空闲的时候处理 :D。
