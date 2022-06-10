@@ -96,6 +96,11 @@ fn position_heading_by_anchor() {
     let document = window.document().unwrap();
     let location = document.location().unwrap();
     let hash = location.hash().unwrap();
+
+    if hash != "" {
+        return;
+    }
+
     let heading_ele = document.get_element_by_id(&hash[1..]).unwrap();
 
     heading_ele.scroll_into_view();
