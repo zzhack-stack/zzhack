@@ -17,6 +17,7 @@ pub fn links() -> Html {
 
         .banner > img {
             width: 100%;
+            height: 165.59px;
         }
 
         .banner__links {
@@ -64,6 +65,10 @@ pub fn links() -> Html {
             .banner__links-desc {
                 width: 100%;
                 line-height: 20px;
+            }
+
+            .banner > img {
+                height: 323.69px;
             }
 
             .links {
