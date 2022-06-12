@@ -613,6 +613,7 @@ dependencies = [
 name = "not_found"
 version = "0.1.0"
 dependencies = [
+ "stylist",
  "yew",
 ]
 

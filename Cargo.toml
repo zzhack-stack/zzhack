@@ -12,5 +12,5 @@ members = [
     "pages/home",
     "pages/links",
     "pages/post",
-    "router"
+    "router",
 ]
