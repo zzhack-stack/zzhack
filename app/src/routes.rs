@@ -17,6 +17,9 @@ fn switch(routes: &RootRoutes) -> Html {
         RootRoutes::About => html! { <About /> },
         RootRoutes::Post { filename } => html! {<Post filename={filename.clone()} />},
         RootRoutes::NotFound => html! { <NotFound />},
+        RootRoutes::Technology => html! {
+            <Redirect<RootRoutes> to={RootRoutes::Home}/>
+        },
         RootRoutes::Links => html! {<Links />},
     }
 }

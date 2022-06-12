@@ -14,6 +14,9 @@ pub enum RootRoutes {
     Links,
     #[at("/about")]
     About,
+    // Compatible with https://github.com/jetli/awesome-yew
+    #[at("/technology")]
+    Technology,
     #[not_found]
     #[at("/404")]
     NotFound,
