@@ -7,14 +7,12 @@ use yew::prelude::*;
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct PostProps {
-    pub encoded_title: String,
+    pub filename: String,
 }
 
 #[function_component(Post)]
 pub fn post(props: &PostProps) -> Html {
-    let post = POST_SERVICE
-        .find_post_by_encoded_title(&props.encoded_title)
-        .unwrap();
+    let post = POST_SERVICE.find_post_by_filename(&props.filename).unwrap();
     let style = style!(
         r#"
         width: 660px;

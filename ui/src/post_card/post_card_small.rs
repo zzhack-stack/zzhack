@@ -3,7 +3,6 @@ use crate::post_card_header::PostCardHeader;
 use router::RootRoutes;
 use services::post_service::post_service::Post;
 use stylist::style;
-use urlencoding::encode;
 use yew::prelude::*;
 
 #[derive(Properties, Clone, PartialEq)]
@@ -81,11 +80,10 @@ pub fn post_card_small(props: &PostCardProps) -> Html {
         cover = props.post.metadata.cover.clone()
     )
     .unwrap();
-    let post_encoded_title = encode(props.post.metadata.title.as_str());
 
     html! {
         <div class={style}>
-            <Link href={RootRoutes::Post{title: post_encoded_title.to_string()}}>
+            <Link href={RootRoutes::Post{filename: props.post.filename.to_string()}}>
                 <div class="wrapper">
                     <PostCardHeader label={props.post.metadata.tag.clone()} />
                     <div class="cover" />

@@ -4,7 +4,6 @@ use chrono::NaiveDateTime;
 use once_cell::sync::Lazy;
 use regex::Regex;
 use std::cmp::Ordering;
-use urlencoding::encode;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Post {
@@ -12,6 +11,7 @@ pub struct Post {
     pub raw_content: &'static str,
     pub desc: String,
     pub modified_time: String,
+    pub filename: &'static str,
 }
 
 pub struct PostService {
@@ -57,15 +57,11 @@ impl PostService {
             .into_owned()
     }
 
-    pub fn find_post_by_title(&self, title: &str) -> Option<Post> {
-        self.find_post_by_encoded_title(encode(title).to_string().as_str())
-    }
-
-    pub fn find_post_by_encoded_title(&self, title: &str) -> Option<Post> {
+    pub fn find_post_by_filename(&self, filename: &str) -> Option<Post> {
         self.posts
             .clone()
             .into_iter()
-            .find(|post| encode(post.metadata.title.as_str()) == title)
+            .find(|post| post.filename == filename)
     }
 
     pub fn get_tags(&self) -> Vec<String> {
@@ -121,6 +117,7 @@ impl PostService {
                     raw_content: post.content,
                     desc,
                     modified_time,
+                    filename: post.filename,
                 }
             })
             .collect::<Vec<Post>>();

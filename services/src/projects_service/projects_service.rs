@@ -37,7 +37,7 @@ impl ProjectsService {
             .iter()
             .map(|raw_project| {
                 let post = match raw_project.post.clone() {
-                    Some(post_title) => POST_SERVICE.find_post_by_title(&post_title).clone(),
+                    Some(filename) => POST_SERVICE.find_post_by_filename(&filename).clone(),
                     None => None,
                 };
 

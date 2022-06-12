@@ -81,7 +81,7 @@ pub fn post_card_large(props: &PostCardLargeProps) -> Html {
     let post_encoded_title = encode(props.post.metadata.title.as_str());
 
     html! {
-        <Link href={RootRoutes::Post{title: post_encoded_title.to_string()}}>
+        <Link href={RootRoutes::Post{filename: props.post.filename.to_string()}}>
         <div class={style}>
             <div class="cover" />
             <div class="post-preview">

@@ -15,7 +15,7 @@ fn switch(routes: &RootRoutes) -> Html {
         RootRoutes::Home | RootRoutes::Root => html! { <Home /> },
         RootRoutes::Projects => html! { <Projects /> },
         RootRoutes::About => html! { <About /> },
-        RootRoutes::Post { title } => html! {<Post encoded_title={title.clone()} />},
+        RootRoutes::Post { filename } => html! {<Post filename={filename.clone()} />},
         RootRoutes::NotFound => html! { <NotFound />},
         RootRoutes::Links => html! {<Links />},
     }
