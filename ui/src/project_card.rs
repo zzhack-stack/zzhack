@@ -2,7 +2,6 @@ use crate::link::Link;
 use router::RootRoutes;
 use services::projects_service::projects_service::Project;
 use stylist::style;
-use urlencoding::encode;
 use yew::prelude::*;
 
 #[derive(Properties, Clone, PartialEq)]
@@ -74,10 +73,8 @@ pub fn project_card(props: &ProjectCardProps) -> Html {
             {
                 match &props.project.post {
                     Some(post) => {
-                        let encoded_title = encode(post.metadata.title.as_str()).to_string();
-
                         html! {
-                            <Link href={RootRoutes::Post {title: encoded_title }}>
+                            <Link href={RootRoutes::Post {filename: post.filename.to_string() }}>
                                 <div class="post-block">
                                     <div class="summary">
                                         {&post.desc}

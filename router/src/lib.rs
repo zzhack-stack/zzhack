@@ -4,8 +4,8 @@ use yew_router::prelude::*;
 pub enum RootRoutes {
     #[at("/home")]
     Home,
-    #[at("/posts/:title")]
-    Post { title: String },
+    #[at("/posts/:filename")]
+    Post { filename: String },
     #[at("/")]
     Root,
     #[at("/projects")]
