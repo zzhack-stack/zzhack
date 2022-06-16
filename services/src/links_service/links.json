@@ -53,6 +53,12 @@
             "addr": "http://idinr.com/",
             "desc": "有技术，有科学",
             "logo": "https://s2.loli.net/2022/06/15/d6MYUaVWf74sKIi.jpg"
+        },
+        {
+            "name": "Levi's Blog",
+            "addr": "https://www.jianshu.com/u/1fc674525eeb",
+            "desc": "学的越多，懂的越少",
+            "logo": "https://upload.jianshu.io/users/upload_avatars/10826765/5e06dfca-ff26-488c-a60c-79ca6504917a?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"
         }
     ]
 }
