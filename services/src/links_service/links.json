@@ -71,6 +71,12 @@
             "addr": "https://www.pseudoyu.com/",
             "desc": "Blockchain | Programming | Photography | Misty",
             "logo": "https://www.pseudoyu.com/images/author.webp"
+        },
+        {
+            "name": "circlehotarux's blog",
+            "addr": "https://www.circlehotarux.me/",
+            "desc": "心诚则灵",
+            "logo": "https://avatars.githubusercontent.com/u/48060080?v=4"
         }
     ]
 }
