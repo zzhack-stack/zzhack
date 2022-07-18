@@ -3,6 +3,6 @@
     "editor.formatOnSave": true,
     "editor.tabSize": 4,
     "[rust]": {
-        "editor.defaultFormatter": "rust-lang.rust"
+        "editor.defaultFormatter": "rust-lang.rust-analyzer"
     }
 }
