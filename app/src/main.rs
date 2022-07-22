@@ -1,5 +1,6 @@
 mod app;
 mod routes;
+mod routes_switch;
 
 extern crate lazy_static;
 extern crate wee_alloc;
