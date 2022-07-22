@@ -1,3 +1,4 @@
+use super::pages::PAGES;
 use crate::contact::ContactType;
 use crate::container::Container;
 use crate::header::drawer::Drawer;
@@ -100,10 +101,9 @@ pub fn header() -> Html {
     html! {
         <div class={style}>
             <Drawer is_open={is_open_drawer_handle}>
-                <DrawerItem lnk={RootRoutes::Home}>{"Posts"}</DrawerItem>
-                <DrawerItem lnk={RootRoutes::Projects}>{"Projects"}</DrawerItem>
-                <DrawerItem lnk={RootRoutes::About}>{"About"}</DrawerItem>
-                <DrawerItem lnk={RootRoutes::Links}>{"Links"}</DrawerItem>
+                {
+                    PAGES.into_iter().map(|page| html!{<DrawerItem lnk={page.route}>{page.name}</DrawerItem>}).collect::<Html>()
+                }
             </Drawer>
             <div class="header">
                 <Container>
@@ -113,10 +113,9 @@ pub fn header() -> Html {
                                 <ThemeImage source="zzhack_logo.svg" />
                             </Link>
                             <div class="tabs">
-                                <Link href={RootRoutes::Home}>{"Posts"}</Link>
-                                <Link href={RootRoutes::Projects}>{"Projects"}</Link>
-                                <Link href={RootRoutes::About}>{"About"}</Link>
-                                <Link href={RootRoutes::Links}>{"Links"}</Link>
+                                {
+                                    PAGES.into_iter().map(|page| html!{<Link href={page.route}>{page.name}</Link>}).collect::<Html>()
+                                }
                             </div>
                         </div>
                         <div class="right">
