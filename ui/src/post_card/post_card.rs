@@ -1,7 +1,7 @@
 use crate::post_card_large::PostCardLarge;
 use crate::post_card_small::PostCardSmall;
 use services::post_service::post_card_size::PostCardSize;
-use services::post_service::post_service::Post;
+use services::post_service::posts_container::Post;
 use utils::theme::is_on_mobile;
 use yew::prelude::*;
 

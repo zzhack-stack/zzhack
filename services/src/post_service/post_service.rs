@@ -1,19 +1,9 @@
 use crate::markdown_service::markdown_service::{MarkdownService, PostMetadata};
-use crate::posts::POSTS;
-use chrono::NaiveDateTime;
-use once_cell::sync::Lazy;
-use regex::Regex;
-use std::cmp::Ordering;
+use crate::posts::{get_posts, POSTS};
 
-#[derive(Clone, Debug, PartialEq)]
-pub struct Post {
-    pub metadata: PostMetadata,
-    pub raw_content: &'static str,
-    pub desc: String,
-    pub modified_time: String,
-    pub filename: &'static str,
-}
+use super::posts_container::{Post, POST_CONTAINER};
 
+#[derive(Clone)]
 pub struct PostService {
     posts: Vec<Post>,
 }
@@ -23,8 +13,6 @@ pub enum FilterTag {
     All,
     Tag(String),
 }
-
-const MAX_DESC_LENGTH: usize = 600;
 
 pub fn find_char_boundary(s: &str, index: usize) -> usize {
     if s.len() <= index {
@@ -40,21 +28,20 @@ pub fn find_char_boundary(s: &str, index: usize) -> usize {
 }
 
 impl PostService {
-    pub fn new() -> PostService {
-        let posts = PostService::read_posts_into_memo();
+    pub fn from(key: String) -> PostService {
+        let posts = POST_CONTAINER.get_posts_by_key(key);
+
+        PostService { posts }
+    }
+
+    pub fn from_all() -> PostService {
+        let posts = POST_CONTAINER.get_posts();
 
         PostService { posts }
     }
 
     pub fn get_posts(&self) -> Vec<Post> {
         self.posts.clone()
-    }
-
-    pub fn trim_useless_symbol(content: &'static str) -> String {
-        Regex::new(r#"([\n]|```[^`]+```|`[^`]+`)"#)
-            .unwrap()
-            .replace_all(content, "")
-            .into_owned()
     }
 
     pub fn find_post_by_filename(&self, filename: &str) -> Option<Post> {
@@ -89,51 +76,4 @@ impl PostService {
                 .collect::<Vec<Post>>(),
         }
     }
-
-    fn read_posts_into_memo() -> Vec<Post> {
-        let mut posts = POSTS
-            .clone()
-            .into_iter()
-            .map(|post| {
-                let markdown_service = MarkdownService::new(post.content.to_string());
-                let metadata = markdown_service.extract_metadata().expect(
-                    "Please make sure the post has metadata which declare using block syntax.",
-                );
-                let parsed_content = PostService::trim_useless_symbol(post.content);
-                let parsed_content_length = parsed_content.len();
-                let slice_desc_length = if parsed_content_length > MAX_DESC_LENGTH {
-                    MAX_DESC_LENGTH
-                } else {
-                    parsed_content_length
-                };
-                let desc = parsed_content[..find_char_boundary(&parsed_content, slice_desc_length)]
-                    .to_string();
-                let modified_secs = (post.modified_time / 1000) as i64;
-                let modified_time = NaiveDateTime::from_timestamp(modified_secs, 0);
-                let modified_time = modified_time.format("%a, %b %e %Y").to_string();
-
-                Post {
-                    metadata,
-                    raw_content: post.content,
-                    desc,
-                    modified_time,
-                    filename: post.filename,
-                }
-            })
-            .collect::<Vec<Post>>();
-
-        posts.sort_by(|a, b| {
-            if a.metadata.pined {
-                Ordering::Less
-            } else if b.metadata.pined {
-                Ordering::Greater
-            } else {
-                a.modified_time.cmp(&b.modified_time)
-            }
-        });
-
-        posts
-    }
 }
-
-pub static POST_SERVICE: Lazy<PostService> = Lazy::new(|| PostService::new());

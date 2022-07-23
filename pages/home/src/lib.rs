@@ -1,4 +1,4 @@
-use services::post_service::post_service::{FilterTag, POST_SERVICE};
+use services::post_service::post_service::{FilterTag, PostService};
 use ui::image::ThemeImage;
 use ui::label::Label;
 use ui::link::Link;
@@ -6,8 +6,13 @@ use ui::post_card::post_card::PostCard;
 use utils::use_style;
 use yew::prelude::*;
 
+#[derive(Properties, Clone, PartialEq)]
+pub struct HomeProps {
+    pub posts_key: String,
+}
+
 #[function_component(Home)]
-pub fn home() -> Html {
+pub fn home(props: &HomeProps) -> Html {
     let style = use_style!(
         r"
         .banner {
@@ -55,17 +60,20 @@ pub fn home() -> Html {
         }
     "
     );
-    let posts = use_state_eq(|| POST_SERVICE.get_posts());
+    let post_service = PostService::from(props.posts_key.clone());
+    let posts = use_state_eq(|| post_service.get_posts());
     let handle_filter_posts_by_label = {
         let posts = posts.clone();
+        let post_service = post_service.clone();
 
         |tag: FilterTag| {
             Callback::from(move |_| {
-                posts.set(POST_SERVICE.filter_post_by_tag(tag.clone()));
+                posts.set(post_service.filter_post_by_tag(tag.clone()));
             })
         }
     };
     let handle_filter_posts_by_rest_label = handle_filter_posts_by_label.clone();
+    let tags = post_service.get_tags().clone();
 
     html! {
         <div class={style}>
@@ -76,7 +84,7 @@ pub fn home() -> Html {
                 <Link onclick={handle_filter_posts_by_label(FilterTag::All)}>
                     <Label text="All" />
                 </Link>
-                {POST_SERVICE.get_tags().iter().map(|tag| {
+                {tags.iter().map(|tag| {
                     html! {
                         <div class="label">
                             <Link onclick={handle_filter_posts_by_rest_label.clone()(FilterTag::Tag(tag.clone()))}>

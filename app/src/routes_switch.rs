@@ -10,7 +10,7 @@ use yew_router::prelude::*;
 
 pub fn switch(routes: &RootRoutes) -> Html {
     match routes {
-        RootRoutes::Home | RootRoutes::Root => html! { <Home /> },
+        RootRoutes::Home | RootRoutes::Root => html! { <Home posts_key={String::from("1")} /> },
         RootRoutes::Projects => html! { <Projects /> },
         RootRoutes::About => html! { <About /> },
         RootRoutes::Post { filename } => html! {<Post filename={filename.clone()} />},
