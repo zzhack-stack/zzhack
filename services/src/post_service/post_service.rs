@@ -1,5 +1,4 @@
 use crate::markdown_service::markdown_service::{MarkdownService, PostMetadata};
-use crate::posts::{get_posts, POSTS};
 
 use super::posts_container::{Post, POST_CONTAINER};
 
