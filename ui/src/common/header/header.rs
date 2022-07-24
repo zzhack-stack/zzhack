@@ -1,5 +1,5 @@
+use super::header_config::{GITHUB_BAR_LINK, IS_GITHUB_BAR_VISIBLE};
 use super::pages::PAGES;
-use crate::contact::ContactType;
 use crate::container::Container;
 use crate::header::drawer::Drawer;
 use crate::header::drawer_item::DrawerItem;
@@ -120,9 +120,15 @@ pub fn header() -> Html {
                         </div>
                         <div class="right">
                             <Icon source="setting.svg" size=26 onclick={handle_setting_click} />
-                            <Link out_href={ContactType::GitHub.into_lnk()}>
-                                <Icon source="github.svg" size=26 />
-                            </Link>
+                            {if IS_GITHUB_BAR_VISIBLE {
+                                html! {
+                                    <Link out_href={GITHUB_BAR_LINK}>
+                                        <Icon source="github.svg" size=26 />
+                                    </Link>
+                                }
+                            } else {
+                                html! {}
+                            }}
                             {only_render_on_mobile(html! {
                                 <Icon source="drawer.svg" size=26 onclick={handle_drawer_click} />
                             })}
