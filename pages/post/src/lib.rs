@@ -1,6 +1,7 @@
 use gloo_timers::callback::Timeout;
-use services::markdown_service::markdown_service::MarkdownService;
-use services::post_service::post_service::POST_SERVICE;
+use services::{
+    markdown_service::markdown_service::MarkdownService, post_service::post_service::PostService,
+};
 use stylist::style;
 use ui::post_card_header::PostCardHeader;
 use yew::prelude::*;
@@ -12,7 +13,9 @@ pub struct PostProps {
 
 #[function_component(Post)]
 pub fn post(props: &PostProps) -> Html {
-    let post = POST_SERVICE.find_post_by_filename(&props.filename).unwrap();
+    let post = PostService::from_all()
+        .find_post_by_filename(&props.filename)
+        .unwrap();
     let style = style!(
         r#"
         width: 660px;

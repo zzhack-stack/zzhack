@@ -1,4 +1,4 @@
-use crate::post_service::post_service::{Post, POST_SERVICE};
+use crate::post_service::{post_service::PostService, posts_container::Post};
 use once_cell::sync::Lazy;
 use serde::Deserialize;
 use serde_json;
@@ -37,7 +37,9 @@ impl ProjectsService {
             .iter()
             .map(|raw_project| {
                 let post = match raw_project.post.clone() {
-                    Some(filename) => POST_SERVICE.find_post_by_filename(&filename).clone(),
+                    Some(filename) => PostService::from_all()
+                        .find_post_by_filename(&filename)
+                        .clone(),
                     None => None,
                 };
 

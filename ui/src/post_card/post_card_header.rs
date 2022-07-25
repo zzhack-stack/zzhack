@@ -1,4 +1,7 @@
-use crate::label::Label;
+use crate::{
+    author::{AUTHOR_AVATAR, AUTHOR_NAME},
+    label::Label,
+};
 use utils::use_style;
 use yew::prelude::*;
 
@@ -15,7 +18,6 @@ pub fn post_card_header(props: &PostCardHeaderProps) -> Html {
         align-items: center;
         width: 100%;
         justify-content: space-between;
-
 
         .avatar {
             width: 32px;
@@ -39,8 +41,8 @@ pub fn post_card_header(props: &PostCardHeaderProps) -> Html {
     html! {
         <div class={style}>
             <div class="author">
-                <img src="/images/avatar.png" class="avatar" alt="avatar" />
-                <span class="author-name">{"Mist"}</span>
+                <img src={AUTHOR_AVATAR} class="avatar" alt="avatar" />
+                <span class="author-name">{AUTHOR_NAME}</span>
             </div>
             <Label text={props.label.clone()} />
         </div>
