@@ -32,7 +32,6 @@ utils = {path = "../utils"}
 ui = {path = "../ui"}
 post = {path = "../pages/post"}
 home = {path = "../pages/home"}
-about = {path = "../pages/about"}
 not_found = {path = "../pages/not_found"}
 projects = {path = "../pages/projects"}
 links = {path = "../pages/links"}

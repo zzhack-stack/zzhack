@@ -3,17 +3,6 @@
 version = 3
 
 [[package]]
-name = "about"
-version = "0.1.0"
-dependencies = [
- "services",
- "stylist",
- "ui",
- "utils",
- "yew",
-]
-
-[[package]]
 name = "adler"
 version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1469,7 +1458,6 @@ dependencies = [
 name = "zzhack"
 version = "0.1.0"
 dependencies = [
- "about",
  "anyhow",
  "base64",
  "chrono",

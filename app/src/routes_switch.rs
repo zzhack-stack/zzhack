@@ -1,4 +1,3 @@
-use about::About;
 use home::Home;
 use links::Links;
 use not_found::NotFound;
@@ -12,7 +11,6 @@ pub fn switch(routes: &RootRoutes) -> Html {
     match routes {
         RootRoutes::Home | RootRoutes::Root => html! { <Home posts_key={String::from("1")} /> },
         RootRoutes::Projects => html! { <Projects /> },
-        RootRoutes::About => html! { <About /> },
         RootRoutes::Post { filename } => html! {<Post filename={filename.clone()} />},
         RootRoutes::NotFound => html! { <NotFound />},
         RootRoutes::Technology => html! {
