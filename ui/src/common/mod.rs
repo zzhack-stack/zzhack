@@ -1,3 +1,5 @@
+mod footer_source;
+
 pub mod contact;
 pub mod container;
 pub mod footer;

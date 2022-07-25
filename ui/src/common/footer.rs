@@ -1,7 +1,9 @@
-use crate::contact::{ContactType, Contacts};
+use crate::contact::Contacts;
 use crate::container::Container;
 use utils::use_style;
 use yew::prelude::*;
+
+use super::footer_source::FOOTER_TEXT;
 
 #[function_component(Footer)]
 pub fn footer() -> Html {
@@ -47,10 +49,10 @@ pub fn footer() -> Html {
                             <div class="text">{"Illustration by Icons 8 from Ouch!"}</div>
                         </div>
                         <div>
-                            <Contacts source={vec![ContactType::GitHub, ContactType::Twitter, ContactType::Discord, ContactType::Email, ContactType::WeChat]} />
+                            <Contacts />
                         </div>
                     </div>
-                    <div class="copyright text">{"Copyright © 2021 Mist"}</div>
+                    <div class="copyright text">{FOOTER_TEXT}</div>
                 </div>
             </Container>
         </div>

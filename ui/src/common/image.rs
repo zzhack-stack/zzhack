@@ -25,6 +25,8 @@ pub struct IconProps {
     #[prop_or(true)]
     pub has_theme: bool,
     pub size: i32,
+    #[prop_or(false)]
+    pub is_raw_source: bool,
     #[prop_or(String::from(""))]
     pub style: String,
     #[prop_or_default]
@@ -112,7 +114,7 @@ pub fn icon(props: &IconProps) -> Html {
     html! {
         <div onclick={onclick_callback} class={vec![wrapper_style.get_class_name().to_string(), props.style.clone()]}>
             <MatIconButton>
-                <BaseImage has_theme={props.has_theme} source={props.source} style={style.to_string()} />
+                <BaseImage has_theme={props.has_theme} source={props.source} style={style.to_string()} is_raw_source={props.is_raw_source} />
             </MatIconButton>
         </div>
     }
