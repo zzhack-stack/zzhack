@@ -98,11 +98,19 @@ pub fn projects() -> Html {
             <Link out_href={PROJECTS_BANNER_LINK}>
                 <ThemeImage  source="projects_banner.svg" is_reactive={true} />
             </Link>
-            <div class="alert">
-                <p>
-                    {PROJECTS_BANNER_TEXT}
-                </p>
-            </div>
+            {
+                if PROJECTS_BANNER_TEXT != "" {
+                    html! {
+                        <div class="alert">
+                            <p>
+                                {PROJECTS_BANNER_TEXT}
+                            </p>
+                        </div>
+                    }
+                } else {
+                    html! {}
+                }
+            }
             <div class="cards">
                 {render_target_vnode}
             </div>
