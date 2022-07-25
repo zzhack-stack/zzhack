@@ -1,12 +1,15 @@
+use projects_config::PROJECTS_BANNER_LINK;
+use projects_config::PROJECTS_BANNER_TEXT;
 use services::projects_service::projects_service::Project;
 use services::projects_service::projects_service::PROJECTS_SERVICE;
 use stylist::style;
-use ui::contact::ContactType;
 use ui::image::ThemeImage;
 use ui::link::Link;
 use ui::ProjectCard;
 use utils::theme::is_on_mobile;
 use yew::prelude::*;
+
+mod projects_config;
 
 #[function_component(Projects)]
 pub fn projects() -> Html {
@@ -92,15 +95,12 @@ pub fn projects() -> Html {
 
     html! {
         <div class={style}>
-            <Link out_href={ContactType::GitHub.into_lnk()}>
+            <Link out_href={PROJECTS_BANNER_LINK}>
                 <ThemeImage  source="projects_banner.svg" is_reactive={true} />
             </Link>
             <div class="alert">
-                <p>{"我会用业余时间维护一些开源项目，包括不限于奇思妙想的产品，提升开发者体验的工具，库，框架。我目前在思考于 UI Design 和想要用 ❤️ 做好一个产品。"}</p>
                 <p>
-                    {"如果你有任何相关的建议或者有趣问题的讨论，欢迎直接通过 "}
-                    <Link out_href={ContactType::Email.into_lnk()}>{"邮件"}</Link>
-                    {" 联系我。"}
+                    {PROJECTS_BANNER_TEXT}
                 </p>
             </div>
             <div class="cards">

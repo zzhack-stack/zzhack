@@ -1,10 +1,13 @@
+use posts_config::BANNER_LINK;
 use services::post_service::post_service::{FilterTag, PostService};
-use ui::image::ThemeImage;
+use ui::image::ThemeRawImage;
 use ui::label::Label;
 use ui::link::Link;
 use ui::post_card::post_card::PostCard;
 use utils::use_style;
 use yew::prelude::*;
+
+mod posts_config;
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct HomeProps {
@@ -78,7 +81,7 @@ pub fn home(props: &HomeProps) -> Html {
     html! {
         <div class={style}>
             <div class="banner">
-                <ThemeImage source="banner.svg" is_reactive=true />
+                <ThemeRawImage source={BANNER_LINK} is_reactive=true />
             </div>
             <div class="labels">
                 <Link onclick={handle_filter_posts_by_label(FilterTag::All)}>

@@ -1,10 +1,11 @@
-use router::RootRoutes;
+use links_config::LINKS_BANNER_TEXT;
 use services::links_service::links_service::LINKS_SERVICE;
 use stylist::style;
 use ui::image::BaseImage;
-use ui::link::Link;
 use ui::link_card::LinkCard;
 use yew::prelude::*;
+
+mod links_config;
 
 #[function_component(Links)]
 pub fn links() -> Html {
@@ -92,9 +93,7 @@ pub fn links() -> Html {
                 <BaseImage source="links_banner.svg" is_reactive={true} />
                 <div class="banner__links">
                     <div class="banner__links-title">{"友情链接"}</div>
-                    <div class="banner__links-desc">{"这里放置大家的博客 & 个人网站，拒绝广告，欢迎各类应用，如果你想跟我交换友情链接，直接戳 "}
-                        <Link href={RootRoutes::Post {filename: String::from("add_links")}}>{"这里"}</Link>
-                    {" 来进行交换吧。"}</div>
+                    <div class="banner__links-desc">{LINKS_BANNER_TEXT}</div>
                 </div>
             </div>
             <div class="links">

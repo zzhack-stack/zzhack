@@ -35,6 +35,8 @@ pub struct IconProps {
 pub struct BaseImageProps {
     pub source: &'static str,
     #[prop_or(false)]
+    pub is_raw_source: bool,
+    #[prop_or(false)]
     pub has_theme: bool,
     #[prop_or(false)]
     pub is_reactive: bool,
@@ -50,7 +52,9 @@ pub fn base_image(props: &BaseImageProps) -> Html {
     } else {
         props.source.to_string()
     };
-    let source = if props.has_theme {
+    let source = if props.is_raw_source {
+        source
+    } else if props.has_theme {
         with_assets_by_theme(&source, &theme_ctx.theme)
     } else {
         with_assets(&source)
@@ -72,6 +76,13 @@ pub fn image(props: &ImageProps) -> Html {
 pub fn theme_image(props: &ThemeImageProps) -> Html {
     html! {
         <BaseImage source={props.source} has_theme=true is_reactive={props.is_reactive} style={props.style.clone()} />
+    }
+}
+
+#[function_component(ThemeRawImage)]
+pub fn theme_raw_image(props: &ThemeImageProps) -> Html {
+    html! {
+        <BaseImage source={props.source} has_theme=true is_reactive={props.is_reactive} style={props.style.clone()} is_raw_source={true} />
     }
 }
 
