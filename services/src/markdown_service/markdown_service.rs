@@ -75,8 +75,13 @@ impl MarkdownService {
             Some(p) => p.to_str().unwrap(),
             None => "",
         };
+        let source_path = path.to_str().unwrap().trim_start_matches(wait_for_trim_str);
 
-        format!("/{}", path.to_str().unwrap().replace(wait_for_trim_str, ""))
+        if source_path.starts_with("/") {
+            source_path.to_string()
+        } else {
+            format!("/{}", source_path)
+        }
     }
 
     /**
