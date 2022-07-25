@@ -18,6 +18,8 @@ use syntect::parsing::SyntaxSet;
 use web_sys::window;
 use web_sys::Element;
 
+use super::sources_config::SOURCES_FOLDER_NAME;
+
 #[derive(Clone)]
 pub struct MarkdownService {
     value: String,
@@ -66,9 +68,15 @@ impl MarkdownService {
 
     fn parse_source_path(path: &str) -> String {
         let path = Path::new(path);
-        let filename = path.file_name().expect("Cannot parse filename of image, please make sure the image has a valid extension and file stem.").to_str().unwrap();
+        let p = path
+            .ancestors()
+            .find(|p| !p.to_str().unwrap().contains(SOURCES_FOLDER_NAME));
+        let wait_for_trim_str = match p {
+            Some(p) => p.to_str().unwrap(),
+            None => "",
+        };
 
-        format!("/sources/{}", filename)
+        format!("/{}", path.to_str().unwrap().replace(wait_for_trim_str, ""))
     }
 
     /**
