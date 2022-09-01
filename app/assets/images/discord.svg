@@ -3,7 +3,7 @@
     <title>Bitmap</title>
     <g id="Symbols" fill="none" fill-rule="evenodd">
         <g id="footer" transform="translate(-1098.000000, -42.000000)">
-            <image id="Bitmap" x="1097.5" y="37.6875" width="36" height="36" xlink:href="data:image/svg;base64,https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg"></image>
+            <image id="Bitmap" x="1097.5" y="37.6875" width="36" height="36" href="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt=""></image>
         </g>
     </g>
 </svg>
