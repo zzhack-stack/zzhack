@@ -18,16 +18,11 @@ pub fn footer() -> Html {
             justify-content: space-between;
         }
 
-        .copyright {
-            display: flex;
-            justify-content: center;
-        }
-
         .text {
             font-size: 14px;
         }
 
-        @media (max-width: 600px) {            
+        @media (max-width: 600px) {
             .contacts {
                 flex-direction: column;
                 height: auto;
@@ -43,14 +38,12 @@ pub fn footer() -> Html {
                 <div>
                     <div class="contacts">
                         <div>
-                            <div class="text">{"Powered by Rust & Yew"}</div>
-                            <div class="text">{"Illustration by Icons 8 from Ouch!"}</div>
+                            <div class="text">{"🛠️ with Rust & Yew"}</div>
                         </div>
                         <div>
-                            <Contacts source={vec![ContactType::GitHub, ContactType::Twitter, ContactType::Discord, ContactType::Email, ContactType::WeChat]} />
+                            <Contacts source={vec![ContactType::GitHub, ContactType::Twitter, ContactType::Email, ContactType::LinkedIn,]} />
                         </div>
                     </div>
-                    <div class="copyright text">{"Copyright © 2021 Mist"}</div>
                 </div>
             </Container>
         </div>

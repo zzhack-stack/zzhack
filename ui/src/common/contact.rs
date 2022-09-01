@@ -10,19 +10,17 @@ pub struct ContactsProps {
 
 #[derive(Clone, PartialEq)]
 pub enum ContactType {
+    LinkedIn,
     Twitter,
-    GitHub,
     Email,
-    WeChat,
-    Discord,
+    GitHub,
 }
 
 impl From<&ContactType> for &'static str {
     fn from(contact: &ContactType) -> &'static str {
         match contact {
-            ContactType::Discord => "discord.svg",
+            ContactType::LinkedIn => "linkedin.svg",
             ContactType::Twitter => "twitter.svg",
-            ContactType::WeChat => "wechat.svg",
             ContactType::Email => "gmail.svg",
             ContactType::GitHub => "github.svg",
         }
@@ -32,11 +30,10 @@ impl From<&ContactType> for &'static str {
 impl ContactType {
     pub fn into_lnk(&self) -> &'static str {
         match self {
-            ContactType::Discord => "#",
-            ContactType::Twitter => "https://twitter.com/_mistricky",
-            ContactType::WeChat => "#",
-            ContactType::Email => "mailto:mist.zzh@gmail.com",
-            ContactType::GitHub => "https://github.com/mistricky",
+            ContactType::LinkedIn => "https://www.linkedin.com/in/anandnambakam/",
+            ContactType::Twitter => "https://twitter.com/andnasnd",
+            ContactType::Email => "mailto:anambakam@icloud.com",
+            ContactType::GitHub => "https://github.com/andnasnd",
         }
     }
 }
