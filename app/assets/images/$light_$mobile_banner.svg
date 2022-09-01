@@ -11,9 +11,11 @@
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="dark/V4_home_mobile" transform="translate(-22.000000, -178.000000)">
             <g id="Group-2" transform="translate(22.000000, 178.000000)">
-                <rect id="Rectangle" fill="url(#radialGradient-1)" x="0" y="0" width="331" height="223" rx="15"></rect>
-                <text id="Do-more-useless-thin" font-family="JCfg, PilGi" font-size="28" font-weight="normal" fill="#FFFFFF">
-                    <tspan x="26" y="122">Performant. Scalable. High-assurance.</tspan>
+                <rect id="Rectangle" fill="url(#radialGradient-1)" x="0" y="0" width="231" height="223" rx="15"></rect>
+                <text id="Do-more-useless-thin" font-family="JCfg, PilGi" text-center="yes" font-size="16" font-weight="thin" fill="#FFFFFF">
+                    <tspan x="26" y="122">
+                        Performant. Scalable. High-assurance.
+                    </tspan>
                 </text>
             </g>
         </g>
