@@ -1,104 +1,100 @@
 :root {
-  --mdc-theme-primary: #7ECCB4;
-
-  mwc-icon-button::part("mdc-icon-button") {
-    background: red;
-  }
-
-  .light {
-    --primary-color: #7ECCB4;
-    --base-color: #fff;
-    --underlay-color: #F3F7FD;
-    --text-color: #3F3D55;
-    --card-color: #fff;
-    --mask-color: rgba(0, 0, 0, 0.45);
-    --shallow-gray: rgba(112, 112, 112, 0.06);
-    --sub-text-color: rgba(63, 61, 85, 0.63);
-    --primary-shadow-color: rgb(127 214 194 / 22%);
-    --card-shadow-color: rgba(149, 157, 165, 0.2);
-    --label-color: rgba(126, 204, 180, 0.36);
-    --tip-color: rgba(63, 61, 85, 0.39);
-    --code-block-bg: #282c34;
-    --alert-color: rgba(32, 136, 255, 0.2);
-    --blue: #4794FE;
-    --code-color: var(--text-color);
-    --code-bg: rgba(126, 204, 180, 0.35);
-  }
-
-  .dark {
-    --code-bg: rgba(126, 204, 180, 0.35);
-    --code-color: var(--text-color);
-    --blue: #4794FE;
-    --alert-color: rgba(32, 136, 255, 0.2);
-    --code-block-bg: #282c34;
-    --label-color: rgba(126, 204, 180, 0.36);
-    --card-shadow-color: rgba(149, 157, 165, 0);
-    --primary-color: #7ECCB4;
-    --primary-shadow-color: rgb(127 214 194 / 22%);
-    --base-color: #31363F;
-    --underlay-color: #24292E;
-    --text-color: #D6D8DA;
-    --card-color: #31363F;
-    --mask-color: rgba(0, 0, 0, 0.83);
-    --shallow-gray: rgba(216, 216, 216, 0.08);
-    --sub-text-color: #768390;
-    --tip-color: #57606A;
-  }
+    --mdc-theme-primary: #7ECCB4;
+    mwc-icon-button::part("mdc-icon-button") {
+        background: red;
+    }
+    .light {
+        --primary-color: #7ECCB4;
+        --base-color: #fff;
+        --underlay-color: #F3F7FD;
+        --text-color: #3F3D55;
+        --card-color: #fff;
+        --mask-color: rgba(0, 0, 0, 0.45);
+        --shallow-gray: rgba(112, 112, 112, 0.06);
+        --sub-text-color: rgba(63, 61, 85, 0.63);
+        --primary-shadow-color: rgb(127 214 194 / 22%);
+        --card-shadow-color: rgba(149, 157, 165, 0.2);
+        --label-color: rgba(126, 204, 180, 0.36);
+        --tip-color: rgba(63, 61, 85, 0.39);
+        --code-block-bg: #282c34;
+        --alert-color: rgba(32, 136, 255, 0.2);
+        --blue: #4794FE;
+        --code-color: var(--text-color);
+        --code-bg: rgba(126, 204, 180, 0.35);
+    }
+    .dark {
+        --code-bg: rgba(126, 204, 180, 0.35);
+        --code-color: var(--text-color);
+        --blue: #4794FE;
+        --alert-color: rgba(32, 136, 255, 0.2);
+        --code-block-bg: #282c34;
+        --label-color: rgba(126, 204, 180, 0.36);
+        --card-shadow-color: rgba(149, 157, 165, 0);
+        --primary-color: #7ECCB4;
+        --primary-shadow-color: rgb(127 214 194 / 22%);
+        --base-color: #31363F;
+        --underlay-color: #24292E;
+        --text-color: #D6D8DA;
+        --card-color: #31363F;
+        --mask-color: rgba(0, 0, 0, 0.83);
+        --shallow-gray: rgba(216, 216, 216, 0.08);
+        --sub-text-color: #768390;
+        --tip-color: #57606A;
+    }
 }
 
 .text {
-  color: var(--normal-text-color);
+    color: var(--normal-text-color);
 }
 
 .article-text {
-  color: var(--article-text-color);
+    color: var(--article-text-color);
 }
 
 .mini-container {
-  width: 600px;
-  margin: auto;
+    width: 600px;
+    margin: auto;
 }
 
 .article-container {
-  width: 760px;
-  margin: auto;
+    width: 760px;
+    margin: auto;
 }
 
 .non-style-link {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .articles {
-  background: var(--base-color);
-  border-radius: 3px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  width: 100%;
-  padding: 10px 15px;
+    background: var(--base-color);
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    width: 100%;
+    padding: 10px 15px;
 }
 
 .card {
-  border: 1px solid var(--border-color);
-  transition: box-shadow 0.3s;
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 0px 0px;
-
-  &:hover {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-    border-color: transparent;
-  }
+    border: 1px solid var(--border-color);
+    transition: box-shadow 0.3s;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 0px 0px;
+    &:hover {
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+        border-color: transparent;
+    }
 }
 
 @media (max-width: 600px) {
-  .container, .mini-container {
-    width: 100%;
-    overflow: hidden;
-    padding: 0 20px;
-    box-sizing: border-box;
-  }
-
-  .article-container {
-    width: 100%;
-    overflow: hidden;
-    padding: 10px 30px;
-    box-sizing: border-box;
-  }
+    .container,
+    .mini-container {
+        width: 100%;
+        overflow: hidden;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+    .article-container {
+        width: 100%;
+        overflow: hidden;
+        padding: 10px 30px;
+        box-sizing: border-box;
+    }
 }
