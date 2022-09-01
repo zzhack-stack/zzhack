@@ -21,7 +21,7 @@ impl From<&ContactType> for &'static str {
         match contact {
             ContactType::LinkedIn => "linkedin.svg",
             ContactType::Twitter => "twitter.svg",
-            ContactType::Email => "gmail.svg",
+            ContactType::Email => "mail.svg",
             ContactType::GitHub => "github.svg",
         }
     }

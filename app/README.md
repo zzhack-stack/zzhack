@@ -12,7 +12,7 @@ It's worth to mention that, oh I love dark mode, so the `zzhack` also support da
 
 ![zzhack light mode](https://raw.githubusercontent.com/zzhack-stack/zzhack/main/doc/zzhack_light_mode.png)
 
-If you have some advice for design, please contact me by [email](Mailto:mist.zzh@gmail.com), also if you want my sketches of zzhack, just send me email.
+If you have some advice for design, please contact me by [email](Mailto:anambakam@icloud.com)if you have any inquiries!
 
 ## Links
 The zzhack have a full page to display links, so if you wanna add your website to zzhack, please comment in [here](https://github.com/zzhack-stack/zzhack/issues/4).

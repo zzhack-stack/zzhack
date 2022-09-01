@@ -54,4 +54,4 @@ Fork `zzhack` 到你的 GitHub，修改 `/services/links_service/links.json` 添
 通过 GitHub 创建一个 PR 合并到 `main`，等待 merge 后就能在 [友情链接](/links) 看到你的站点了。
 
 #### Final
-如果你嫌上述步骤太麻烦也不要紧，将你的网站信息通过 [Email](mailto:mist.zzh@gmail.com) 发给我，我会在空闲的时候处理 :D。
+如果你嫌上述步骤太麻烦也不要紧，将你的网站信息通过 [Email](mailto:anambakam@icloud.com) 发给我，我会在空闲的时候处理 :D。
