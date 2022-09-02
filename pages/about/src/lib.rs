@@ -43,14 +43,39 @@ pub fn about() -> Html {
                         </ul>
                     </p>
                     <p>
-                        {"I've got quite a few interests, and can do some stuff"}
+                        {"I've got quite a few interests, and can do some stuff:"}
                         <ul>
+                            <li>
+                                {"Albeit I beep boop 🧑‍💻 now, I like to ✒️ English too."}
+                            </li>
+                            <li>
+                                {"While I primarily use a Mac now, I grew up using Windows."}
+                            </li>
+                            <ul>
+                                <li>
+                                    {"When I have some spare time, I like to tinker with Linux (OpenBSD, Arch, WSL) as well."}
+                                </li>
+                                <li>
+                                    {"I'm also a big fan of Raspberry Pi's (not the edible ones), and like tinkering with microcontrollers."}
+                                </li>
+                            </ul>
+                            <li>
+                                {"I like Bash and the command line, and am an unashamed Unix philosophy fanboy."}
+                            </li>
+                            <li>
+                                {"While I ❤️ Vim/Vi, (sorry Emacs gang), I'm a huge fan of VSCode/IntelliJ products."}
+                            </li>
+                            <li>
+                                {"I still use IRC sometimes 🤷."}
+                            </li>
                             <li>
                                 {"I'm a big fan of Rust 🦀, GoLang, and TypeScript."}
                             </li>
-                            <li>
-                                {"I like C, but try to avoid using it, as I'm not a wizard 🧙."}
-                            </li>
+                            <ul>
+                                <li>
+                                    {"I like C, but try to avoid using it, as I'm not a wizard 🧙."}
+                                </li>
+                            </ul>
                             <li>
                                 {"I read a lot of books and research papers, and I'm constantly searching for new things to learn."}
                             </li>
