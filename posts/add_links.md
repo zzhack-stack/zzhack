@@ -16,36 +16,17 @@ Fork `zzhack` 到你的 GitHub，修改 `/services/links_service/links.json` 添
 {
     "links": [
         {
-            "name": "Busyops博客",
-            "addr": "https://busyops.com/",
-            "desc": "Hello Moon",
-            "logo": "https://busyops.com/images/avatar.jpg"
+            "name": "Anand Nambakam,
+            "addr": "https://github.com/andnasnd",
+            "desc": "👋",
+            "logo": "https://media-exp1.licdn.com/dms/image/C5603AQF1FU0l6JaPgQ/profile-displayphoto-shrink_800_800/0/1634256413735?e=1667433600&v=beta&t=VxzDzS3wIH_6P54sMcwq9BeH2aak-vb6wedbhNBdrh0"
         },
-        {
-            "name": "Clay 的技术博客",
-            "addr": "https://www.techgrow.cn",
-            "desc": "用进废退 | 艺不压身",
-            "logo": "https://www.techgrow.cn/img/head.jpg"
-        },
-        {
-            "name": "Christine的博客",
-            "desc": "虽然我不够优秀，但我从未放弃过努力。",
-            "logo": "https://christine-only.github.io/blog/logo.png",
-            "addr": "https://christine-only.github.io/blog/"
-        },
-        {
-            "name": "Forever丿顾北博客", 
-            "addr": "https://forevergubei.gitee.io/myblod/",
-            "desc": "一个追寻大佬脚步的小白",
-            "logo": "https://forevergubei.gitee.io/myblod/logo.png"
-        }
         // {
-        //     "name": "站点名称", 
-        //     "addr": "站点链接",
-        //     "desc": "站点描述",
-        //     "logo": "站点 logo"
+        //     "name": "insert name",
+        //     "addr": "insert website",
+        //     "desc": "insert description",
+        //     "logo": "intert logo"
         // }，
-        // <- 加到这里 :D
     ]
 }
 ```

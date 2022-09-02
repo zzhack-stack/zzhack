@@ -1,82 +1,21 @@
 {
-    "links": [
-        {
-            "name": "Busyops博客",
-            "addr": "https://busyops.com/",
-            "desc": "Hello Moon",
-            "logo": "https://busyops.com/images/avatar.jpg"
+    "links": [{
+            "name": "My GitHub Profile",
+            "addr": "https://github.com/andnasnd",
+            "desc": "👨🏽‍🚀",
+            "logo": "https://media-exp1.licdn.com/dms/image/C5603AQF1FU0l6JaPgQ/profile-displayphoto-shrink_400_400/0/1634256413735?e=1667433600&v=beta&t=OdOvB3oJIneoNr-TbhJOhhcMTL0vhNEqXevSUW0vNVE"
         },
         {
-            "name": "Clay 的技术博客",
-            "addr": "https://www.techgrow.cn",
-            "desc": "用进废退 | 艺不压身",
-            "logo": "https://www.techgrow.cn/img/head.jpg"
+            "name": "My Twitter Profile",
+            "addr": "https://twitter.com/andnasnd",
+            "desc": "🐦",
+            "logo": "https://media-exp1.licdn.com/dms/image/C5603AQF1FU0l6JaPgQ/profile-displayphoto-shrink_400_400/0/1634256413735?e=1667433600&v=beta&t=OdOvB3oJIneoNr-TbhJOhhcMTL0vhNEqXevSUW0vNVE"
         },
         {
-            "name": "Christine的博客",
-            "desc": "虽然我不够优秀，但我从未放弃过努力。",
-            "logo": "https://christine-only.github.io/blog/logo.png",
-            "addr": "https://christine-only.github.io/blog/"
-        },
-        {
-            "name": "Forever丿顾北博客",
-            "addr": "https://forevergubei.gitee.io/myblod/",
-            "desc": "一个追寻大佬脚步的小白",
-            "logo": "https://forevergubei.gitee.io/myblod/logo.png"
-        },
-        {
-            "name": "MrDJun's Blog",
-            "addr": "https://mrdjun.gitee.io/",
-            "desc": "Just an ordinary JAVA programmer",
-            "logo": "https://mrdjun.gitee.io/images/avatar.png"
-        },
-        {
-            "name": "一物一世界的 blog",
-            "addr": "https://www.flyfrag.cn/",
-            "desc": "太阳强烈，水波温柔",
-            "logo": "https://avatars.githubusercontent.com/u/53332638?v=4"
-        },
-        {
-            "name": "Fatpandac’s Blog",
-            "addr": "https://www.fatpandac.com/",
-            "desc": "不知道写啥的个人博客",
-            "logo": "https://avatars.githubusercontent.com/u/30423976?v=4"
-        },
-        {
-            "name": "低调小熊猫",
-            "addr": "https://ilovey.live",
-            "desc": "读万卷书，行万里路，赚很多钱",
-            "logo": "https://uss.ilovey.live/img/avatar.jpg"
-        },
-        {
-            "name": "风吹鼍鼓旌旗动",
-            "addr": "http://idinr.com/",
-            "desc": "有技术，有科学",
-            "logo": "https://s2.loli.net/2022/06/15/d6MYUaVWf74sKIi.jpg"
-        },
-        {
-            "name": "Levi's Blog",
-            "addr": "https://www.jianshu.com/u/1fc674525eeb",
-            "desc": "学的越多，懂的越少",
-            "logo": "https://upload.jianshu.io/users/upload_avatars/10826765/5e06dfca-ff26-488c-a60c-79ca6504917a?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"
-        },
-        {
-            "name": "高耳机",
-            "addr": "http://www.ragnaroks.site/",
-            "desc": "青春有爱 年少有梦",
-            "logo": "https://avatars.githubusercontent.com/u/7598199?v=4"
-        },
-        {
-            "name": "Pseudoyu",
-            "addr": "https://www.pseudoyu.com/",
-            "desc": "Blockchain | Programming | Photography | Misty",
-            "logo": "https://www.pseudoyu.com/images/author.webp"
-        },
-        {
-            "name": "circlehotarux's blog",
-            "addr": "https://www.circlehotarux.me/",
-            "desc": "心诚则灵",
-            "logo": "https://avatars.githubusercontent.com/u/48060080?v=4"
+            "name": "My LinkedIn Profile",
+            "addr": "https://www.linkedin.com/in/anandnambakam/",
+            "desc": "👴🏽",
+            "logo": "https://media-exp1.licdn.com/dms/image/C5603AQF1FU0l6JaPgQ/profile-displayphoto-shrink_400_400/0/1634256413735?e=1667433600&v=beta&t=OdOvB3oJIneoNr-TbhJOhhcMTL0vhNEqXevSUW0vNVE"
         }
     ]
 }

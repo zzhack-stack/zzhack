@@ -96,11 +96,11 @@ pub fn projects() -> Html {
                 <ThemeImage  source="projects_banner.svg" is_reactive={true} />
             </Link>
             <div class="alert">
-                <p>{"我会用业余时间维护一些开源项目，包括不限于奇思妙想的产品，提升开发者体验的工具，库，框架。我目前在思考于 UI Design 和想要用 ❤️ 做好一个产品。"}</p>
+                <p>{"Here are a few cool projects I've built, and been involved with!"}</p>
                 <p>
-                    {"如果你有任何相关的建议或者有趣问题的讨论，欢迎直接通过 "}
-                    <Link out_href={ContactType::Email.into_lnk()}>{"邮件"}</Link>
-                    {" 联系我。"}
+                    {"If you wanna collaborate on something, feel free to send me an email "}
+                    <Link out_href={ContactType::Email.into_lnk()}>{"here"}</Link>
+                    {" ✌️"}
                 </p>
             </div>
             <div class="cards">

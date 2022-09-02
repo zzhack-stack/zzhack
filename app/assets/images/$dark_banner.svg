@@ -3,16 +3,16 @@
     <title>Group 2</title>
     <defs>
         <radialGradient cx="104.307787%" cy="111.952154%" fx="104.307787%" fy="111.952154%" r="303.959988%" gradientTransform="translate(1.043078,1.119522),scale(0.346078,1.000000),rotate(-161.920088),translate(-1.043078,-1.119522)" id="radialGradient-1">
-            <stop stop-color="#FECDC9" stop-opacity="0.8" offset="0%"></stop>
-            <stop stop-color="#BFF7F2" stop-opacity="0.7" offset="63.4670017%"></stop>
-            <stop stop-color="#A8C4FB" stop-opacity="0.6" offset="100%"></stop>
+            <stop stop-color="#7F7FD5" stop-opacity="0.8" offset="0%"></stop>
+            <stop stop-color="#86A8E7" stop-opacity="0.7" offset="63.4670017%"></stop>
+            <stop stop-color="#91EAE4" stop-opacity="0.6" offset="100%"></stop>
         </radialGradient>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="light/V5_home" transform="translate(-210.000000, -133.000000)">
             <g id="Group-2" transform="translate(210.000000, 133.000000)">
                 <rect id="Rectangle" fill="url(#radialGradient-1)" x="0" y="0" width="1020" height="353" rx="15"></rect>
-                <text id="Do-more-useless-thin" font-family="JCfg, PilGi" text-center="yes" font-size="36" font-weight="normal" fill="#3F3D55">
+                <text id="Do-more-useless-thin" font-family="JCfg, PilGi" align-center="yes" font-size="36" font-weight="normal" fill="#3F3D55">
                     <tspan x="211" y="188">Performant. Scalable. High-assurance.</tspan>
                 </text>
             </g>

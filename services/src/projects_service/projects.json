@@ -1,6 +1,5 @@
 {
-    "projects": [
-        {
+    "projects": [{
             "name": "zzhack",
             "addr": "https://github.com/zzhack-stack/zzhack",
             "desc": "⚙️ 🦀️ My personal blog site"

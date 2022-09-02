@@ -3,9 +3,9 @@
     <title>Group 2</title>
     <defs>
         <radialGradient cx="104.307787%" cy="111.952154%" fx="104.307787%" fy="111.952154%" r="175.869609%" gradientTransform="translate(1.043078,1.119522),scale(0.673716,1.000000),rotate(-147.562852),translate(-1.043078,-1.119522)" id="radialGradient-1">
-            <stop stop-color="#FECDC9" offset="0%"></stop>
-            <stop stop-color="#BFF7F2" offset="63.6434655%"></stop>
-            <stop stop-color="#A8C4FB" offset="100%"></stop>
+            <stop stop-color="#7F7FD5" offset="0%"></stop>
+            <stop stop-color="#86A8E7" offset="63.6434655%"></stop>
+            <stop stop-color="#91EAE4" offset="100%"></stop>
         </radialGradient>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">

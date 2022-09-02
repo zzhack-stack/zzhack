@@ -41,7 +41,7 @@ pub fn footer() -> Html {
                             <div class="text">{"🛠️ with Rust & Yew"}</div>
                         </div>
                         <div>
-                            <Contacts source={vec![ContactType::GitHub, ContactType::Twitter, ContactType::Email, ContactType::LinkedIn,]} />
+                            <Contacts source={vec![ContactType::Email, ContactType::GitHub, ContactType::Twitter, ContactType::LinkedIn,]} />
                         </div>
                     </div>
                 </div>
