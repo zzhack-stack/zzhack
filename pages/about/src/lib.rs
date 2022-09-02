@@ -1,7 +1,5 @@
 use stylist::style;
-use ui::contact::ContactType;
 use ui::gradient_title::GradientTitle;
-use ui::link::Link;
 use yew::prelude::*;
 
 #[function_component(About)]
@@ -53,18 +51,20 @@ pub fn about() -> Html {
                             </li>
                             <ul>
                                 <li>
-                                    {"When I have some spare time, I like to tinker with Linux (OpenBSD, Arch, WSL) as well."}
+                                    {"When I have some spare time, I like to 🧑‍🔬 with Linux (OpenBSD, Arch, WSL)."}
                                 </li>
                                 <li>
                                     {"I'm also a big fan of Raspberry Pi's (not the edible ones), and like tinkering with microcontrollers."}
                                 </li>
                             </ul>
                             <li>
-                                {"I like Bash and the command line, and am an unashamed Unix philosophy fanboy."}
-                            </li>
-                            <li>
                                 {"While I ❤️ Vim/Vi, (sorry Emacs gang), I'm a huge fan of VSCode/IntelliJ products."}
                             </li>
+                            <ul>
+                                <li>
+                                    {"I like Bash and the command line, and am an unashamed Unix philosophy fanboy."}
+                                </li>
+                            </ul>
                             <li>
                                 {"I still use IRC sometimes 🤷."}
                             </li>
@@ -83,7 +83,7 @@ pub fn about() -> Html {
                     </p>
                 </div>
                 <p>
-                    {"Outside of tech, I enjoy:"}
+                    {"Outside of beep booping, I enjoy:"}
                         <ul>
                             <li>
                                 {"Snowboarding 🏂"}
