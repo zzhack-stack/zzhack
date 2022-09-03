@@ -131,11 +131,11 @@ pub fn header() -> Html {
                     </div>
                 </Container>
             </div>
-            <Modal is_visible={is_open_theme_modal} title="选择一个你喜欢的主题" subtitle="你可以选择 light 和 dark 两种主题色，选择一种你喜欢的主题色吧~">
+            <Modal is_visible={is_open_theme_modal} title="Theme Options" subtitle="You can choose between the light 🌞 and dark 🌚 themes">
                 <ModalContent>
                     <ThemeSelector />
                     <div class={control_theme_style}>
-                        <p class="control-theme__text">{"你可以在任何地方通过开关随时修改你的主题"}</p>
+                        <p class="control-theme__text">{"This switch toggles between light and dark"}</p>
                         <img class="control-theme__img" src={with_assets("switch_theme_guide.png")} />
                     </div>
                 </ModalContent>

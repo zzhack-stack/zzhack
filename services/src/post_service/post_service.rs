@@ -123,9 +123,9 @@ impl PostService {
             .collect::<Vec<Post>>();
 
         posts.sort_by(|a, b| {
-            if a.metadata.pined {
+            if a.metadata.pinned {
                 Ordering::Less
-            } else if b.metadata.pined {
+            } else if b.metadata.pinned {
                 Ordering::Greater
             } else {
                 a.modified_time.cmp(&b.modified_time)

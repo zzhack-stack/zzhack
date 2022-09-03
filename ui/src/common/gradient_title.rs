@@ -20,11 +20,12 @@ pub fn gradient_title(props: &GradientTitleProps) -> Html {
 
         .gradient-title__content::before {
             content: '';
+            opacity: 0.7;
             width: 120%;
             display: block;
             height: 21px;
             border-radius: 100px;
-            background: linear-gradient(90deg, #FF4AA8 0%, #F95D66 22%, #FE9C76 100%);
+            background: linear-gradient(90deg, #91EAE4 0%, #86A8E7 22%, #7F7FD5 100%);
             position: absolute;
             z-index: -1;
             bottom: 0px;

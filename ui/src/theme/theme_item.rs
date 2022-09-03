@@ -33,7 +33,7 @@ pub fn theme_item(props: &ThemeItemProps) -> Html {
         .theme-preview {
             width: 100px;
             transition: all 0.1s;
-            border: 2.5px solid #7FD6C2;
+            border: 2.5px solid #86a8e7;
             border-radius: 10px;
             box-sizing: border-box;
             border: 2.5px solid var(--primary-color);

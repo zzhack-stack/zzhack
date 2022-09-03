@@ -29,7 +29,7 @@ pub struct RawPostMetadata {
     pub tag: String,
     pub title: String,
     pub size: Option<String>,
-    pub pined: Option<bool>,
+    pub pinned: Option<bool>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -38,7 +38,7 @@ pub struct PostMetadata {
     pub tag: String,
     pub title: String,
     pub size: PostCardSize,
-    pub pined: bool,
+    pub pinned: bool,
 }
 
 #[derive(Clone)]
@@ -72,12 +72,12 @@ impl MarkdownService {
     }
 
     /**
-     * The post metadata is looks like:
+     * The post metadata looks like:
      *
      * ```metadata
      * {
-     * "cover": "https://zzhack.fun",
-     * "tag": ["zzhack", "zzhack.fun"]
+     * "cover": "https://domain.xyz",
+     * "tag": ["tag1", "tag2"]
      * }
      * ```
      */
@@ -123,8 +123,8 @@ impl MarkdownService {
                 Some(size) => PostCardSize::from(size),
                 None => PostCardSize::Small,
             },
-            pined: match metadata.pined {
-                Some(pined) => pined,
+            pinned: match metadata.pinned {
+                Some(pinned) => pinned,
                 None => false,
             },
         };

@@ -3,7 +3,6 @@
     transition: 0.1s all;
     cursor: pointer;
     position: relative;
-
     &:hover {
         color: var(--mdc-theme-primary);
     }
@@ -20,13 +19,11 @@
     align-items: center;
     flex-direction: column;
     margin: 30px 0;
-
     .markdown-img {
         max-width: 660px;
         max-height: 400px;
         border-radius: 5px;
     }
-
     .markdown-img-alt {
         margin-top: 10px;
     }
@@ -39,7 +36,6 @@ blockquote {
     background: rgba(57, 113, 245, 0.1);
     border-radius: 5px;
     padding-left: 15px;
-
     p {
         color: var(--blockquote-color) !important;
         font-size: 14px;
@@ -52,14 +48,12 @@ blockquote {
     justify-content: center;
     align-items: center;
     margin: 50px 0;
-
     .markdown-spotlight__content {
         text-align: center;
         font-style: italic;
         margin: 0 20px;
         font-size: 18px;
     }
-
     .markdown-spotlight__icon {
         width: 25px;
     }
@@ -69,7 +63,6 @@ blockquote {
     .markdown-github-render-block-link {
         text-decoration: none;
     }
-
     .markdown-github-render-block {
         max-width: 450px;
         width: fit-content;
@@ -82,26 +75,21 @@ blockquote {
         margin: 25px 0;
         align-items: center;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
         .markdown-github-render-block-icon {
             width: 50px;
         }
-
         .markdown-github-render-block-info {
             margin-left: 15px;
-
             .markdown-github-render-block-repo {
                 color: white;
                 font-size: 16px;
             }
-
             .markdown-github-render-block-desc {
                 color: white;
                 font-size: 14px;
                 line-height: 1.5;
             }
         }
-
         .markdown-github-render-block-goto {
             width: 35px;
             height: 35px;
@@ -129,11 +117,9 @@ blockquote {
     background: var(--code-block-bg);
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-
     .markdown-mac-control-bars {
         display: flex;
         align-items: center;
-
         .control-bar {
             width: 13px;
             height: 13px;
@@ -141,24 +127,19 @@ blockquote {
             background: #fff;
             border-radius: 50%;
         }
-
         .markdown-mac-close-bar {
             @extend .control-bar;
-            
             background: #ff5f57;
         }
         .markdown-mac-min-bar {
             @extend .control-bar;
-
             background: #febc2e;
         }
         .markdown-mac-max-bar {
             @extend .control-bar;
-
             background: #28c840;
         }
     }
-
     pre {
         background-color: var(--code-block-bg) !important;
         white-space: break-spaces;
@@ -171,24 +152,21 @@ blockquote {
     }
 }
 
-@media (max-width: 600px){
+@media (max-width: 600px) {
     .markdown-img-container {
         max-width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-    
         .markdown-img {
             max-width: 100%;
             border-radius: 5px;
         }
     }
-
     .markdown-spotlight {
         .markdown-spotlight__icon {
             width: 18px;
         }
     }
-    
 }

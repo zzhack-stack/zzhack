@@ -47,11 +47,11 @@ pub fn about() -> Html {
                                 {"Albeit I beep boop 🧑‍💻 now, I like to ✒️ English too."}
                             </li>
                             <li>
-                                {"While I primarily use a Mac now, I grew up using Windows."}
+                                {"While I primarily use a Mac, I grew up using Windows."}
                             </li>
                             <ul>
                                 <li>
-                                    {"When I have some spare time, I like to 🧑‍🔬 with Linux (OpenBSD, Arch, WSL)."}
+                                    {"With some spare time, I like to 🧑‍🔬 with Linux (OpenBSD, Arch, WSL)."}
                                 </li>
                                 <li>
                                     {"I'm also a big fan of Raspberry Pi's (not the edible ones), and like tinkering with microcontrollers."}

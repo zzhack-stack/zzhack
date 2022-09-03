@@ -25,6 +25,7 @@ pub fn post_card_header(props: &PostCardHeaderProps) -> Html {
         .author {
             display: flex;
             align-items: center;
+            margin-right: 8px;
         }
 
         .author-name {
@@ -39,8 +40,8 @@ pub fn post_card_header(props: &PostCardHeaderProps) -> Html {
     html! {
         <div class={style}>
             <div class="author">
-                <img src="/images/avatar.png" class="avatar" alt="avatar" />
-                <span class="author-name">{"Mist"}</span>
+                <img src="/images/rsz_pfp.png" class="avatar" alt="avatar" />
+                <span class="author-name">{"andnasnd"}</span>
             </div>
             <Label text={props.label.clone()} />
         </div>

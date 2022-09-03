@@ -23,7 +23,7 @@ pub fn link_card(props: &LinkCardProps) -> Html {
         padding: 10px 25px;
         box-sizing: border-box;
         margin-bottom: 25px;
-        
+        transition: all 0.3s ease;
 
         .logo {
             width: 55px;
