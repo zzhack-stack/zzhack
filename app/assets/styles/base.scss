@@ -1,10 +1,10 @@
 :root {
-    --mdc-theme-primary: #7ECCB4;
+    --mdc-theme-primary: #86a8e7;
     mwc-icon-button::part("mdc-icon-button") {
         background: red;
     }
     .light {
-        --primary-color: #7ECCB4;
+        --primary-color: #86a8e7;
         --base-color: #fff;
         --underlay-color: #F3F7FD;
         --text-color: #3F3D55;
@@ -14,23 +14,23 @@
         --sub-text-color: rgba(63, 61, 85, 0.63);
         --primary-shadow-color: rgb(127 214 194 / 22%);
         --card-shadow-color: rgba(149, 157, 165, 0.2);
-        --label-color: rgba(126, 204, 180, 0.36);
+        --label-color: #86a8e7;
         --tip-color: rgba(63, 61, 85, 0.39);
         --code-block-bg: #282c34;
         --alert-color: rgba(32, 136, 255, 0.2);
         --blue: #4794FE;
         --code-color: var(--text-color);
-        --code-bg: rgba(126, 204, 180, 0.35);
+        --code-bg: #7f95d5;
     }
     .dark {
-        --code-bg: rgba(126, 204, 180, 0.35);
+        --code-bg: #7f95d5;
         --code-color: var(--text-color);
         --blue: #4794FE;
         --alert-color: rgba(32, 136, 255, 0.2);
         --code-block-bg: #282c34;
-        --label-color: rgba(126, 204, 180, 0.36);
+        --label-color: #7f95d5;
         --card-shadow-color: rgba(149, 157, 165, 0);
-        --primary-color: #7ECCB4;
+        --primary-color: #86a8e7;
         --primary-shadow-color: rgb(127 214 194 / 22%);
         --base-color: #31363F;
         --underlay-color: #24292E;

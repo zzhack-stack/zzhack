@@ -16,7 +16,7 @@
                 <g id="switch" transform="translate(99.910064, 0.000000)">
                     <g id="Rectangle">
                         <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-                        <use fill="#7ECCB4" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        <use fill="#86a8e7" fill-rule="evenodd" xlink:href="#path-1"></use>
                     </g>
                     <rect id="Rectangle" fill="#FFFFFF" x="0" y="0" width="26" height="40.4444444" rx="13"></rect>
                     <g id="light_mode" transform="translate(5.777778, 13.000000)">
