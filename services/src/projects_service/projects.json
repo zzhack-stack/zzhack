@@ -1,43 +1,63 @@
 {
     "projects": [{
-            "name": "zzhack",
-            "addr": "https://github.com/zzhack-stack/zzhack",
-            "desc": "⚙️ 🦀️ My personal blog site"
+            "name": "(Solana) honest.space Serum, Mango DEX Integrations",
+            "addr": "https://live.honest.space/",
+            "desc": "Built Serum and Mango DEX integrations, alongside a friend at Solana Hacker House Miami 2022. We also implemented a SOL / USDT Spot "
         },
         {
-            "name": "Archie",
-            "addr": "https://github.com/wizardoc/archie",
-            "desc": "GraphQL API server for @wizardoc/wizard, powered by @gin, Git-based document management, timely notification for document changes."
+            "name": "lourdesite",
+            "addr": "https://github.com/andnasnd/lourdesite",
+            "desc": "A simple NFT minting site I made for a friend back in March 2022"
         },
         {
-            "name": "Chelli",
-            "addr": "https://github.com/mistricky/chelli",
-            "desc": "🖖🏻Chelli is a function set that implements command-line parsing using Zsh Shell. And the name of Chelli means that combination Shell and CLI."
+            "name": "ethGasTracker",
+            "addr": "https://github.com/andnasnd/ethGasTracker",
+            "desc": "Built this small CLI tool in Go because I wanted command-line access to Ethereum gas prices"
         },
         {
-            "name": "Arrow Cache",
-            "addr": "https://github.com/wizardoc/arrow-cache",
-            "desc": "🏹️Cache mechanism base on Web Worker, help us build high performance webApp."
+            "name": "Dynamic-Storage-Allocator-C",
+            "addr": "https://github.com/andnasnd/Dynamic-Storage-Allocator-C-",
+            "desc": "Custom C implementation of general-purpose dynamic memory allocator, heap consistency checker, and memory leak detector"
         },
         {
-            "name": "postcss-relaxed-unit",
-            "addr": "https://github.com/mistricky/postcss-relaxed-unit",
-            "desc": "🍮Postcss-relaxed-unit is a postcss plugin for unit tranformation and make write css easier with custom unit."
+            "name": "RPi-Kernel-Module-Concurrent-Number-Sieve",
+            "addr": "https://github.com/andnasnd/Kernel-Module-Concurrent-Memory-Use-Sieve-of-Eratosthenes",
+            "desc": "A smol C kernel module utilizing basic multi-threaded synchronization and concurrency techniques to compute prime numbers via the Sieve of Eratosthenes algorithm"
         },
         {
-            "name": "Fence",
-            "addr": "https://github.com/wizardoc/fence",
-            "desc": "🐟Fence is an operator-based request library that provide a serises of APIs to help you more easily manipulate the request flow"
+            "name": "ToyTinyShell-C",
+            "addr": "https://github.com/andnasnd/ToyTinyShell-C",
+            "desc": "Toy Unix shell program in C that supports job control and basic functionality "
         },
         {
-            "name": "Wizard",
-            "addr": "https://github.com/wizardoc/wizard",
-            "desc": "🍳Wizardoc is a WEBAPP for managing documents and knowledge."
+            "name": "RPi-Kernel-Monitoring-Framework-C",
+            "addr": "https://github.com/andnasnd/KernelMonitoringFramework-",
+            "desc": "A simple monitoring framework that periodically captures basic information from kernel-space, using kernel timers and kernel threads to manage the frequency and context of such information gathering. Kernel timers are used to schedule recurring events (e.g., thread wakeups) in the future, and kernel threads perform deferrable work inside the kernel."
         },
         {
-            "name": "Flat",
-            "addr": "https://github.com/mistlang/Flat",
-            "desc": "🍪Lightweight MVVM framework base on TypeScript."
+            "name": "Writing Sample-Writing Culture",
+            "addr": "https://github.com/andnasnd/WritingSample-WritingCulture",
+            "desc": "An anthology which indicates my passion for writing and anthropology. Created as part of an upper-level course titled 'Writing Culture'. Highly recommend the course!"
+        },
+        {
+            "name": "Reimagining the Electric Car: Application of a Dual Motor Drive with a Planetary Gear System to Increase Efficiency",
+            "addr": "https://drive.google.com/drive/folders/1RNblMcxzx8uJhGP6iA0NO9UANJfiPrR0",
+            "desc": "The objective of this project was to optimize the electric car through an innovative motor redesign, in addition to market demonstration of it's viability, alongside adoption via public education campaign. As a team, we managed to receive 1 st Place in the 2014 Technology Challenge Division of Imagine Tomorrow."
+        },
+        {
+            "name": "2014 National History Day Sr. Group Documentary - The Right to Remain Silent",
+            "addr": "https://www.youtube.com/watch?v=9xjcieMnv10",
+            "desc": " this documentary focuses on the rights and responsibilities associated with Death with Dignity and assisted dying laws as they evolved throughout US history, particularly in Washington and Oregon state."
+        },
+        {
+            "name": "2013 National History Day 1st Place Sr. Group Documentary - Nikola Tesla: Electrifying a New Era",
+            "addr": "https://www.youtube.com/watch?v=wOFwKpXvUj0",
+            "desc": "This documentary received 1 st Place at the National level in the Senior Group Documentary Division at National History Day 2013. Nikola Tesla's inventions sparked a turning point in history, bringing electricity to all corners of the globe."
+        },
+        {
+            "name": "2012 National History Day Jr. Group Documentary - Perestroika: Destruction through Reconstruction",
+            "addr": "https://www.youtube.com/watch?v=9xjcieMnv10",
+            "desc": "This documentary received 7th Place at the National Level, and 1st Place at the Washington state and regional levels. This short video attempts to qualify a paradigm shift (and eventual collapse) of the Soviet Union through economic, political, and cultural lenses."
         }
     ]
 }
