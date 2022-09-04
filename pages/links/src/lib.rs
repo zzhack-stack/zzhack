@@ -1,8 +1,5 @@
-use router::RootRoutes;
 use services::links_service::links_service::LINKS_SERVICE;
 use stylist::style;
-use ui::image::BaseImage;
-use ui::link::Link;
 use ui::link_card::LinkCard;
 use yew::prelude::*;
 
@@ -12,7 +9,7 @@ pub fn links() -> Html {
         r"
         .banner {
             position: relative;
-            margin-top: 63px;
+            margin-top: 0px;
         }
 
         .banner > img {
@@ -27,7 +24,7 @@ pub fn links() -> Html {
         }
 
         .banner__links-title {
-            color: #fff;
+            color: #86a8e7;
             font-size: 18px;
         }
 
@@ -89,14 +86,11 @@ pub fn links() -> Html {
     html! {
         <div class={style}>
             <div class="banner">
-                <BaseImage source="links_banner.svg" is_reactive={true} />
                 <div class="banner__links">
-                    <div class="banner__links-title">{"Links"}</div>
-                    <div class="banner__links-desc">{"Message me to have a link to your site and/or blog post added "}
-                        <Link href={RootRoutes::Post {filename: String::from("add_links")}}>{"here"}</Link>
-                    {" 🤟"}</div>
+                    <div class="banner__links-title">{"🔗 Links"}</div>
                 </div>
             </div>
+            <br/>
             <div class="links">
                 {
                     LINKS_SERVICE.get_links_data().iter().map(|data| {

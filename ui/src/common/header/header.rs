@@ -135,7 +135,7 @@ pub fn header() -> Html {
                 <ModalContent>
                     <ThemeSelector />
                     <div class={control_theme_style}>
-                        <p class="control-theme__text">{"This switch toggles between light and dark"}</p>
+                        <p class="control-theme__text">{"This switch toggles between 🌞 and 🌚 mode"}</p>
                         <img class="control-theme__img" src={with_assets("switch_theme_guide.png")} />
                     </div>
                 </ModalContent>
