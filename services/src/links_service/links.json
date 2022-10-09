@@ -77,6 +77,12 @@
             "addr": "https://www.circlehotarux.me/",
             "desc": "心诚则灵",
             "logo": "https://avatars.githubusercontent.com/u/48060080?v=4"
+        },
+        {
+            "name": "小博's blog",
+            "addr": "https://zhongbohuang.github.io/hzb-blog.github.io/",
+            "desc": "记录知识，记录生活",
+            "logo": "https://github.com/ZhongboHuang/hzb-blog.github.io/blob/gh-pages/img/avatar.png"
         }
     ]
 }
