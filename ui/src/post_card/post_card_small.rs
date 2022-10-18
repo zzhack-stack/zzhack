@@ -1,7 +1,7 @@
 use crate::link::Link;
 use crate::post_card_header::PostCardHeader;
 use router::RootRoutes;
-use services::post_service::post_service::Post;
+use services::post_service::posts_container::Post;
 use stylist::style;
 use yew::prelude::*;
 

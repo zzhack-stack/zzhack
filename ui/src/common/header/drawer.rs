@@ -1,4 +1,3 @@
-use crate::header::drawer_item::DrawerItem;
 use stylist::{css, yew::styled_component};
 use utils::html::render_with_insert_node;
 use yew::prelude::*;
@@ -6,7 +5,7 @@ use yew::prelude::*;
 #[derive(Properties, Clone, PartialEq)]
 pub struct DrawerProps {
     pub is_open: UseStateHandle<bool>,
-    pub children: ChildrenWithProps<DrawerItem>,
+    pub children: Children,
 }
 
 #[styled_component(Drawer)]

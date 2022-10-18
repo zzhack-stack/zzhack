@@ -1,4 +1,5 @@
-use crate::contact::ContactType;
+use super::header_config::{GITHUB_BAR_LINK, IS_GITHUB_BAR_VISIBLE};
+use super::pages::PAGES;
 use crate::container::Container;
 use crate::header::drawer::Drawer;
 use crate::header::drawer_item::DrawerItem;
@@ -100,10 +101,9 @@ pub fn header() -> Html {
     html! {
         <div class={style}>
             <Drawer is_open={is_open_drawer_handle}>
-                <DrawerItem lnk={RootRoutes::Home}>{"Posts"}</DrawerItem>
-                <DrawerItem lnk={RootRoutes::Projects}>{"Projects"}</DrawerItem>
-                <DrawerItem lnk={RootRoutes::About}>{"About"}</DrawerItem>
-                <DrawerItem lnk={RootRoutes::Links}>{"Links"}</DrawerItem>
+                {
+                    PAGES.into_iter().map(|page| html!{<DrawerItem lnk={page.route}>{page.name}</DrawerItem>}).collect::<Html>()
+                }
             </Drawer>
             <div class="header">
                 <Container>
@@ -113,17 +113,22 @@ pub fn header() -> Html {
                                 <ThemeImage source="zzhack_logo.svg" />
                             </Link>
                             <div class="tabs">
-                                <Link href={RootRoutes::Home}>{"Posts"}</Link>
-                                <Link href={RootRoutes::Projects}>{"Projects"}</Link>
-                                <Link href={RootRoutes::About}>{"About"}</Link>
-                                <Link href={RootRoutes::Links}>{"Links"}</Link>
+                                {
+                                    PAGES.into_iter().map(|page| html!{<Link href={page.route}>{page.name}</Link>}).collect::<Html>()
+                                }
                             </div>
                         </div>
                         <div class="right">
                             <Icon source="setting.svg" size=26 onclick={handle_setting_click} />
-                            <Link out_href={ContactType::GitHub.into_lnk()}>
-                                <Icon source="github.svg" size=26 />
-                            </Link>
+                            {if IS_GITHUB_BAR_VISIBLE {
+                                html! {
+                                    <Link out_href={GITHUB_BAR_LINK}>
+                                        <Icon source="github.svg" size=26 />
+                                    </Link>
+                                }
+                            } else {
+                                html! {}
+                            }}
                             {only_render_on_mobile(html! {
                                 <Icon source="drawer.svg" size=26 onclick={handle_drawer_click} />
                             })}
