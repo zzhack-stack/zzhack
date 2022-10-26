@@ -22,6 +22,11 @@ jobs:
         with:
           version: 'latest'
 
+      - uses: actions-rs/install@v0.1
+        with:
+          crate: rapper
+          version: latest
+
       - uses: jetli/trunk-action@v0.1.0
         with:
           version: 'latest'
