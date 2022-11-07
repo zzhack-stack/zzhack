@@ -11,7 +11,7 @@ Hii，欢迎来到我的站点，我很乐意跟你连接，你可以向我发�
 跟随以下几个步骤来将你的网站添加到 [友情链接](/links) 吧！
 
 #### 1. Fork & Update links
-Fork `zzhack` 到你的 GitHub，修改 `/services/links_service/links.json` 添加你的网站信息。
+Fork [zzhack](https://github.com/zzhack-stack/zzhack) 到你的 GitHub，修改 `/services/links_service/links.json` 添加你的网站信息。
 ```json
 {
     "links": [

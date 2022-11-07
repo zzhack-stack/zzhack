@@ -89,6 +89,12 @@
             "addr": "https://absolutevalue.cc",
             "desc": "一个垃圾站，写点垃圾话",
             "logo": "https://bu.dusays.com/2022/10/11/63456cf24d191.png"
+        },
+        {
+            "name": "SeerSu", 
+            "addr": "https://seersu.me",
+            "desc": "留给自己一片大陆，把无垠的大海留给飞鸟和大鱼",
+            "logo": "https://seersu.me/favicon/avatar.jpg"
         }
     ]
 }
