@@ -6,4 +6,4 @@ zzhack is a simple but beauty WASM App template, which based on by Rust & Yew, i
 ![sketch](https://raw.githubusercontent.com/zzhack-stack/zzhack/main/doc/zzhack_sketch.png)
 
 ## License
-MIT.
+GNU GPLv3.
