@@ -59,10 +59,10 @@ impl ThemeService {
             Some(theme_literal) => Theme::from(&theme_literal),
             None => {
                 local_storage
-                    .set_item(THEME_KEY, Theme::Light.into_str())
+                    .set_item(THEME_KEY, Theme::Dark.into_str())
                     .unwrap();
 
-                Theme::Light
+                Theme::Dark
             }
         }
     }

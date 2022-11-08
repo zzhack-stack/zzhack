@@ -19,7 +19,7 @@ impl Theme {
             "dark" => Theme::Dark,
             "light" => Theme::Light,
             "auto" => Theme::Auto,
-            _ => Theme::Light,
+            _ => Theme::Dark,
         }
     }
 
