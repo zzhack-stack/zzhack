@@ -17,6 +17,7 @@ pub fn label(props: &LabelProps) -> Html {
         box-sizing: border-box;
         display: flex;
         align-items: center;
+        margin-bottom: 10px;
 
         .label-icon {
             width: 13.9px;
