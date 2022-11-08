@@ -1,12 +1,6 @@
 {
     "links": [
         {
-            "name": "Busyops博客",
-            "addr": "https://busyops.com/",
-            "desc": "Hello Moon",
-            "logo": "https://busyops.com/images/avatar.jpg"
-        },
-        {
             "name": "Clay 的技术博客",
             "addr": "https://www.techgrow.cn",
             "desc": "用进废退 | 艺不压身",
@@ -29,12 +23,6 @@
             "addr": "https://mrdjun.gitee.io/",
             "desc": "Just an ordinary JAVA programmer",
             "logo": "https://mrdjun.gitee.io/images/avatar.png"
-        },
-        {
-            "name": "一物一世界的 blog",
-            "addr": "https://www.flyfrag.cn/",
-            "desc": "太阳强烈，水波温柔",
-            "logo": "https://avatars.githubusercontent.com/u/53332638?v=4"
         },
         {
             "name": "Fatpandac’s Blog",
