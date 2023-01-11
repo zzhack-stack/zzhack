@@ -79,10 +79,16 @@
             "logo": "https://bu.dusays.com/2022/10/11/63456cf24d191.png"
         },
         {
-            "name": "SeerSu", 
+            "name": "SeerSu",
             "addr": "https://seersu.me",
             "desc": "留给自己一片大陆，把无垠的大海留给飞鸟和大鱼",
             "logo": "https://seersu.me/favicon/avatar.jpg"
+        },
+        {
+            "name": "Scorpio's Blog",
+            "addr": "http://0925.wang",
+            "desc": "改掉拖延症~",
+            "logo": "https://q.qlogo.cn/headimg_dl?bs=qq&dst_uin=1849748550@qq.com&src_uin=qq.feixue.me&fid=blog&spec=100&id=1000"
         }
     ]
 }
