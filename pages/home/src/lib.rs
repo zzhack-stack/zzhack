@@ -70,7 +70,7 @@ pub fn home() -> Html {
     html! {
         <div class={style}>
             <div class="banner">
-                <ThemeImage source="banner.svg" is_reactive=true />
+                <ThemeImage source="banner.png" is_reactive=true />
             </div>
             <div class="labels">
                 <Link onclick={handle_filter_posts_by_label(FilterTag::All)}>
