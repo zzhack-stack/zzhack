@@ -29,7 +29,8 @@ pub fn header() -> Html {
         }
 
         .left img {
-            height: 16px;
+            height: 23px;
+            display: flex;
         }
 
         .tabs {
@@ -110,7 +111,7 @@ pub fn header() -> Html {
                     <div class="wrapper">
                         <div class="left">
                             <Link href={RootRoutes::Home}>
-                                <ThemeImage source="zzhack_logo.svg" />
+                                <ThemeImage source="zzhack_logo.png" />
                             </Link>
                             <div class="tabs">
                                 <Link href={RootRoutes::Home}>{"Posts"}</Link>
