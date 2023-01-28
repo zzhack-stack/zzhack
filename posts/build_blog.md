@@ -1,7 +1,7 @@
 ```metadata
 {
     "cover": "../app/assets/sources/blog_cover.svg",
-    "tag": "genesis",
+    "tag": "Genesis",
     "title": "构建静态纯粹的博客站点",
     "pined": true,
     "size": "large"
