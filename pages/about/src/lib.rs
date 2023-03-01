@@ -54,7 +54,7 @@ pub fn about() -> Html {
             <section>
                 <GradientTitle>{"关于我"}</GradientTitle>
                 <p>
-                    {"我叫 Mist，一名前端工程师。"}
+                    {"我叫 Mist，一名全栈工程师。"}
                 </p>
             </section>
         </div>
