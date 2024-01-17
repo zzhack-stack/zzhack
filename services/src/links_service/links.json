@@ -95,6 +95,12 @@
             "addr": "https://www.flyfrag.cn/",
             "desc": "太阳强烈，水波温柔",
             "logo": "https://avatars.githubusercontent.com/u/53332638?v=4"
+        },
+        {
+            "name": "Airing's blog",
+            "addr": "https://blog.ursb.me/",
+            "desc": "我是一只小小小小熊",
+            "logo": "https://airing.ursb.me/image/airing-face.png"
         }
     ]
 }
