@@ -1,16 +1,3 @@
 [workspace]
 
-members = [
-    "app",
-    "ui",
-    "utils",
-    "services",
-    "global",
-    "pages/home",
-    "pages/projects",
-    "pages/not_found",
-    "pages/home",
-    "pages/links",
-    "pages/post",
-    "router",
-]
+members = ["app", "entry"]

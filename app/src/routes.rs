@@ -1,36 +1,28 @@
-use post::Post;
-use ui::layout::BaseLayout;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
-use about::About;
-use home::Home;
-use links::Links;
-use not_found::NotFound;
-use projects::Projects;
-use router::RootRoutes;
+use crate::pages::{home::Home, not_found::NotFound, post::Post, posts::Posts};
 
-fn switch(routes: &RootRoutes) -> Html {
-    match routes {
-        RootRoutes::Home | RootRoutes::Root => html! { <Home /> },
-        RootRoutes::Projects => html! { <Projects /> },
-        RootRoutes::About => html! { <About /> },
-        RootRoutes::Post { filename } => html! {<Post filename={filename.clone()} />},
-        RootRoutes::NotFound => html! { <NotFound />},
-        RootRoutes::Technology => html! {
-            <Redirect<RootRoutes> to={RootRoutes::Home}/>
-        },
-        RootRoutes::Links => html! {<Links />},
-    }
+#[derive(Routable, PartialEq, Eq, Clone, Debug)]
+pub enum Routes {
+    #[at("/posts/:id")]
+    Post { id: u32 },
+    #[at("/posts")]
+    Posts,
+    #[at("/")]
+    Home,
+    #[not_found]
+    #[at("/404")]
+    NotFound,
 }
 
-#[function_component(RouteOutlet)]
-pub fn route_outlet() -> Html {
-    html! {
-        <BrowserRouter>
-            <BaseLayout>
-                <Switch<RootRoutes> render={Switch::render(switch)} />
-            </BaseLayout>
-        </BrowserRouter>
+pub fn switch(routes: Routes) -> Html {
+    match routes {
+        Routes::Post { id } => html! {<Post />},
+        Routes::Posts => {
+            html! {<Posts />}
+        }
+        Routes::Home => html! {<Home />},
+        Routes::NotFound => html! {<NotFound />},
     }
 }

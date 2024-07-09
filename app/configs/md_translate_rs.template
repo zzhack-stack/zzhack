@@ -1,1 +1,0 @@
-static const content: &'static str = r#"{{TEMPLATE}}"#;

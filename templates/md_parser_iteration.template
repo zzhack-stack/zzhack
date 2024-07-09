@@ -1,5 +1,0 @@
-PostFile {
-    content: include_str!("../../posts/{{STEM}}.md"),
-    modified_time: {{MODIFY_TIME}},
-    filename: "{{STEM}}"
-},

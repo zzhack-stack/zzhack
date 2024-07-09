@@ -1,12 +1,3 @@
-**/*.rs.bk
-.vercel
-
-# Dependencies
-pkg
-/target
-
-# Dist
+# Build
+target
 dist
-
-# Platform
-.DS_Store
