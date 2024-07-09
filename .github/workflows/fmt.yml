@@ -1,0 +1,25 @@
+name: Check code style 
+on:
+  pull_request:
+    paths:
+      - "**/*.rs"
+  push:
+    branches: [main]
+    paths:
+      - "**/*.rs"
+
+jobs:
+  format:
+    name: cargo fmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          components: rustfmt
+
+      - name: Run fmt
+        run: cargo +nightly fmt --all -- --check --unstable-features
