@@ -1,5 +1,0 @@
-# rapper reduce -t ./templates/md_parser.template -i ./templates/md_parser_iteration.template --target ./posts/ -e md -d ./services/src/posts.rs
-[[hooks]]
-stage = "pre_build"
-command = "rapper"
-command_arguments = ["reduce", "-t", "../templates/md_parser.template", "-i", "../templates/md_parser_iteration.template", "--target", "../posts/", "-e", "md", "-d", "../services/src/posts.rs"]

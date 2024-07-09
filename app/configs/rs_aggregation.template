@@ -1,3 +1,0 @@
-pub static posts: [&'static str; {{TRAVERSE_COUNT}}] = [
-    {{TEMPLATE}}
-];
