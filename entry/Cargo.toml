@@ -5,11 +5,11 @@ edition = "2021"
 
 [[bin]]
 name = "zzhack_hydrate_bundle"
-require_features = ["hydration"]
+required_features = ["hydration"]
 
 [[bin]]
 name = "zzhack_main"
-require_features = ["ssr"]
+required_features = ["ssr"]
 
 [dependencies]
 yew = { version = "0.21.0", features = ["hydration", "ssr"]}
