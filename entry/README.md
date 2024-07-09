@@ -3,13 +3,18 @@ Well, SSR is a experimental feature of Yew. You change the source code everytime
 
 We recommaned you install cargo-watch, and watch the whole workspace, if source code was changed, then rebuild the app:
 
-## Build client bundle
+### Build client bundle
 ```shell
-cargo watch -C entry -- trunk build
+cargo watch -C entry -i dist -i public -- trunk build
 ```
 
-## Run server
+### Run server
 
 ```shell
 cargo watch -C entry -- cargo run --features=ssr --bin zzhack_main -- --dir dist
+```
+
+## TailwindCSS
+```shell
+npx tailwindcss -i ./entry/styles/input.css -o ./entry/styles/output.css -- --watch
 ```

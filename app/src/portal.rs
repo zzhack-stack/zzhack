@@ -9,7 +9,7 @@ use yew_router::prelude::*;
 pub fn BrowserApp() -> Html {
     html! {
         <BrowserRouter>
-            <main>
+            <main class="p-4 h-full w-full">
                 <Switch<Routes> render={switch} />
             </main>
             <footer class="footer">
@@ -41,7 +41,7 @@ pub fn ServerApp(props: &ServerAppProps) -> Html {
 
     html! {
         <Router history={history}>
-            <main>
+            <main class="p-4 h-full w-full">
                 <Switch<Routes> render={switch} />
             </main>
             <footer class="footer">
