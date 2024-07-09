@@ -6,5 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+gray_matter = "0.2.8"
+serde = "1.0.204"
 yew = "0.21.0"
 yew-router = "0.18.0"
+
+
