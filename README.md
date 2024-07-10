@@ -11,7 +11,7 @@ Cargo install cargo-watch
 
 Go to the root of project. Build client bundle and watch:
 ```shell
-cargo watch -C entry -i dist -i public -- trunk build
+cargo watch -C entry -i dist -i public -i styles -- trunk build
 ```
 
 Then build server bin and watch:
