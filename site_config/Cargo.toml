@@ -1,0 +1,11 @@
+[package]
+name = "site_config"
+version = "0.0.1"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = "1.0.204"
+serde_derive = "1.0.204"
+toml = "0.8.14"
