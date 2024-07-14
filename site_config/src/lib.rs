@@ -13,12 +13,10 @@ pub struct RootConfig {
     pub posts_folder_name: String,
 }
 
-pub fn get_site_config() -> RootConfig {
+pub fn get_site_config() -> Config {
     let config_string = read_to_string(SIDE_CONFIG_PATH).expect(
         "Cannot find site.config.toml, please make sure you have one in the root directory.",
     );
 
-    toml::from_str::<Config>(&config_string)
-        .expect("Wrong format of site.config.toml")
-        .root
+    toml::from_str::<Config>(&config_string).expect("Wrong format of site.config.toml")
 }

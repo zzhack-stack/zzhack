@@ -3,6 +3,8 @@ use std::convert::Infallible;
 use std::future::Future;
 use std::path::PathBuf;
 
+use api::get_api_routes;
+use api::utils::map_posts_to_db::map_posts_to_db;
 use app::portal::{ServerApp, ServerAppProps};
 use axum::body::StreamBody;
 use axum::error_handling::HandleError;
@@ -13,10 +15,13 @@ use axum::response::IntoResponse;
 use axum::routing::get;
 use axum::Router;
 use clap::Parser;
+use database::rusqlite;
 use futures::stream::{self, StreamExt};
 use hyper::server::Server;
 use tower::ServiceExt;
 use tower_http::services::ServeDir;
+
+use database::initialize::initialize_tables;
 use yew::platform::Runtime;
 
 // We use jemalloc as it produces better performance.
@@ -74,8 +79,18 @@ where
     }
 }
 
+// Map posts to database and initialize tables
+pub fn initialize_data() -> rusqlite::Result<()> {
+    initialize_tables()?;
+    map_posts_to_db()?;
+
+    Ok(())
+}
+
 #[tokio::main]
 async fn main() {
+    initialize_data().unwrap();
+
     let exec = Executor::default();
 
     env_logger::init();
@@ -99,17 +114,19 @@ async fn main() {
         )
     };
 
-    let app = Router::new().fallback_service(HandleError::new(
-        ServeDir::new(opts.dir)
-            .append_index_html_on_directories(false)
-            .fallback(
-                get(render)
-                    .with_state((index_html_before.clone(), index_html_after.clone()))
-                    .into_service()
-                    .map_err(|err| -> std::io::Error { match err {} }),
-            ),
-        handle_error,
-    ));
+    let app = Router::new()
+        .nest("/api", get_api_routes())
+        .fallback_service(HandleError::new(
+            ServeDir::new(opts.dir)
+                .append_index_html_on_directories(false)
+                .fallback(
+                    get(render)
+                        .with_state((index_html_before.clone(), index_html_after.clone()))
+                        .into_service()
+                        .map_err(|err| -> std::io::Error { match err {} }),
+                ),
+            handle_error,
+        ));
 
     println!("Listening on http://localhost:8080/");
 

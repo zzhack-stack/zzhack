@@ -1,3 +1,10 @@
 # Build
 **/target
 **/dist
+database.json
+
+# Deps
+node_modules
+
+# Database
+zzhack.redb
