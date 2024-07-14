@@ -1,6 +1,7 @@
 mod controllers;
 mod dao;
 mod routes;
+mod services;
 pub mod utils;
 
 use axum::Router;

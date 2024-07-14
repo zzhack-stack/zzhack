@@ -1,5 +1,5 @@
-#[cfg(not(target_arch = "wasm32"))]
-use log::info;
+// #[cfg(not(target_arch = "wasm32"))]
+// use log::info;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
@@ -7,18 +7,18 @@ struct PostItemProps {
     title: String,
     spoiler: String,
 }
-
-#[function_component]
-fn PostItem(props: &PostItemProps) -> Html {
-    html! {
-        <div onclick={Callback::from(|_| {
-            info!("Hello World");
-        })}>
-            <p>{props.title.clone()}</p>
-            <p>{props.spoiler.clone()}</p>
-        </div>
-    }
-}
+//
+// #[function_component]
+// fn PostItem(props: &PostItemProps) -> Html {
+//     html! {
+//         <div onclick={Callback::from(|_| {
+//             info!("Hello World");
+//         })}>
+//             <p>{props.title.clone()}</p>
+//             <p>{props.spoiler.clone()}</p>
+//         </div>
+//     }
+// }
 
 #[function_component]
 pub fn Posts() -> Html {

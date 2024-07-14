@@ -14,7 +14,10 @@ pub struct Post {
     pub updated_at: String,
 }
 
-pub fn get_posts_by_page(page: usize, page_limit: usize) -> rusqlite::Result<Vec<Post>> {
+pub fn get_posts_by_page(
+    page: usize,
+    page_limit: usize,
+) -> rusqlite::Result<Vec<rusqlite::Result<Post>>> {
     execute(move |conn| {
         let mut statement = conn.prepare("SELECT * FROM posts LIMIT ?1 OFFSET ?2")?;
         let posts_rows = statement
@@ -28,8 +31,7 @@ pub fn get_posts_by_page(page: usize, page_limit: usize) -> rusqlite::Result<Vec
                     updated_at: row.get(6)?,
                 })
             })?
-            .map(|post| post.unwrap())
-            .collect::<Vec<Post>>();
+            .collect::<Vec<rusqlite::Result<Post>>>();
 
         Ok(posts_rows)
     })
