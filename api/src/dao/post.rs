@@ -2,7 +2,28 @@ use database::{
     connection::execute,
     rusqlite::{self, params},
 };
-use shared::post::Post;
+use shared::post::{Post, PostDetail};
+
+pub fn get_post_detail(id: usize) -> rusqlite::Result<PostDetail> {
+    execute(|conn| -> rusqlite::Result<PostDetail> {
+        let post_detail = conn.query_row(
+            "SELECT id, title, content, created_at, updated_at FROM posts
+            WHERE id = ?1",
+            [id],
+            |row| {
+                Ok(PostDetail {
+                    id: row.get(0)?,
+                    title: row.get(1)?,
+                    content: row.get(2)?,
+                    created_at: row.get(3)?,
+                    updated_at: row.get(4)?,
+                })
+            },
+        )?;
+
+        Ok(post_detail)
+    })
+}
 
 pub fn get_posts_count() -> rusqlite::Result<usize> {
     execute(|conn| -> rusqlite::Result<usize> {
@@ -20,16 +41,17 @@ pub fn get_posts_by_page(
 ) -> rusqlite::Result<Vec<rusqlite::Result<Post>>> {
     execute(move |conn| {
         let mut statement = conn.prepare(
-            "SELECT path, title, spoiler, created_at, updated_at FROM posts LIMIT ?1 OFFSET ?2",
+            "SELECT id, path, title, spoiler, created_at, updated_at FROM posts LIMIT ?1 OFFSET ?2",
         )?;
         let posts_rows = statement
             .query_map(params!(page_limit, page), |row| {
                 Ok(Post {
-                    path: row.get(0)?,
-                    title: row.get(1)?,
-                    spoiler: row.get(2)?,
-                    created_at: row.get(3)?,
-                    updated_at: row.get(4)?,
+                    id: row.get(0)?,
+                    path: row.get(1)?,
+                    title: row.get(2)?,
+                    spoiler: row.get(3)?,
+                    created_at: row.get(4)?,
+                    updated_at: row.get(5)?,
                 })
             })?
             .collect::<Vec<rusqlite::Result<Post>>>();
