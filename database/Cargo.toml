@@ -7,4 +7,4 @@ edition = "2021"
 site_config = { path = "../site_config" }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-rusqlite = { version = "0.31.0", features = ["bundled"] }
+rusqlite = { version = "0.31.0", features = ["bundled", "bundled-full"] }
