@@ -6,11 +6,18 @@ const SIDE_CONFIG_PATH: &'static str = "../site.config.toml";
 #[derive(Deserialize)]
 pub struct Config {
     pub root: RootConfig,
+    pub server: ServerConfig,
 }
 
 #[derive(Deserialize)]
 pub struct RootConfig {
     pub posts_folder_name: String,
+}
+
+#[derive(Deserialize)]
+pub struct ServerConfig {
+    pub dev_port: usize,
+    pub prod_port: usize,
 }
 
 pub fn get_site_config() -> Config {

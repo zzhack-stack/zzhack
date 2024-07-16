@@ -87,6 +87,16 @@ pub fn initialize_data() -> rusqlite::Result<()> {
     Ok(())
 }
 
+#[cfg(debug_assertions)]
+fn get_port() -> usize {
+    site_config::get_site_config().server.dev_port
+}
+
+#[cfg(not(debug_assertions))]
+fn get_port() -> usize {
+    site_config::get_site_config().server.prod_port
+}
+
 #[tokio::main]
 async fn main() {
     initialize_data().unwrap();
@@ -128,9 +138,10 @@ async fn main() {
             handle_error,
         ));
 
-    println!("Listening on http://localhost:8080/");
+    let port = get_port();
+    println!("Listening on http://localhost:{port}/");
 
-    Server::bind(&"127.0.0.1:8080".parse().unwrap())
+    Server::bind(&format!("127.0.0.1:{port}").parse().unwrap())
         .executor(exec)
         .serve(app.into_make_service())
         .await

@@ -1,2 +1,6 @@
 [root]
 posts_folder_name = "posts"
+
+[server]
+dev_port = 8000
+prod_port = 8080

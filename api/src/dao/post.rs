@@ -2,16 +2,18 @@ use database::{
     connection::execute,
     rusqlite::{self, params},
 };
-use serde::Serialize;
+use models::post::Post;
 
-#[derive(Debug, Serialize)]
-pub struct Post {
-    pub path: String,
-    pub content: String,
-    pub spoiler: String,
-    pub title: String,
-    pub created_at: String,
-    pub updated_at: String,
+pub fn get_posts_count() -> rusqlite::Result<usize> {
+    execute(|conn| -> rusqlite::Result<usize> {
+        let row = conn.query_row("SELECT COUNT(*) FROM posts", [], |row| {
+            Ok(row.get_unwrap::<_, usize>(0))
+        })?;
+
+        println!("{}", row);
+
+        Ok(1)
+    })
 }
 
 pub fn get_posts_by_page(

@@ -1,4 +1,4 @@
-use crate::controllers::get_posts::get_posts;
+use crate::controllers::post::get_posts::get_posts;
 use axum::{routing::get, Router};
 
 pub fn get_posts_routes() -> Router {
