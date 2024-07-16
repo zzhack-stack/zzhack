@@ -1,6 +1,3 @@
-use axum::http::StatusCode;
-use database::rusqlite::{self};
-
 use crate::dao::{self};
 use anyhow::{bail, Result};
 use models::post::Post;

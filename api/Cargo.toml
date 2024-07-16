@@ -3,8 +3,6 @@ name = "api"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 axum = "0.6"
 chrono = "0.4.38"
@@ -14,3 +12,4 @@ database = {path = "../database"}
 site_config = { path = "../site_config" }
 models = { path = "../models" }
 anyhow = "1.0.86"
+response = { path = "../response" }
