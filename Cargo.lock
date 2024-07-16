@@ -130,6 +130,7 @@ dependencies = [
  "database",
  "gray_matter",
  "models",
+ "response",
  "serde",
  "site_config",
 ]
@@ -146,6 +147,7 @@ dependencies = [
  "models",
  "pulldown-cmark",
  "reqwest",
+ "response",
  "serde",
  "serde_json",
  "site_config",
@@ -1834,6 +1836,14 @@ dependencies = [
  "wasm-bindgen-futures",
  "web-sys",
  "winreg",
+]
+
+[[package]]
+name = "response"
+version = "0.1.0"
+dependencies = [
+ "models",
+ "serde",
 ]
 
 [[package]]

@@ -16,6 +16,7 @@ web-sys = "0.3.69"
 yew = { version = "0.21.0", features = ["hydration", "ssr"]}
 yew-router = "0.18.0"
 models = {path = "../models"}
+response = {path = "../response"}
 reqwest = { version = "0.12.5", features = ["json"] }
 site_config = { path = "../site_config" }
 

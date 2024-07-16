@@ -1,4 +1,4 @@
-mod controllers;
+pub mod controllers;
 pub mod dao;
 mod error;
 mod routes;
