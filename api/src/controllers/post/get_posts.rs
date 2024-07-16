@@ -2,7 +2,10 @@ use axum::{extract::Query, http::StatusCode, Json};
 use models::post::Post;
 use serde::{Deserialize, Serialize};
 
-use crate::{dao::post::get_posts_count, services::post_service::get_posts_by_page};
+use crate::{
+    error::ResponseResultExt,
+    services::post_service::{get_posts_by_page, get_posts_count},
+};
 
 #[derive(Deserialize)]
 pub struct Pagination {
@@ -19,10 +22,12 @@ pub struct PostsRes {
     posts: Vec<Post>,
 }
 
-pub async fn get_posts(pagination: Query<Pagination>) -> Result<Json<PostsRes>, StatusCode> {
+pub async fn get_posts(
+    pagination: Query<Pagination>,
+) -> Result<Json<PostsRes>, (StatusCode, String)> {
     let posts = get_posts_by_page(pagination.page_limit, pagination.page)
-        .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
-    let total = get_posts_count().map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
+        .into_response_result(StatusCode::BAD_REQUEST)?;
+    let total = get_posts_count().into_response_result(StatusCode::INTERNAL_SERVER_ERROR)?;
     let has_next = (pagination.page + 1) * pagination.page_limit < total;
 
     Ok(Json(PostsRes {
