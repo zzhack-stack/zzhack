@@ -2,7 +2,7 @@ use database::{
     connection::execute,
     rusqlite::{self, params},
 };
-use models::post::Post;
+use shared::post::Post;
 
 pub fn get_posts_count() -> rusqlite::Result<usize> {
     execute(|conn| -> rusqlite::Result<usize> {

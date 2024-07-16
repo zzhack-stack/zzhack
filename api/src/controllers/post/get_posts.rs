@@ -1,6 +1,6 @@
 use axum::{extract::Query, http::StatusCode, Json};
-use response::post::PaginationPostsRes;
 use serde::Deserialize;
+use shared::post::PaginationPostsRes;
 
 use crate::{
     error::ResponseResultExt,

@@ -1,6 +1,6 @@
 use crate::dao::{self};
 use anyhow::{bail, Result};
-use models::post::Post;
+use shared::post::Post;
 
 pub fn get_posts_by_page(page_limit: usize, page: usize) -> Result<Vec<Post>> {
     if page <= 0 {

@@ -10,6 +10,5 @@ gray_matter = "0.2.8"
 serde = "1.0.204"
 database = {path = "../database"}
 site_config = { path = "../site_config" }
-models = { path = "../models" }
 anyhow = "1.0.86"
-response = { path = "../response" }
+shared = { path = "../shared" }
