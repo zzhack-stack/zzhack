@@ -6,13 +6,11 @@ use models::post::Post;
 
 pub fn get_posts_count() -> rusqlite::Result<usize> {
     execute(|conn| -> rusqlite::Result<usize> {
-        let row = conn.query_row("SELECT COUNT(*) FROM posts", [], |row| {
+        let count = conn.query_row("SELECT COUNT(*) FROM posts", [], |row| {
             Ok(row.get_unwrap::<_, usize>(0))
         })?;
 
-        println!("{}", row);
-
-        Ok(1)
+        Ok(count)
     })
 }
 
