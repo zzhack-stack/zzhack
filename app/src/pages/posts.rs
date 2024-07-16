@@ -2,8 +2,7 @@ use std::rc::Rc;
 
 use crate::components::load_more::LoadMore;
 use crate::http::HTTP;
-use models::post::Post;
-use response::post::PaginationPostsRes;
+use shared::post::PaginationPostsRes;
 use yew::{platform::spawn_local, prelude::*};
 
 #[derive(Properties, PartialEq)]
