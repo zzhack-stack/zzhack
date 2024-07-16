@@ -1,5 +1,6 @@
 mod controllers;
 pub mod dao;
+mod error;
 mod routes;
 pub mod services;
 pub mod utils;
