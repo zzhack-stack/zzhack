@@ -8,6 +8,7 @@ WIP
 - [ ] Post page
 - [ ] 404 page
 - [ ] About page
+- [ ] Links page
 - [x] Delete logic of map_posts
 - [ ] Auth system (users can modified post includes delete, create and update using token)
 
