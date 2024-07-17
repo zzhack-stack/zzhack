@@ -1,7 +1,9 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
 
-use crate::pages::{home::Home, links::Links, not_found::NotFound, post::Post, posts::Posts};
+use crate::pages::{
+    dynamic::Dynamic, home::Home, links::Links, not_found::NotFound, post::Post, posts::Posts,
+};
 
 #[derive(Routable, PartialEq, Eq, Clone, Debug)]
 pub enum Routes {
@@ -11,11 +13,13 @@ pub enum Routes {
     Posts,
     #[at("/links")]
     Links,
+    #[at("/")]
+    Home,
+    #[at("/*path")]
+    Dynamic { path: String },
     #[not_found]
     #[at("/not_found")]
     NotFound,
-    #[at("/")]
-    Home,
 }
 
 pub fn switch(routes: Routes) -> Html {
@@ -27,5 +31,6 @@ pub fn switch(routes: Routes) -> Html {
         Routes::Home => html! {<Home />},
         Routes::NotFound => html! {<NotFound />},
         Routes::Links => html! {<Links />},
+        Routes::Dynamic { path } => html! {<Dynamic path={path} />},
     }
 }

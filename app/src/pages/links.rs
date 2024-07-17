@@ -6,7 +6,7 @@ async fn fetch_links() -> LinksConfig {
     use crate::http::HTTP;
 
     HTTP::new()
-        .get(&format!("/links"))
+        .get("/links")
         .await
         .unwrap()
         .json::<LinksConfig>()
