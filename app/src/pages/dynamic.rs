@@ -10,7 +10,7 @@ async fn fetch_dynamic_post_rendered_content(path: &str) -> String {
         .get(&format!("/dynamic/post/{path}"))
         .await
         .unwrap()
-        .json::<String>()
+        .text()
         .await
         .unwrap()
 }
