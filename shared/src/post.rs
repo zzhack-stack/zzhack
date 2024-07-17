@@ -9,7 +9,7 @@ pub struct PaginationPostsRes {
     pub posts: Vec<Post>,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct Post {
     pub id: usize,
     pub path: String,

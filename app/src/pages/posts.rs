@@ -1,6 +1,6 @@
 use std::rc::Rc;
 
-use crate::components::load_more::LoadMore;
+use crate::components::{load_more::LoadMore, post_item::PostItem};
 use crate::http::HTTP;
 use shared::post::PaginationPostsRes;
 use yew::{platform::spawn_local, prelude::*};
@@ -23,13 +23,11 @@ async fn fetch_posts(page_limit: usize, page: usize) -> PaginationPostsRes {
 }
 
 const PAGE_LIMIT: usize = 10;
+const INIT_PAGE: usize = 1;
 
 #[function_component]
 pub fn Content() -> HtmlResult {
-    // The first panel is rendered on server, so the page should start from 2
-    let page = use_state(|| 2);
-    let has_load_more = use_state(|| true);
-    let has_load_more_cloned = has_load_more.clone();
+    let page = use_state(|| INIT_PAGE);
     let page_cloned = page.clone();
 
     // The prepared_state macro return a Rc object, the Yew fetch data on server side
@@ -42,15 +40,13 @@ pub fn Content() -> HtmlResult {
         .unwrap();
     let pagination_posts =
         Rc::try_unwrap(prepared_pagination_posts).unwrap_or_else(|rc| (*rc).clone());
+    let has_load_more = use_state(|| pagination_posts.has_next);
+    let has_load_more_cloned = has_load_more.clone();
     let posts = use_state(|| pagination_posts.posts);
     let posts_clone = posts.clone();
     let rendered_posts = posts_clone.iter().map(|post| {
         html! {
-        <div>
-            <h2>{&post.title}</h2>
-            <p>{&post.spoiler}</p>
-            <p>{&post.created_at}</p>
-        </div>
+            <PostItem post={post.clone()} />
         }
     });
 
