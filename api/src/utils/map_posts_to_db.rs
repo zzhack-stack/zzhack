@@ -22,12 +22,13 @@ fn upsert_posts(dir_entries: &Vec<DirEntry>) -> anyhow::Result<()> {
         let metadata = dir_entry.metadata()?;
         let created_at = format_system_time_to_rfc2822(metadata.created().unwrap());
         let updated_at = format_system_time_to_rfc2822(metadata.modified().unwrap());
-        let path = get_markdown_path(dir_entry.path());
+        let dir_path = dir_entry.path();
+        let path = get_markdown_path(dir_path.clone());
         let content = read_to_string(path.clone())?;
         let front_matter = get_post_front_matter(&content);
 
         upsert_post(RawPost {
-            path: path.to_string_lossy().to_string(),
+            path: dir_path.to_string_lossy().to_string(),
             content: markdown::parse::parse_markdown(&content),
             title: front_matter.title,
             spoiler: front_matter.spoiler,
@@ -44,7 +45,7 @@ fn upsert_posts(dir_entries: &Vec<DirEntry>) -> anyhow::Result<()> {
 fn delete_posts(dir_entries: &Vec<DirEntry>) -> Result<usize> {
     let posts_paths = dir_entries
         .into_iter()
-        .map(|dir_entry| dir_entry.path().to_string_lossy().to_string())
+        .map(|dir_entry| format!("\"{}\"", dir_entry.path().to_string_lossy().to_string()))
         .collect::<Vec<String>>();
 
     delete_posts_by_paths(&posts_paths)

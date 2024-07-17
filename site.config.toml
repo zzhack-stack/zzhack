@@ -4,3 +4,11 @@ posts_folder_name = "posts"
 [server]
 dev_port = 8000
 prod_port = 8080
+
+# If you want to use different client to create/update post,
+# you need to set password and secret_key to create access_token
+# Otherwise you don't need to modify this section
+[api]
+password = ""
+# The secret_key used for encoding and decoding the JWT tokens
+secret_key = ""

@@ -17,7 +17,7 @@ fn parse_gray_matter(content: &str) -> ParsedEntity {
 pub fn get_post_front_matter(content: &str) -> PostFrontMatter {
     parse_gray_matter(content)
         .data
-        .unwrap()
+        .expect("Failed to parse front matter")
         .deserialize::<PostFrontMatter>()
         .unwrap()
 }
