@@ -7,7 +7,7 @@ pub struct HTTP {
 impl HTTP {
     pub fn new() -> HTTP {
         HTTP {
-            base_url: Self::get_base_url(),
+            base_url: Self::get_base_url("/api"),
         }
     }
 
@@ -22,12 +22,12 @@ impl HTTP {
     }
 
     #[cfg(not(target_arch = "wasm32"))]
-    pub fn get_base_url() -> String {
-        format!("http://localhost:{}", Self::get_port())
+    pub fn get_base_url(prefix: &'static str) -> String {
+        format!("http://localhost:{}{}", Self::get_port(), prefix)
     }
 
     #[cfg(target_arch = "wasm32")]
-    pub fn get_base_url() -> String {
+    pub fn get_base_url(prefix: &'static str) -> String {
         web_sys::window().unwrap().origin()
     }
 

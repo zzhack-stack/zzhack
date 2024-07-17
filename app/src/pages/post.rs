@@ -13,7 +13,7 @@ async fn fetch_post_detail(id: usize) -> PostDetail {
     use crate::http::HTTP;
 
     HTTP::new()
-        .get(&format!("/api/posts/{id}"))
+        .get(&format!("/posts/{id}"))
         .await
         .unwrap()
         .json::<PostDetail>()

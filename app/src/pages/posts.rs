@@ -14,7 +14,7 @@ struct PostItemProps {
 #[cfg(feature = "ssr")]
 async fn fetch_posts(page_limit: usize, page: usize) -> PaginationPostsRes {
     HTTP::new()
-        .get(&format!("/api/posts?page_limit={page_limit}&page={page}"))
+        .get(&format!("/posts?page_limit={page_limit}&page={page}"))
         .await
         .unwrap()
         .json::<PaginationPostsRes>()

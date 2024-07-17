@@ -134,6 +134,7 @@ dependencies = [
  "shared",
  "site_config",
  "tokio",
+ "toml 0.8.14",
 ]
 
 [[package]]
