@@ -6,9 +6,9 @@ use crate::{
 
 pub async fn get_dynamic_post_content(
     Path(path): Path<String>,
-) -> Result<Json<String>, (StatusCode, String)> {
+) -> Result<String, (StatusCode, String)> {
     let rendered_content =
         get_dynamic_post_rendered_content(&path).into_response_result(StatusCode::BAD_REQUEST)?;
 
-    Ok(Json(rendered_content))
+    Ok(rendered_content)
 }
