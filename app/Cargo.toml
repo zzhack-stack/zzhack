@@ -17,6 +17,7 @@ yew-router = "0.18.0"
 shared = {path = "../shared"}
 reqwest = { version = "0.12.5", features = ["json"] }
 site_config = { path = "../site_config" }
+wasm-bindgen = "0.2.92"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 database = { path ="../database" }

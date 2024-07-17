@@ -2,6 +2,18 @@
 WIP
 
 ## TODO
+**Functional**
+- [x] Nav
+- [x] Homepage
+- [x] Posts page
+- [x] Post page
+- [x] 404 page
+- [x] About page
+- [x] Links page
+- [x] Delete logic of map_posts
+- [ ] Auth system (users can modified post includes delete, create and update using token)
+
+**Design**
 - [ ] Nav
 - [ ] Homepage
 - [ ] Posts page
@@ -9,8 +21,7 @@ WIP
 - [ ] 404 page
 - [ ] About page
 - [ ] Links page
-- [x] Delete logic of map_posts
-- [ ] Auth system (users can modified post includes delete, create and update using token)
+
 
 ## How to start dev server
 SSR is a experimental feature of Yew. you need to build both client bundle and server source code when the source code was changed.

@@ -11,8 +11,20 @@ posts_folder_name = "posts"
 #   |- about/
 #       |- me.md
 #
-# then you can visit the about page through /about/me
+# then you can visit the about page through /pages/about/me
 dynamic_pages_folder_name = "dynamic_pages"
+
+[[nav]]
+text = "Home"
+url = "/"
+
+[[nav]]
+text = "Posts"
+url = "/posts"
+
+[[nav]]
+text = "About me"
+url = "/pages/about/me"
 
 [server]
 dev_port = 8000

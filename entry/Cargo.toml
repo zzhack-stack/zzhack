@@ -16,6 +16,7 @@ yew = { version = "0.21.0", features = ["hydration", "ssr"]}
 log = "0.4"
 futures = { version = "0.3", features = ["std"], default-features = false }
 app = { path = "../app", features = ["ssr", "hydration"] }
+site_config = { path = "../site_config" }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 wasm-bindgen-futures = "0.4"
@@ -31,7 +32,6 @@ clap = { version = "4", features = ["derive"] }
 hyper = { version = "0.14", features = ["server", "http1"] }
 database = { path ="../database" }
 api = { path = "../api"}
-site_config = { path = "../site_config" }
 
 [target.'cfg(unix)'.dependencies]
 jemallocator = "0.5"

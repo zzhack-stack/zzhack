@@ -15,7 +15,7 @@ pub enum Routes {
     Links,
     #[at("/")]
     Home,
-    #[at("/*path")]
+    #[at("/pages/*path")]
     Dynamic { path: String },
     #[not_found]
     #[at("/not_found")]
