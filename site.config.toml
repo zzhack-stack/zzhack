@@ -1,6 +1,19 @@
 [root]
 posts_folder_name = "posts"
 
+# dynamic_pages_folder_name is really useful in most cases,
+# you can put markdown files under the root/dynamic_pages_folder_name folder,
+# if zzhack found markdown file in root/dynamic_pages_folder_name,
+# these files will be rendered as html pages, that allows users can visit these pages
+# through path of these markdown files, for instance:
+# 
+# dynamic_pages/
+#   |- about/
+#       |- me.md
+#
+# then you can visit the about page through /about/me
+dynamic_pages_folder_name = "dynamic_pages"
+
 [server]
 dev_port = 8000
 prod_port = 8080
@@ -10,5 +23,6 @@ prod_port = 8080
 # Otherwise you don't need to modify this section
 [api]
 password = ""
+
 # The secret_key used for encoding and decoding the JWT tokens
 secret_key = ""

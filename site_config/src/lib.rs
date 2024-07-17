@@ -12,6 +12,7 @@ pub struct Config {
 #[derive(Deserialize)]
 pub struct RootConfig {
     pub posts_folder_name: String,
+    pub dynamic_pages_folder_name: String,
 }
 
 #[derive(Deserialize)]
