@@ -8,6 +8,8 @@ WIP
 - [ ] Post page
 - [ ] 404 page
 - [ ] About page
+- [x] Delete logic of map_posts
+- [ ] Auth system (users can modified post includes delete, create and update using token)
 
 ## How to start dev server
 SSR is a experimental feature of Yew. you need to build both client bundle and server source code when the source code was changed.

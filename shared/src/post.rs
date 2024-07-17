@@ -20,6 +20,16 @@ pub struct Post {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct RawPost {
+    pub path: String,
+    pub content: String,
+    pub spoiler: String,
+    pub title: String,
+    pub created_at: String,
+    pub updated_at: String,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct PostDetail {
     pub id: usize,
     pub content: String,

@@ -1,30 +1,47 @@
-use std::{fs::read_to_string, path::PathBuf};
-
+use shared::post::PostDetail;
 use yew::prelude::*;
-use yew_router::components::Redirect;
 
-use crate::routes::Routes;
+use crate::utils::inner_html::parse_str_to_element;
 
 #[derive(Properties, PartialEq)]
 pub struct PostProps {
-    pub name: String,
+    pub id: usize,
+}
+
+#[cfg(feature = "ssr")]
+async fn fetch_post_detail(id: usize) -> PostDetail {
+    use crate::http::HTTP;
+
+    HTTP::new()
+        .get(&format!("/api/posts/{id}"))
+        .await
+        .unwrap()
+        .json::<PostDetail>()
+        .await
+        .unwrap()
+}
+
+#[function_component]
+fn Content(props: &PostProps) -> HtmlResult {
+    let id = props.id.clone();
+    let parepared_post_detail = use_prepared_state!((), async move |_| -> PostDetail {
+        fetch_post_detail(id).await
+    })?
+    .unwrap();
+    let element = parse_str_to_element(&parepared_post_detail.content);
+
+    Ok(html! {
+        element
+    })
 }
 
 #[function_component]
 pub fn Post(props: &PostProps) -> Html {
-    // let markdown_path = get_markdown_path(PathBuf::from("../posts").join(&props.name));
-    html! {"Post"}
+    let fallback = html! {<div>{"Loading..."}</div>};
 
-    // match read_to_string(markdown_path) {
-    //     Ok(content) => {
-    //         let post_content = get_post_content(&content);
-    //
-    //         html! {<div class="prose lg:prose-xl">{parse_markdown_as_html(&post_content)}</div>}
-    //     }
-    //     Err(_) => {
-    //         html! {
-    //             <Redirect<Routes> to={Routes::NotFound} />
-    //         }
-    //     }
-    // }
+    html! {
+        <Suspense fallback={fallback}>
+           <Content id={props.id} />
+        </Suspense>
+    }
 }

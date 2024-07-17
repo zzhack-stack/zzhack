@@ -32,8 +32,6 @@ impl HTTP {
     }
 
     fn with_base_url(&self, path: &str) -> String {
-        println!("{}", format!("{}{path}", self.base_url));
-
         format!("{}{path}", self.base_url)
     }
 
