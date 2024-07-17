@@ -65,9 +65,12 @@ pub fn delete_posts_by_paths(local_paths: &Vec<String>) -> rusqlite::Result<usiz
 
     execute(|conn| -> rusqlite::Result<usize> {
         conn.execute(
-            "DELETE FROM posts
-            WHERE path NOT IN (?1)",
-            [local_paths_stringify],
+            &format!(
+                "DELETE FROM posts
+                WHERE path NOT IN ({})",
+                local_paths_stringify
+            ),
+            [],
         )
     })
 }
