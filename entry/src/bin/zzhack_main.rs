@@ -80,11 +80,9 @@ where
 }
 
 // Map posts to database and initialize tables
-pub fn initialize_data() -> rusqlite::Result<()> {
-    initialize_tables()?;
-    map_posts_to_db()?;
-
-    Ok(())
+pub fn initialize_data() {
+    initialize_tables().unwrap();
+    map_posts_to_db().unwrap();
 }
 
 #[cfg(debug_assertions)]
@@ -99,7 +97,7 @@ fn get_port() -> usize {
 
 #[tokio::main]
 async fn main() {
-    initialize_data().unwrap();
+    initialize_data();
 
     let exec = Executor::default();
 

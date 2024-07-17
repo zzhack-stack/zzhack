@@ -5,8 +5,8 @@ use crate::pages::{home::Home, not_found::NotFound, post::Post, posts::Posts};
 
 #[derive(Routable, PartialEq, Eq, Clone, Debug)]
 pub enum Routes {
-    #[at("/post/:name")]
-    Post { name: String },
+    #[at("/post/:id")]
+    Post { id: usize },
     #[at("/posts")]
     Posts,
     #[not_found]
@@ -18,7 +18,7 @@ pub enum Routes {
 
 pub fn switch(routes: Routes) -> Html {
     match routes {
-        Routes::Post { name } => html! {<Post name={name} />},
+        Routes::Post { id } => html! {<Post id={id} />},
         Routes::Posts => {
             html! {<Posts />}
         }

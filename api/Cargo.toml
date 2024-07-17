@@ -12,3 +12,6 @@ database = {path = "../database"}
 site_config = { path = "../site_config" }
 anyhow = "1.0.86"
 shared = { path = "../shared" }
+markdown = { path = "../markdown"}
+tokio = "1.38.0"
+

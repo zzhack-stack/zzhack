@@ -1,1 +1,1 @@
-pub mod markdown;
+pub mod inner_html;
