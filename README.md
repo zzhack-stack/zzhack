@@ -23,6 +23,20 @@ WIP
 - [ ] Links page
 
 
+## Migrate database
+The zzhack use SQLite as database, and use `sea-orm` to do migration, you may need to execute migrate before start server:
+```shell
+DATABASE_URL=sqlite://zzhack.db?mode=rwc sea-orm-cli migrate up
+```
+
+### Auto generate entities from database
+`sea-orm-cli` provide ability to auto-generate entities and corresponding relations code from database, if you want to update the entities code, please run the following command:
+
+```shell
+DATABASE_URL=sqlite://zzhack.db?mode=rwc sea-orm-cli generate entity --with-serde serialize -o ./api/src/database/models
+```
+
+
 ## How to start dev server
 SSR is a experimental feature of Yew. you need to build both client bundle and server source code when the source code was changed.
 
