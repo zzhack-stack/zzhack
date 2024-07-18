@@ -5,7 +5,7 @@ use sea_orm::{
 
 use crate::database::{
     connection::DBResult,
-    models::post::{ActiveModel, Column, Entity, Model},
+    models::posts::{ActiveModel, Column, Entity, Model},
 };
 
 pub async fn get_post_detail(db: &DatabaseConnection, id: i32) -> DBResult<Model> {

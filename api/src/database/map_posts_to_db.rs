@@ -10,7 +10,7 @@ use std::{
     time::SystemTime,
 };
 
-use super::models::post::ActiveModel;
+use super::models::posts::ActiveModel;
 
 fn format_system_time_to_rfc2822(time: SystemTime) -> String {
     let time: DateTime<Utc> = time.into();

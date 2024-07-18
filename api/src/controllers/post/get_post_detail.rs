@@ -1,5 +1,5 @@
 use crate::{
-    database::models::post::Model, error::ResponseResultExt, services::post_service, AppState,
+    database::models::posts::Model, error::ResponseResultExt, services::post_service, AppState,
 };
 use axum::{
     extract::{Path, State},
