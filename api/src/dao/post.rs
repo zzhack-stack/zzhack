@@ -1,99 +1,59 @@
-use database::{
-    connection::execute,
-    rusqlite::{self, params},
+use sea_orm::{
+    sea_query::OnConflict, ColumnTrait, DatabaseConnection, DbBackend, DeleteResult, EntityTrait,
+    InsertResult, PaginatorTrait, QueryFilter, QuerySelect, QueryTrait,
 };
-use shared::post::{Post, PostDetail, RawPost};
 
-pub fn get_post_detail(id: usize) -> rusqlite::Result<PostDetail> {
-    execute(|conn| -> rusqlite::Result<PostDetail> {
-        let post_detail = conn.query_row(
-            "SELECT id, title, content, created_at, updated_at FROM posts
-            WHERE id = ?1",
-            [id],
-            |row| {
-                Ok(PostDetail {
-                    id: row.get(0)?,
-                    title: row.get(1)?,
-                    content: row.get(2)?,
-                    created_at: row.get(3)?,
-                    updated_at: row.get(4)?,
-                })
-            },
-        )?;
+use crate::database::{
+    connection::DBResult,
+    models::post::{ActiveModel, Column, Entity, Model},
+};
 
-        Ok(post_detail)
-    })
+pub async fn get_post_detail(db: &DatabaseConnection, id: i32) -> DBResult<Model> {
+    let post_detail = Entity::find_by_id(id).one(db).await?.unwrap();
+
+    Ok(post_detail)
 }
 
-pub fn get_posts_count() -> rusqlite::Result<usize> {
-    execute(|conn| -> rusqlite::Result<usize> {
-        let count = conn.query_row("SELECT COUNT(*) FROM posts", [], |row| {
-            Ok(row.get_unwrap::<_, usize>(0))
-        })?;
-
-        Ok(count)
-    })
+pub async fn get_posts_count(db: &DatabaseConnection) -> DBResult<u64> {
+    Entity::find().select_only().count(db).await
 }
 
-pub fn get_posts_by_page(
-    page: usize,
-    page_limit: usize,
-) -> rusqlite::Result<Vec<rusqlite::Result<Post>>> {
-    execute(move |conn| {
-        let mut statement = conn.prepare(
-            "SELECT id, path, title, spoiler, created_at, updated_at FROM posts LIMIT ?1 OFFSET ?2",
-        )?;
-        let posts_rows = statement
-            .query_map(params!(page_limit, page), |row| {
-                Ok(Post {
-                    id: row.get(0)?,
-                    path: row.get(1)?,
-                    title: row.get(2)?,
-                    spoiler: row.get(3)?,
-                    created_at: row.get(4)?,
-                    updated_at: row.get(5)?,
-                })
-            })?
-            .collect::<Vec<rusqlite::Result<Post>>>();
-
-        Ok(posts_rows)
-    })
+pub async fn get_posts_by_page(
+    db: &DatabaseConnection,
+    page: u64,
+    page_limit: u64,
+) -> DBResult<Vec<Model>> {
+    Entity::find().all(db).await
+    // .select_only()
+    // .columns([
+    //     Column::Id,
+    //     Column::Path,
+    //     Column::Title,
+    //     Column::Spoiler,
+    //     Column::CreatedAt,
+    //     Column::UpdatedAt,
+    // ])
+    // .paginate(db, page_limit)
+    // .fetch_page(page)
+    // .await
 }
 
-pub fn delete_posts_by_paths(local_paths: &Vec<String>) -> rusqlite::Result<usize> {
-    let local_paths_stringify = &local_paths.join(",");
-
-    execute(|conn| -> rusqlite::Result<usize> {
-        conn.execute(
-            &format!(
-                "DELETE FROM posts
-                WHERE path NOT IN ({})",
-                local_paths_stringify
-            ),
-            [],
-        )
-    })
+pub async fn delete_posts_by_paths(
+    db: &DatabaseConnection,
+    local_paths: &Vec<String>,
+) -> DBResult<DeleteResult> {
+    Entity::delete_many()
+        .filter(Column::Path.is_not_in(local_paths))
+        .exec(db)
+        .await
 }
 
-pub fn upsert_post(post: RawPost) -> rusqlite::Result<usize> {
-    execute(|conn| -> rusqlite::Result<usize> {
-        conn.execute(
-            "INSERT INTO posts (path, content, title, spoiler, created_at, updated_at)
-                VALUES (?1, ?2, ?3, ?4, ?5, ?6)
-                ON CONFLICT(path) DO UPDATE SET
-                    content=excluded.content,
-                    title=excluded.title,
-                    spoiler=excluded.spoiler,
-                    created_at=excluded.created_at,
-                    updated_at=excluded.updated_at",
-            params!(
-                post.path.to_string(),
-                markdown::parse::parse_markdown(&post.content),
-                post.title,
-                post.spoiler,
-                post.created_at,
-                post.updated_at
-            ),
-        )
-    })
+pub async fn upsert_post(
+    db: &DatabaseConnection,
+    post: ActiveModel,
+) -> DBResult<InsertResult<ActiveModel>> {
+    Entity::insert(post)
+        .on_conflict(OnConflict::column(Column::Path).do_nothing().to_owned())
+        .exec(db)
+        .await
 }

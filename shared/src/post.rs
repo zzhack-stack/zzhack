@@ -1,12 +1,12 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone)]
-pub struct PaginationPostsRes {
-    pub page_limit: usize,
-    pub page: usize,
-    pub total: usize,
+pub struct PaginationPostsRes<T> {
+    pub page_limit: u64,
+    pub page: u64,
+    pub total: u64,
     pub has_next: bool,
-    pub posts: Vec<Post>,
+    pub posts: Vec<T>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

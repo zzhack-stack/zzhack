@@ -2,7 +2,7 @@ use std::rc::Rc;
 
 use crate::components::{load_more::LoadMore, post_item::PostItem};
 use crate::http::HTTP;
-use shared::post::PaginationPostsRes;
+use shared::post::{PaginationPostsRes, Post};
 use yew::{platform::spawn_local, prelude::*};
 
 #[derive(Properties, PartialEq)]
@@ -12,12 +12,12 @@ struct PostItemProps {
 }
 
 #[cfg(feature = "ssr")]
-async fn fetch_posts(page_limit: usize, page: usize) -> PaginationPostsRes {
+async fn fetch_posts(page_limit: usize, page: usize) -> PaginationPostsRes<Post> {
     HTTP::new()
         .get(&format!("/posts?page_limit={page_limit}&page={page}"))
         .await
         .unwrap()
-        .json::<PaginationPostsRes>()
+        .json::<PaginationPostsRes<Post>>()
         .await
         .unwrap()
 }
@@ -34,7 +34,7 @@ pub fn Content() -> HtmlResult {
     // and send this data to browser, then call hydrate, if we want to redefine a state
     // that inited by prepared_state, we should extract value from Rc functor
     let prepared_pagination_posts =
-        use_prepared_state!((), async move |_| -> PaginationPostsRes {
+        use_prepared_state!((), async move |_| -> PaginationPostsRes<Post> {
             fetch_posts(PAGE_LIMIT, *page_cloned).await
         })?
         .unwrap();
