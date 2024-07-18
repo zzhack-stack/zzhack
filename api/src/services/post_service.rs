@@ -1,5 +1,5 @@
 use crate::dao::{self};
-use crate::database::models::post::Model;
+use crate::database::models::posts::Model;
 use anyhow::{bail, Result};
 use sea_orm::DatabaseConnection;
 

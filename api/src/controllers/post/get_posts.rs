@@ -7,7 +7,7 @@ use serde::Deserialize;
 use shared::post::PaginationPostsRes;
 
 use crate::{
-    database::models::post::Model,
+    database::models::posts::Model,
     error::ResponseResultExt,
     services::post_service::{get_posts_by_page, get_posts_count},
     AppState,
