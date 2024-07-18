@@ -1,24 +1,34 @@
-use axum::{extract::Query, http::StatusCode, Json};
+use axum::{
+    extract::{Query, State},
+    http::StatusCode,
+    Json,
+};
 use serde::Deserialize;
 use shared::post::PaginationPostsRes;
 
 use crate::{
+    database::models::post::Model,
     error::ResponseResultExt,
     services::post_service::{get_posts_by_page, get_posts_count},
+    AppState,
 };
 
 #[derive(Deserialize)]
 pub struct Pagination {
-    page_limit: usize,
-    page: usize,
+    page_limit: u64,
+    page: u64,
 }
 
 pub async fn get_posts(
+    state: State<AppState>,
     pagination: Query<Pagination>,
-) -> Result<Json<PaginationPostsRes>, (StatusCode, String)> {
-    let posts = get_posts_by_page(pagination.page_limit, pagination.page)
+) -> Result<Json<PaginationPostsRes<Model>>, (StatusCode, String)> {
+    let posts = get_posts_by_page(&state.conn, pagination.page_limit, pagination.page)
+        .await
         .into_response_result(StatusCode::BAD_REQUEST)?;
-    let total = get_posts_count().into_response_result(StatusCode::INTERNAL_SERVER_ERROR)?;
+    let total = get_posts_count(&state.conn)
+        .await
+        .into_response_result(StatusCode::INTERNAL_SERVER_ERROR)?;
     let has_next = (pagination.page + 1) * pagination.page_limit <= total;
 
     Ok(Json(PaginationPostsRes {

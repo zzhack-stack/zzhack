@@ -20,7 +20,6 @@ site_config = { path = "../site_config" }
 wasm-bindgen = "0.2.92"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-database = { path ="../database" }
 api = {path = "../api"}
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]

@@ -3,8 +3,8 @@ use std::convert::Infallible;
 use std::future::Future;
 use std::path::PathBuf;
 
+use api::database::{connection::get_db_connection, map_posts_to_db::map_posts_to_db};
 use api::get_api_routes;
-use api::utils::map_posts_to_db::map_posts_to_db;
 use app::portal::{ServerApp, ServerAppProps};
 use axum::body::StreamBody;
 use axum::error_handling::HandleError;
@@ -20,7 +20,6 @@ use hyper::server::Server;
 use tower::ServiceExt;
 use tower_http::services::ServeDir;
 
-use database::initialize::initialize_tables;
 use yew::platform::Runtime;
 
 // We use jemalloc as it produces better performance.
@@ -81,8 +80,7 @@ where
 
 // Map posts to database and initialize tables
 pub fn initialize_data() {
-    initialize_tables().unwrap();
-    map_posts_to_db().unwrap();
+    // initialize_tables().unwrap();
 }
 
 #[cfg(debug_assertions)]
@@ -97,8 +95,6 @@ fn get_port() -> usize {
 
 #[tokio::main]
 async fn main() {
-    initialize_data();
-
     let exec = Executor::default();
 
     env_logger::init();
@@ -122,8 +118,13 @@ async fn main() {
         )
     };
 
+    let conn = get_db_connection().await;
+
+    map_posts_to_db(&conn).await.unwrap();
+
     let app = Router::new()
         .nest("/api", get_api_routes())
+        .with_state(api::AppState { conn })
         .fallback_service(HandleError::new(
             ServeDir::new(opts.dir)
                 .append_index_html_on_directories(false)

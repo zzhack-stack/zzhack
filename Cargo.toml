@@ -1,3 +1,3 @@
 [workspace]
 
-members = [ "api","app", "database", "entry", "markdown", "shared", "site_config"]
+members = [ "api","app", "entry", "markdown", "shared", "site_config", "migration"]
