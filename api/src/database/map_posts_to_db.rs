@@ -54,7 +54,7 @@ async fn delete_posts(
 ) -> anyhow::Result<()> {
     let posts_paths = dir_entries
         .into_iter()
-        .map(|dir_entry| format!("\"{}\"", dir_entry.path().to_string_lossy().to_string()))
+        .map(|dir_entry| dir_entry.path().to_string_lossy().to_string())
         .collect::<Vec<String>>();
 
     delete_posts_by_paths(conn, &posts_paths).await?;

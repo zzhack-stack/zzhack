@@ -1,6 +1,6 @@
 use sea_orm::{
-    sea_query::OnConflict, ColumnTrait, DatabaseConnection, DbBackend, DeleteResult, EntityTrait,
-    InsertResult, PaginatorTrait, QueryFilter, QuerySelect, QueryTrait,
+    sea_query::OnConflict, ColumnTrait, DatabaseConnection, DeleteResult, EntityTrait,
+    InsertResult, PaginatorTrait, QueryFilter, QuerySelect,
 };
 
 use crate::database::{
@@ -15,7 +15,7 @@ pub async fn get_post_detail(db: &DatabaseConnection, id: i32) -> DBResult<Model
 }
 
 pub async fn get_posts_count(db: &DatabaseConnection) -> DBResult<u64> {
-    Entity::find().select_only().count(db).await
+    Entity::find().count(db).await
 }
 
 pub async fn get_posts_by_page(
@@ -23,25 +23,26 @@ pub async fn get_posts_by_page(
     page: u64,
     page_limit: u64,
 ) -> DBResult<Vec<Model>> {
-    Entity::find().all(db).await
-    // .select_only()
-    // .columns([
-    //     Column::Id,
-    //     Column::Path,
-    //     Column::Title,
-    //     Column::Spoiler,
-    //     Column::CreatedAt,
-    //     Column::UpdatedAt,
-    // ])
-    // .paginate(db, page_limit)
-    // .fetch_page(page)
-    // .await
+    Entity::find()
+        .columns([
+            Column::Id,
+            Column::Path,
+            Column::Title,
+            Column::Spoiler,
+            Column::CreatedAt,
+            Column::UpdatedAt,
+        ])
+        .paginate(db, page_limit)
+        .fetch_page(page)
+        .await
 }
 
 pub async fn delete_posts_by_paths(
     db: &DatabaseConnection,
     local_paths: &Vec<String>,
 ) -> DBResult<DeleteResult> {
+    println!("{:?}", local_paths);
+
     Entity::delete_many()
         .filter(Column::Path.is_not_in(local_paths))
         .exec(db)
@@ -53,7 +54,16 @@ pub async fn upsert_post(
     post: ActiveModel,
 ) -> DBResult<InsertResult<ActiveModel>> {
     Entity::insert(post)
-        .on_conflict(OnConflict::column(Column::Path).do_nothing().to_owned())
+        .on_conflict(
+            OnConflict::column(Column::Path)
+                .update_columns([
+                    Column::Content,
+                    Column::Title,
+                    Column::Spoiler,
+                    Column::UpdatedAt,
+                ])
+                .to_owned(),
+        )
         .exec(db)
         .await
 }
