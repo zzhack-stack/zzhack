@@ -12,8 +12,6 @@ pub async fn get_posts_by_page(
     //     bail!("The page should greater than 0");
     // }
 
-    println!("{} {}", page, page_limit);
-
     let posts = dao::post::get_posts_by_page(conn, page, page_limit).await?;
 
     Ok(posts)
