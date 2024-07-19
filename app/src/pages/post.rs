@@ -23,6 +23,8 @@ async fn fetch_post_detail(id: usize) -> PostDetail {
 
 #[function_component]
 fn Content(props: &PostProps) -> HtmlResult {
+    println!("{} wwwwww", props.id);
+
     let id = props.id.clone();
     let parepared_post_detail = use_prepared_state!((), async move |_| -> PostDetail {
         fetch_post_detail(id).await
