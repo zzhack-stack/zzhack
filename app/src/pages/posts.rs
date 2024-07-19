@@ -2,6 +2,7 @@ use std::rc::Rc;
 
 use crate::components::{load_more::LoadMore, post_item::PostItem};
 use crate::http::HTTP;
+use log::info;
 use shared::post::{PaginationPostsRes, Post};
 use yew::{platform::spawn_local, prelude::*};
 
@@ -22,8 +23,8 @@ async fn fetch_posts(page_limit: usize, page: usize) -> PaginationPostsRes<Post>
         .unwrap()
 }
 
-const PAGE_LIMIT: usize = 10;
-const INIT_PAGE: usize = 1;
+const PAGE_LIMIT: usize = 1;
+const INIT_PAGE: usize = 0;
 
 #[function_component]
 pub fn Content() -> HtmlResult {
@@ -67,7 +68,7 @@ pub fn Content() -> HtmlResult {
     });
 
     Ok(html! {
-        <div>
+        <div onclick={Callback::from(|_| {info!("World")})}>
             {for rendered_posts}
             if *has_load_more {
                 <LoadMore onload={handle_load_more_click} />

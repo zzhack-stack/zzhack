@@ -170,6 +170,7 @@ dependencies = [
  "site_config",
  "wasm-bindgen",
  "wasm-bindgen-futures",
+ "wasm-bindgen-macro",
  "wasm-logger",
  "web-sys",
  "yew",

@@ -16,8 +16,9 @@ yew = { version = "0.21.0", features = ["hydration", "ssr"]}
 yew-router = "0.18.0"
 shared = {path = "../shared"}
 reqwest = { version = "0.12.5", features = ["json"] }
-site_config = { path = "../site_config" }
 wasm-bindgen = "0.2.92"
+wasm-bindgen-macro = "0.2.92"
+site_config = { path = "../site_config" }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 api = {path = "../api"}

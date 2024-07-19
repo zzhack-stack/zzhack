@@ -1,5 +1,8 @@
-use site_config::NavConfig;
+use shared::site_config::{Config, NavConfig};
+// use shared::site_config::NavConfig;
 use yew::prelude::*;
+
+use crate::utils::site_config::get_config;
 
 #[derive(Properties, PartialEq)]
 pub struct NavProps {
@@ -7,8 +10,9 @@ pub struct NavProps {
 }
 
 #[function_component]
-pub fn Nav(props: &NavProps) -> Html {
-    let rendered_nav_items = props.nav_configs.iter().map(|config| {
+pub fn Nav() -> Html {
+    let site_config = site_config::get_site_config();
+    let rendered_nav_items = site_config.nav.iter().map(|config| {
         html! {
             <a class="navbar-item" href={config.url.clone()}>{&config.text}</a>
         }

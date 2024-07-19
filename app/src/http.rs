@@ -12,6 +12,7 @@ impl HTTP {
     }
 
     #[cfg(debug_assertions)]
+    #[cfg(not(target_arch = "wasm32"))]
     fn get_port() -> usize {
         site_config::get_site_config().server.dev_port
     }
@@ -23,12 +24,12 @@ impl HTTP {
 
     #[cfg(not(target_arch = "wasm32"))]
     pub fn get_base_url(prefix: &'static str) -> String {
-        format!("http://localhost:{}{}", Self::get_port(), prefix)
+        format!("http://localhost:{}{prefix}", Self::get_port())
     }
 
     #[cfg(target_arch = "wasm32")]
     pub fn get_base_url(prefix: &'static str) -> String {
-        web_sys::window().unwrap().origin()
+        format!("{}{prefix}", web_sys::window().unwrap().origin())
     }
 
     fn with_base_url(&self, path: &str) -> String {
