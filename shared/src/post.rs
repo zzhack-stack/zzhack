@@ -1,12 +1,23 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone)]
+pub struct PostWithTags<P, T> {
+    pub post: P,
+    pub tags: Vec<T>,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct Tag {
+    text: String,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
 pub struct PaginationPostsRes<T> {
     pub page_limit: u64,
     pub page: u64,
     pub total: u64,
     pub has_next: bool,
-    pub posts: Vec<T>,
+    pub posts_with_tags: Vec<T>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
