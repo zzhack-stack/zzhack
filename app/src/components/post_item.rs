@@ -14,12 +14,12 @@ pub fn PostItem(props: &PostItemProps) -> Html {
     let post = &props.post;
 
     html! {
-        <Link<Routes> to={Routes::Post {id: post.id}}>
+        <a href={format!("/post/{}", post.id)}>
             <div>
                 <h2>{&post.title}</h2>
                 <p>{&post.spoiler}</p>
                 <p>{&post.created_at}</p>
             </div>
-        </Link<Routes>>
+        </a>
     }
 }

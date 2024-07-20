@@ -29,7 +29,10 @@ pub fn Content(props: &DynamicProps) -> HtmlResult {
     .unwrap();
 
     Ok(html! {
-        parse_str_to_element(&prepared_dynamic_post_content)
+        <div>
+        {parse_str_to_element(&prepared_dynamic_post_content)}
+
+            </div>
     })
 }
 

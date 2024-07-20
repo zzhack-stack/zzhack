@@ -24,7 +24,7 @@ pub async fn get_posts_count(conn: &DatabaseConnection) -> Result<u64> {
 }
 
 pub async fn get_post_detail(conn: &DatabaseConnection, id: i32) -> Result<Model> {
-    let post_detail = dao::post::get_post_detail(conn, id).await?;
+    let post_detail = dao::post::get_post_by_id(conn, id).await?;
 
     Ok(post_detail)
 }

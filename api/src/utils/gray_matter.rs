@@ -5,6 +5,7 @@ use serde::Deserialize;
 pub struct PostFrontMatter {
     pub title: String,
     pub spoiler: String,
+    pub tags: Option<Vec<String>>,
 }
 
 fn parse_gray_matter(content: &str) -> ParsedEntity {

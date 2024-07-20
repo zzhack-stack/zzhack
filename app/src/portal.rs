@@ -17,6 +17,7 @@ pub struct BrowserAppProps {
 pub fn BrowserApp() -> Html {
     html! {
         <BrowserRouter>
+            <Nav />
             <main class="p-4 h-full w-full">
                 <Switch<Routes> render={switch} />
             </main>

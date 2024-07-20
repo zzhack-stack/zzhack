@@ -11,26 +11,27 @@ impl HTTP {
         }
     }
 
-    #[cfg(debug_assertions)]
-    #[cfg(not(target_arch = "wasm32"))]
-    fn get_port() -> usize {
-        site_config::get_site_config().server.dev_port
-    }
+    // #[cfg(debug_assertions)]
+    // #[cfg(not(target_arch = "wasm32"))]
+    // fn get_port() -> usize {
+    //     site_config::get_site_config().server.dev_port
+    // }
 
-    #[cfg(not(debug_assertions))]
-    fn get_port() -> usize {
-        site_config::get_site_config().server.prod_port
-    }
+    // #[cfg(not(debug_assertions))]
+    // fn get_port() -> usize {
+    //     site_config::get_site_config().server.prod_port
+    // }
 
-    #[cfg(not(target_arch = "wasm32"))]
+    // #[cfg(not(target_arch = "wasm32"))]
     pub fn get_base_url(prefix: &'static str) -> String {
-        format!("http://localhost:{}{prefix}", Self::get_port())
+        // format!("http://localhost:{}{prefix}", Self::get_port())
+        format!("http://localhost:8000{prefix}")
     }
 
-    #[cfg(target_arch = "wasm32")]
-    pub fn get_base_url(prefix: &'static str) -> String {
-        format!("{}{prefix}", web_sys::window().unwrap().origin())
-    }
+    // #[cfg(target_arch = "wasm32")]
+    // pub fn get_base_url(prefix: &'static str) -> String {
+    //     format!("{}{prefix}", web_sys::window().unwrap().origin())
+    // }
 
     fn with_base_url(&self, path: &str) -> String {
         format!("{}{path}", self.base_url)
