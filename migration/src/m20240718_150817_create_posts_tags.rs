@@ -11,8 +11,8 @@ impl MigrationTrait for Migration {
                 Table::create()
                     .table(PostTags::Table)
                     .if_not_exists()
-                    .col(ColumnDef::new(PostTags::PostId).big_integer().not_null())
-                    .col(ColumnDef::new(PostTags::TagId).big_integer().not_null())
+                    .col(ColumnDef::new(PostTags::PostId).integer().not_null())
+                    .col(ColumnDef::new(PostTags::TagId).integer().not_null())
                     .primary_key(
                         Index::create()
                             .name("pk-posts_tags")

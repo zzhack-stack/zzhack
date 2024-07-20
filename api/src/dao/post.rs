@@ -36,6 +36,7 @@ pub async fn get_posts_by_page(
             Column::CreatedAt,
             Column::UpdatedAt,
         ])
+        .to_owned()
         .paginate(db, page_limit)
         .fetch_page(page)
         .await

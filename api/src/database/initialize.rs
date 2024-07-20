@@ -21,10 +21,14 @@ fn format_system_time_to_rfc2822(time: SystemTime) -> String {
     time.to_rfc2822()
 }
 
-async fn upsert_tags(db: &DatabaseConnection, tags: Vec<String>, post_id: i64) {
-    println!("{post_id}");
+async fn upsert_tags(db: &DatabaseConnection, tags: Option<Vec<String>>, post_id: i32) {
+    if tags.is_none() {
+        return;
+    }
 
-    upsert_tags_with_post_id(db, tags, post_id).await.unwrap()
+    upsert_tags_with_post_id(db, tags.unwrap(), post_id)
+        .await
+        .unwrap()
 }
 
 async fn upsert_posts(db: &DatabaseConnection, dir_entries: &Vec<DirEntry>) -> anyhow::Result<()> {
@@ -37,7 +41,7 @@ async fn upsert_posts(db: &DatabaseConnection, dir_entries: &Vec<DirEntry>) -> a
         let path = path.to_string_lossy().to_string();
         let content = read_to_string(path.clone())?;
         let front_matter = get_post_front_matter(&content);
-        let tags = front_matter.tags.unwrap_or_default();
+        let tags = front_matter.tags;
 
         match get_post_by_path(db, &path).await? {
             Some(post) => {
@@ -45,7 +49,7 @@ async fn upsert_posts(db: &DatabaseConnection, dir_entries: &Vec<DirEntry>) -> a
                     continue;
                 }
 
-                upsert_tags(db, tags, post.id as i64).await;
+                upsert_tags(db, tags, post.id).await;
             }
             None => {
                 let post = upsert_post(
@@ -62,7 +66,7 @@ async fn upsert_posts(db: &DatabaseConnection, dir_entries: &Vec<DirEntry>) -> a
                 )
                 .await?;
 
-                upsert_tags(db, tags, post.last_insert_id as i64).await;
+                upsert_tags(db, tags, post.last_insert_id).await;
             }
         }
     }

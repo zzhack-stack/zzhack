@@ -1,14 +1,11 @@
-use crate::database::{
-    connection::DBResult,
-    models::post_tags::{ActiveModel, Column, Entity, Model},
-};
-use sea_orm::{sea_query::OnConflict, ConnectionTrait, EntityTrait, InsertResult, Set};
+use crate::database::models::post_tags::{ActiveModel, Column, Entity, Model};
+use sea_orm::{sea_query::OnConflict, ConnectionTrait, EntityTrait, InsertResult, QueryTrait, Set};
 
 pub async fn upsert_post_tags<T: ConnectionTrait>(
     db: &T,
-    tag_ids: Vec<i64>,
-    post_id: i64,
-) -> DBResult<InsertResult<ActiveModel>> {
+    tag_ids: Vec<i32>,
+    post_id: i32,
+) -> InsertResult<ActiveModel> {
     Entity::insert_many(
         tag_ids
             .into_iter()
@@ -26,4 +23,5 @@ pub async fn upsert_post_tags<T: ConnectionTrait>(
     )
     .exec(db)
     .await
+    .unwrap()
 }

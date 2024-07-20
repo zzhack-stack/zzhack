@@ -1,20 +1,28 @@
+use crate::dao::tag::get_tags_by_post_id;
 use crate::dao::{self};
 use crate::database::models::posts::Model;
-use anyhow::{bail, Result};
+use crate::database::models::tags;
+use anyhow::Result;
+use futures::future::join_all;
 use sea_orm::DatabaseConnection;
+use shared::post::PostWithTags;
 
 pub async fn get_posts_by_page(
     conn: &DatabaseConnection,
     page_limit: u64,
     page: u64,
-) -> Result<Vec<Model>> {
-    // if page <= 0 {
-    //     bail!("The page should greater than 0");
-    // }
+) -> Result<Vec<PostWithTags<Model, tags::Model>>> {
+    let posts = dao::post::get_posts_by_page(conn, page, page_limit)
+        .await?
+        .into_iter()
+        .map(|post| async {
+            let tags = get_tags_by_post_id(conn, post.id).await.unwrap();
 
-    let posts = dao::post::get_posts_by_page(conn, page, page_limit).await?;
+            PostWithTags { post, tags }
+        });
+    let posts_with_tags = join_all(posts).await;
 
-    Ok(posts)
+    Ok(posts_with_tags)
 }
 
 pub async fn get_posts_count(conn: &DatabaseConnection) -> Result<u64> {
