@@ -1,4 +1,7 @@
+use crate::http::HTTP;
+use log::info;
 use shared::post::PostDetail;
+use yew::functional::use_prepared_state;
 use yew::prelude::*;
 
 use crate::utils::inner_html::parse_str_to_element;
@@ -10,8 +13,6 @@ pub struct PostProps {
 
 #[cfg(feature = "ssr")]
 async fn fetch_post_detail(id: usize) -> PostDetail {
-    use crate::http::HTTP;
-
     HTTP::new()
         .get(&format!("/posts/{id}"))
         .await
@@ -23,17 +24,16 @@ async fn fetch_post_detail(id: usize) -> PostDetail {
 
 #[function_component]
 fn Content(props: &PostProps) -> HtmlResult {
-    println!("{} wwwwww", props.id);
-
     let id = props.id.clone();
     let parepared_post_detail = use_prepared_state!((), async move |_| -> PostDetail {
         fetch_post_detail(id).await
     })?
     .unwrap();
-    let element = parse_str_to_element(&parepared_post_detail.content);
 
     Ok(html! {
-        element
+        <div>
+            {parse_str_to_element(&parepared_post_detail.content)}
+        </div>
     })
 }
 
@@ -43,7 +43,7 @@ pub fn Post(props: &PostProps) -> Html {
 
     html! {
         <Suspense fallback={fallback}>
-           <Content id={props.id} />
+           <Content id={props.id.clone()} />
         </Suspense>
     }
 }

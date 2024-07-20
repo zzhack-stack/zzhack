@@ -3,7 +3,7 @@ use std::convert::Infallible;
 use std::future::Future;
 use std::path::PathBuf;
 
-use api::database::{connection::get_db_connection, map_posts_to_db::map_posts_to_db};
+use api::database::{connection::get_db_connection, initialize::initialize};
 use api::get_api_routes;
 use app::portal::{ServerApp, ServerAppProps};
 use axum::body::StreamBody;
@@ -118,7 +118,7 @@ async fn main() {
 
     let conn = get_db_connection().await;
 
-    map_posts_to_db(&conn).await.unwrap();
+    initialize(&conn).await.unwrap();
 
     let app = Router::new()
         .nest("/api", get_api_routes())

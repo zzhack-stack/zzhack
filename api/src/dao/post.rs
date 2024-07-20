@@ -8,10 +8,14 @@ use crate::database::{
     models::posts::{ActiveModel, Column, Entity, Model},
 };
 
-pub async fn get_post_detail(db: &DatabaseConnection, id: i32) -> DBResult<Model> {
+pub async fn get_post_by_id(db: &DatabaseConnection, id: i32) -> DBResult<Model> {
     let post_detail = Entity::find_by_id(id).one(db).await?.unwrap();
 
     Ok(post_detail)
+}
+
+pub async fn get_post_by_path(db: &DatabaseConnection, path: &str) -> DBResult<Option<Model>> {
+    Entity::find().filter(Column::Path.eq(path)).one(db).await
 }
 
 pub async fn get_posts_count(db: &DatabaseConnection) -> DBResult<u64> {
@@ -41,8 +45,6 @@ pub async fn delete_posts_by_paths(
     db: &DatabaseConnection,
     local_paths: &Vec<String>,
 ) -> DBResult<DeleteResult> {
-    println!("{:?}", local_paths);
-
     Entity::delete_many()
         .filter(Column::Path.is_not_in(local_paths))
         .exec(db)

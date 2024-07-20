@@ -145,6 +145,7 @@ dependencies = [
  "anyhow",
  "axum",
  "chrono",
+ "futures",
  "gray_matter",
  "markdown",
  "sea-orm",
@@ -1082,6 +1083,7 @@ checksum = "645c6916888f6cb6350d2550b80fb63e734897a8498abe35cfb732b6487804b0"
 dependencies = [
  "futures-channel",
  "futures-core",
+ "futures-executor",
  "futures-io",
  "futures-sink",
  "futures-task",
