@@ -29,7 +29,7 @@ pub async fn get_posts(
     let total = get_posts_count(&state.conn)
         .await
         .into_response_result(StatusCode::INTERNAL_SERVER_ERROR)?;
-    let has_next = (pagination.page + 1) * pagination.page_limit <= total;
+    let has_next = (pagination.page + 1) * pagination.page_limit < total;
 
     Ok(Json(PaginationPostsRes {
         page_limit: pagination.page_limit,
