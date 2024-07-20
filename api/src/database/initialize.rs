@@ -38,12 +38,12 @@ async fn upsert_posts(db: &DatabaseConnection, dir_entries: &Vec<DirEntry>) -> a
         let updated_at = format_system_time_to_rfc2822(metadata.modified().unwrap());
         let dir_path = dir_entry.path();
         let path = get_markdown_path(dir_path.clone());
-        let path = path.to_string_lossy().to_string();
+        let stringify_dir_path = dir_path.to_string_lossy().to_string();
         let content = read_to_string(path.clone())?;
         let front_matter = get_post_front_matter(&content);
         let tags = front_matter.tags;
 
-        match get_post_by_path(db, &path).await? {
+        match get_post_by_path(db, &stringify_dir_path).await? {
             Some(post) => {
                 if post.updated_at == updated_at {
                     continue;
@@ -55,7 +55,7 @@ async fn upsert_posts(db: &DatabaseConnection, dir_entries: &Vec<DirEntry>) -> a
                 let post = upsert_post(
                     db,
                     ActiveModel {
-                        path: Set(path),
+                        path: Set(stringify_dir_path),
                         content: Set(markdown::parse::parse_markdown(&content)),
                         title: Set(front_matter.title),
                         spoiler: Set(Some(front_matter.spoiler)),
