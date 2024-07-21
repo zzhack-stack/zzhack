@@ -6,17 +6,18 @@ use sea_orm::{
     sea_query::OnConflict, ColumnTrait, DatabaseConnection, DeleteResult, EntityTrait,
     InsertResult, PaginatorTrait, QueryFilter, QuerySelect,
 };
-use shared::post::{IntoPost, Post};
+use shared::post::{IntoPost, Post, PostDetail};
 
 use crate::database::{
     connection::DBResult,
     models::posts::{ActiveModel, Column, Entity, Model},
 };
 
-pub async fn get_post_by_id(db: &DatabaseConnection, id: i32) -> DBResult<Model> {
-    let post_detail = Entity::find_by_id(id).one(db).await?.unwrap();
-
-    Ok(post_detail)
+pub async fn get_post_by_id(
+    db: &DatabaseConnection,
+    id: i32,
+) -> DBResult<Vec<(Model, Vec<tags::Model>)>> {
+    Entity::find_by_id(id).find_with_related(Tags).all(db).await
 }
 
 pub async fn get_posts_by_tag_id(
@@ -96,6 +97,19 @@ impl IntoPost<Post> for Model {
             id: self.id,
             path: self.path,
             spoiler: self.spoiler.unwrap_or_default(),
+            title: self.title,
+            created_at: self.created_at,
+            updated_at: self.updated_at,
+            tags: convert_vecs(tags),
+        }
+    }
+}
+
+impl IntoPost<PostDetail> for Model {
+    fn into_post<T: Into<shared::tag::Tag>>(self, tags: Vec<T>) -> PostDetail {
+        PostDetail {
+            id: self.id,
+            content: self.content,
             title: self.title,
             created_at: self.created_at,
             updated_at: self.updated_at,
