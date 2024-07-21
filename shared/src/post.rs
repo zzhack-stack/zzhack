@@ -30,7 +30,7 @@ pub struct Post {
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct PostDetail {
-    pub id: usize,
+    pub id: i32,
     pub content: String,
     pub created_at: String,
     pub updated_at: String,
@@ -39,5 +39,5 @@ pub struct PostDetail {
 }
 
 pub trait IntoPost<P>: Sized {
-    fn into_post<T: Into<Tag>>(self, tags: Vec<T>) -> Post;
+    fn into_post<T: Into<Tag>>(self, tags: Vec<T>) -> P;
 }

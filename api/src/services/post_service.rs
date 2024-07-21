@@ -1,11 +1,11 @@
 use crate::dao::tag::get_tags_by_post_id;
 use crate::dao::{self};
 use crate::database::models::posts::Model;
-use anyhow::Result;
+use crate::utils::helpers::parse_load_many_result;
+use anyhow::{bail, Result};
 use futures::future::join_all;
 use sea_orm::DatabaseConnection;
-use serde::Deserialize;
-use shared::post::{IntoPost, PaginationPostsRes, Post};
+use shared::post::{IntoPost, Post, PostDetail};
 
 pub async fn get_pagination_posts(
     conn: &DatabaseConnection,
@@ -53,8 +53,14 @@ pub async fn get_posts_count(conn: &DatabaseConnection) -> Result<u64> {
     Ok(posts_count)
 }
 
-pub async fn get_post_detail(conn: &DatabaseConnection, id: i32) -> Result<Model> {
-    let post_detail = dao::post::get_post_by_id(conn, id).await?;
+pub async fn get_post_detail(conn: &DatabaseConnection, id: i32) -> Result<PostDetail> {
+    let result = dao::post::get_post_by_id(conn, id).await?;
 
-    Ok(post_detail)
+    if result.len() == 0 {
+        bail!("Cannot find post with id {}", id)
+    }
+
+    let (post_model, tags) = result[0].clone();
+
+    Ok(post_model.into_post(tags))
 }
