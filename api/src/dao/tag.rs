@@ -7,12 +7,16 @@ use sea_orm::{
 };
 use shared::tag::Tag;
 
-use crate::database::{
-    connection::DBResult,
-    models::{
-        prelude::Posts,
-        tags::{ActiveModel, Column, Entity, Model},
+use crate::{
+    database::{
+        connection::DBResult,
+        models::{
+            posts::Model as PostModel,
+            prelude::Posts,
+            tags::{ActiveModel, Column, Entity, Model},
+        },
     },
+    utils::helpers::parse_load_many_result,
 };
 
 use super::post_tags::upsert_post_tags;
@@ -61,13 +65,7 @@ pub async fn get_tags_by_post_id(db: &DatabaseConnection, post_id: i32) -> DBRes
         .all(db)
         .await?;
 
-    if results.len() == 0 {
-        Ok(vec![])
-    } else {
-        let (_, tags) = results[0].clone();
-
-        Ok(tags)
-    }
+    Ok(parse_load_many_result(results))
 }
 
 impl Into<Tag> for Model {

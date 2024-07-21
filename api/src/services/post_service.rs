@@ -4,9 +4,10 @@ use crate::database::models::posts::Model;
 use anyhow::Result;
 use futures::future::join_all;
 use sea_orm::DatabaseConnection;
-use shared::post::{IntoPost, Post};
+use serde::Deserialize;
+use shared::post::{IntoPost, PaginationPostsRes, Post};
 
-pub async fn get_posts_by_page(
+pub async fn get_pagination_posts(
     conn: &DatabaseConnection,
     page_limit: u64,
     page: u64,
@@ -22,6 +23,28 @@ pub async fn get_posts_by_page(
     let posts_with_tags = join_all(posts).await;
 
     Ok(posts_with_tags)
+}
+
+pub async fn get_posts_by_tag_id(
+    db: &DatabaseConnection,
+    tag_id: i32,
+    page_limit: u64,
+    page: u64,
+) -> Result<Vec<Post>> {
+    let result = dao::post::get_posts_by_tag_id(db, tag_id, page_limit, page * page_limit).await?;
+
+    if result.len() == 0 {
+        Ok(vec![])
+    } else {
+        let (tag, posts) = result[0].clone();
+
+        let posts = posts
+            .into_iter()
+            .map(move |post_model| post_model.into_post(vec![tag.clone()]))
+            .collect::<Vec<Post>>();
+
+        Ok(posts)
+    }
 }
 
 pub async fn get_posts_count(conn: &DatabaseConnection) -> Result<u64> {
