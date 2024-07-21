@@ -1,4 +1,7 @@
-use crate::utils::vector_convert::convert_vecs;
+use crate::{
+    database::models::{prelude::Tags, tags},
+    utils::{helpers::parse_load_many_result, vector_convert::convert_vecs},
+};
 use sea_orm::{
     sea_query::OnConflict, ColumnTrait, DatabaseConnection, DeleteResult, EntityTrait,
     InsertResult, PaginatorTrait, QueryFilter, QuerySelect,
@@ -14,6 +17,20 @@ pub async fn get_post_by_id(db: &DatabaseConnection, id: i32) -> DBResult<Model>
     let post_detail = Entity::find_by_id(id).one(db).await?.unwrap();
 
     Ok(post_detail)
+}
+
+pub async fn get_posts_by_tag_id(
+    db: &DatabaseConnection,
+    tag_id: i32,
+    page_limit: u64,
+    page: u64,
+) -> DBResult<Vec<(tags::Model, Vec<Model>)>> {
+    Tags::find_by_id(tag_id)
+        .find_with_related(Entity)
+        .offset(page)
+        .limit(page_limit)
+        .all(db)
+        .await
 }
 
 pub async fn get_post_by_path(db: &DatabaseConnection, path: &str) -> DBResult<Option<Model>> {
