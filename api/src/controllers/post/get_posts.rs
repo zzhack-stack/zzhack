@@ -4,10 +4,9 @@ use axum::{
     Json,
 };
 use serde::Deserialize;
-use shared::post::{PaginationPostsRes, PostWithTags};
+use shared::post::{PaginationPostsRes, Post};
 
 use crate::{
-    database::models::{posts::Model, tags},
     error::ResponseResultExt,
     services::post_service::{get_posts_by_page, get_posts_count},
     AppState,
@@ -22,8 +21,8 @@ pub struct Pagination {
 pub async fn get_posts(
     state: State<AppState>,
     pagination: Query<Pagination>,
-) -> Result<Json<PaginationPostsRes<PostWithTags<Model, tags::Model>>>, (StatusCode, String)> {
-    let posts_with_tags = get_posts_by_page(&state.conn, pagination.page_limit, pagination.page)
+) -> Result<Json<PaginationPostsRes<Post>>, (StatusCode, String)> {
+    let posts = get_posts_by_page(&state.conn, pagination.page_limit, pagination.page)
         .await
         .into_response_result(StatusCode::BAD_REQUEST)?;
     let total = get_posts_count(&state.conn)
@@ -34,7 +33,7 @@ pub async fn get_posts(
     Ok(Json(PaginationPostsRes {
         page_limit: pagination.page_limit,
         page: pagination.page,
-        posts_with_tags,
+        posts,
         has_next,
         total,
     }))

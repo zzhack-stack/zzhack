@@ -5,11 +5,12 @@ use sea_orm::{
     sea_query::OnConflict, ConnectionTrait, DatabaseConnection, DbErr, EntityTrait, InsertResult,
     Set, TransactionError, TransactionTrait,
 };
+use shared::tag::Tag;
 
 use crate::database::{
     connection::DBResult,
     models::{
-        prelude::{Posts, Tags},
+        prelude::Posts,
         tags::{ActiveModel, Column, Entity, Model},
     },
 };
@@ -50,13 +51,30 @@ pub async fn upsert_tags_with_post_id(
     .await
 }
 
+pub async fn get_all_tags(db: &DatabaseConnection) -> DBResult<Vec<Model>> {
+    Entity::find().all(db).await
+}
+
 pub async fn get_tags_by_post_id(db: &DatabaseConnection, post_id: i32) -> DBResult<Vec<Model>> {
-    let resuls = Posts::find_by_id(post_id)
+    let results = Posts::find_by_id(post_id)
         .find_with_related(Entity)
         .all(db)
         .await?;
-    let (_, tags) = resuls[0].clone();
 
-    Ok(tags)
-    // println!("{:?}", tags);
+    if results.len() == 0 {
+        Ok(vec![])
+    } else {
+        let (_, tags) = results[0].clone();
+
+        Ok(tags)
+    }
+}
+
+impl Into<Tag> for Model {
+    fn into(self) -> Tag {
+        Tag {
+            id: self.id,
+            text: self.text,
+        }
+    }
 }
