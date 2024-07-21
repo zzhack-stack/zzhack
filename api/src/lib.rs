@@ -9,6 +9,7 @@ pub mod utils;
 use axum::Router;
 use routes::{
     dynamic_posts::get_dynamic_posts_routes, links::get_links_routes, post::get_posts_routes,
+    tag::get_tags_routes,
 };
 use sea_orm::DatabaseConnection;
 
@@ -22,4 +23,5 @@ pub fn get_api_routes() -> Router<AppState> {
         .nest("/posts", get_posts_routes())
         .nest("/links", get_links_routes())
         .nest("/dynamic", get_dynamic_posts_routes())
+        .nest("/tags", get_tags_routes())
 }

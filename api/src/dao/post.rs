@@ -1,7 +1,9 @@
+use crate::utils::vector_convert::convert_vecs;
 use sea_orm::{
     sea_query::OnConflict, ColumnTrait, DatabaseConnection, DeleteResult, EntityTrait,
     InsertResult, PaginatorTrait, QueryFilter, QuerySelect,
 };
+use shared::post::{IntoPost, Post};
 
 use crate::database::{
     connection::DBResult,
@@ -69,4 +71,18 @@ pub async fn upsert_post(
         )
         .exec(db)
         .await
+}
+
+impl IntoPost<Post> for Model {
+    fn into_post<T: Into<shared::tag::Tag>>(self, tags: Vec<T>) -> Post {
+        Post {
+            id: self.id,
+            path: self.path,
+            spoiler: self.spoiler.unwrap_or_default(),
+            title: self.title,
+            created_at: self.created_at,
+            updated_at: self.updated_at,
+            tags: convert_vecs(tags),
+        }
+    }
 }
