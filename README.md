@@ -47,7 +47,7 @@ Cargo install cargo-watch
 
 Go to the root of project. Build client bundle and watch:
 ```shell
-cargo watch -C entry -i dist -i public -i styles -i zzhack.db -- trunk build
+cargo watch -C entry -i dist -i public -i styles -i zzhack.db -i assets -- trunk build
 ```
 
 Then build server bin and watch:
