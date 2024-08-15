@@ -101,6 +101,12 @@
             "addr": "https://blog.ursb.me/",
             "desc": "我是一只小小小小熊",
             "logo": "https://airing.ursb.me/image/airing-face.png"
+        },
+        {
+      "name": "宇外御风的hexo博客",
+      "addr": "https://hexo.20010501.xyz/",
+      "desc": "分享免费有趣的知识",
+      "logo": "https://hexo.20010501.xyz/img/fluid.png"
         }
     ]
 }
