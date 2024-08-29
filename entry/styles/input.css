@@ -2,16 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-body, html {
-  height: 100%;
+@layer base {
+  body,
+  html {
+    height: 100%;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: inherit;
+    font-weight: inherit;
+  }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: inherit;
-  font-weight: inherit;
+@layer components {
+  .pixel-badge {
+    box-shadow:
+      1px 0 red,
+      2px 0 green,
+      3px 0 blue;
+
+    position: relative;
+  }
+
+  .pixel-badge::before {
+    content: "";
+    width: 100%;
+    height: 5px;
+    background: red;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }

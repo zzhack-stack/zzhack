@@ -17,9 +17,11 @@ pub struct BrowserAppProps {
 pub fn BrowserApp() -> Html {
     html! {
         <BrowserRouter>
-            <Nav />
-            <main class="p-4 h-full w-full">
-                <Switch<Routes> render={switch} />
+            <main class="p-4 h-full w-full flex justify-center">
+                <div class="h-full w-[768px]">
+                    <Nav />
+                    <Switch<Routes> render={switch} />
+                </div>
             </main>
             <footer class="footer">
                 <div class="content has-text-centered">
@@ -52,9 +54,11 @@ pub fn ServerApp(props: &ServerAppProps) -> Html {
 
     html! {
         <Router history={history}>
-            <Nav />
-            <main class="p-4 h-full w-full">
-                <Switch<Routes> render={switch} />
+            <main class="p-4 h-full w-full flex justify-center">
+                <div class="h-full w-[768px]">
+                    <Nav />
+                    <Switch<Routes> render={switch} />
+                </div>
             </main>
             <footer class="footer">
                 <div class="content has-text-centered">
