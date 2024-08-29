@@ -68,7 +68,7 @@ pub fn Content() -> HtmlResult {
     });
 
     Ok(html! {
-        <div onclick={Callback::from(|_| {info!("World")})}>
+        <div class="mt-12">
             {for rendered_posts}
             if *has_load_more {
                 <LoadMore onload={handle_load_more_click} />
