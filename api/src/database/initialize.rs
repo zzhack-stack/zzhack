@@ -1,9 +1,12 @@
 use crate::{
     dao::{
-        post::{delete_posts_by_paths, get_post_by_id, get_post_by_path, upsert_post},
+        post::{delete_posts_by_paths, get_post_by_path, upsert_post},
         tag::upsert_tags_with_post_id,
     },
-    utils::{gray_matter::get_post_front_matter, post::get_markdown_path},
+    utils::{
+        gray_matter::{get_post_content, get_post_front_matter},
+        post::get_markdown_path,
+    },
 };
 use chrono::{DateTime, Utc};
 use sea_orm::{DatabaseConnection, Set};
@@ -41,6 +44,7 @@ async fn upsert_posts(db: &DatabaseConnection, dir_entries: &Vec<DirEntry>) -> a
         let stringify_dir_path = dir_path.to_string_lossy().to_string();
         let content = read_to_string(path.clone())?;
         let front_matter = get_post_front_matter(&content);
+        let content = get_post_content(&content);
         let tags = front_matter.tags;
 
         match get_post_by_path(db, &stringify_dir_path).await? {

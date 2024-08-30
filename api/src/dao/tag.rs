@@ -1,9 +1,7 @@
-use std::future::Future;
-
 use futures::future::join_all;
 use sea_orm::{
-    sea_query::OnConflict, ConnectionTrait, DatabaseConnection, DbErr, EntityTrait, InsertResult,
-    Set, TransactionError, TransactionTrait,
+    sea_query::OnConflict, ConnectionTrait, DatabaseConnection, DbErr, EntityTrait, Set,
+    TransactionError, TransactionTrait,
 };
 use shared::tag::Tag;
 
@@ -11,7 +9,6 @@ use crate::{
     database::{
         connection::DBResult,
         models::{
-            posts::Model as PostModel,
             prelude::Posts,
             tags::{ActiveModel, Column, Entity, Model},
         },
@@ -35,6 +32,8 @@ async fn upsert_tags<T: ConnectionTrait>(db: &T, tags: Vec<String>) -> Vec<i32> 
     join_all(tags_active_model_futures)
         .await
         .into_iter()
+        // Performing an upsert statement without inserting or updating any of the row will result in a DbErr::RecordNotInserted error.
+        .filter(|insert_result| !matches!(insert_result, Err(DbErr::RecordNotInserted)))
         .map(|insert_result| insert_result.unwrap().last_insert_id)
         .collect::<Vec<i32>>()
 }
@@ -47,7 +46,10 @@ pub async fn upsert_tags_with_post_id(
     db.transaction::<_, (), DbErr>(|txn| {
         Box::pin(async move {
             let tag_ids = upsert_tags(txn, tags).await;
-            upsert_post_tags(txn, tag_ids, post_id).await;
+
+            if tag_ids.len() != 0 {
+                upsert_post_tags(txn, tag_ids, post_id).await;
+            }
 
             Ok(())
         })
