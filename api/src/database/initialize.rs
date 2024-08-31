@@ -25,6 +25,9 @@ fn format_system_time_to_rfc2822(time: SystemTime) -> String {
     time.to_rfc2822()
 }
 
+// Create a new tag if it does not exist in the database
+// Delete the tag if it is not used by the post which id is post_id,
+// but keep the tag in the tags table
 async fn upsert_tags(db: &DatabaseConnection, tags: Option<Vec<String>>, post_id: i32) {
     let tags = tags.unwrap_or_default();
 
