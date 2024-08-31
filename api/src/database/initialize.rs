@@ -1,6 +1,7 @@
 use crate::{
     dao::{
         post::{delete_posts_by_paths, get_post_by_path, upsert_post},
+        post_tags::delete_tags_by_post_id,
         tag::upsert_tags_with_post_id,
     },
     utils::{
@@ -25,13 +26,13 @@ fn format_system_time_to_rfc2822(time: SystemTime) -> String {
 }
 
 async fn upsert_tags(db: &DatabaseConnection, tags: Option<Vec<String>>, post_id: i32) {
-    if tags.is_none() {
-        return;
-    }
+    let tags = tags.unwrap_or_default();
 
-    upsert_tags_with_post_id(db, tags.unwrap(), post_id)
+    upsert_tags_with_post_id(db, tags.clone(), post_id)
         .await
-        .unwrap()
+        .unwrap();
+
+    delete_tags_by_post_id(db, &tags.clone(), post_id).await;
 }
 
 async fn upsert_posts(db: &DatabaseConnection, dir_entries: &Vec<DirEntry>) -> anyhow::Result<()> {
