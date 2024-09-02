@@ -1,6 +1,10 @@
 [root]
 posts_folder_name = "posts"
 
+# The default language of the site
+# en | zh
+language = "en" 
+
 # dynamic_pages_folder_name is really useful in most cases,
 # you can put markdown files under the root/dynamic_pages_folder_name folder,
 # if zzhack found markdown file in root/dynamic_pages_folder_name,

@@ -1,5 +1,5 @@
 use crate::http::HTTP;
-use log::info;
+use crate::i18n::translate::t;
 use shared::post::PostDetail;
 use yew::functional::use_prepared_state;
 use yew::prelude::*;
@@ -31,7 +31,7 @@ fn Content(props: &PostProps) -> HtmlResult {
     .unwrap();
 
     Ok(html! {
-        <div>
+        <div class="prose">
             {parse_str_to_element(&parepared_post_detail.content)}
         </div>
     })

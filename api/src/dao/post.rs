@@ -1,6 +1,6 @@
 use crate::{
     database::models::{prelude::Tags, tags},
-    utils::{helpers::parse_load_many_result, vector_convert::convert_vecs},
+    utils::vector_convert::convert_vecs,
 };
 use sea_orm::{
     sea_query::OnConflict, ColumnTrait, DatabaseConnection, DeleteResult, EntityTrait,

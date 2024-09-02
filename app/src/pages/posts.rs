@@ -2,7 +2,6 @@ use std::rc::Rc;
 
 use crate::components::{load_more::LoadMore, post_item::PostItem};
 use crate::http::HTTP;
-use log::info;
 use shared::post::{PaginationPostsRes, Post};
 use yew::{platform::spawn_local, prelude::*};
 

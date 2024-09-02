@@ -50,33 +50,28 @@ async fn upsert_posts(db: &DatabaseConnection, dir_entries: &Vec<DirEntry>) -> a
         let front_matter = get_post_front_matter(&content);
         let content = get_post_content(&content);
         let tags = front_matter.tags;
+        let post_active_model = ActiveModel {
+            path: Set(stringify_dir_path.clone()),
+            content: Set(markdown::parse::parse_markdown(&content)),
+            title: Set(front_matter.title),
+            spoiler: Set(Some(front_matter.spoiler)),
+            created_at: Set(created_at),
+            updated_at: Set(updated_at.clone()),
+            ..Default::default()
+        };
 
-        match get_post_by_path(db, &stringify_dir_path).await? {
-            Some(post) => {
-                if post.updated_at == updated_at {
-                    continue;
-                }
-
-                upsert_tags(db, tags, post.id).await;
-            }
-            None => {
-                let post = upsert_post(
-                    db,
-                    ActiveModel {
-                        path: Set(stringify_dir_path),
-                        content: Set(markdown::parse::parse_markdown(&content)),
-                        title: Set(front_matter.title),
-                        spoiler: Set(Some(front_matter.spoiler)),
-                        created_at: Set(created_at),
-                        updated_at: Set(updated_at),
-                        ..Default::default()
-                    },
-                )
-                .await?;
-
-                upsert_tags(db, tags, post.last_insert_id).await;
+        if let Some(post) = get_post_by_path(db, &stringify_dir_path).await? {
+            if post.updated_at == updated_at {
+                continue;
             }
         }
+
+        upsert_tags(
+            db,
+            tags,
+            upsert_post(db, post_active_model).await?.last_insert_id,
+        )
+        .await;
     }
 
     Ok(())

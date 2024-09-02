@@ -15,6 +15,7 @@ pub struct NavConfig {
 
 #[derive(Deserialize, Serialize, Debug, PartialEq, Eq, Clone)]
 pub struct RootConfig {
+    pub language: String,
     pub posts_folder_name: String,
     pub dynamic_pages_folder_name: String,
 }
