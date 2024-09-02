@@ -2,25 +2,15 @@
 WIP
 
 ## TODO
-**Functional**
-- [x] Nav
-- [x] Homepage
-- [x] Posts page
-- [x] Post page
-- [x] 404 page
-- [x] About page
-- [x] Links page
-- [x] Delete logic of map_posts
-- [ ] Auth system (users can modified post includes delete, create and update using token)
-
 **Design**
-- [ ] Nav
+- [x] Nav
 - [ ] Homepage
 - [ ] Posts page
 - [ ] Post page
 - [ ] 404 page
 - [ ] About page
 - [ ] Links page
+- [ ] Error page
 
 
 ## Migrate database
