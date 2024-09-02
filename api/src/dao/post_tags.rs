@@ -30,6 +30,7 @@ pub async fn upsert_post_tags<T: ConnectionTrait>(db: &T, tags: &Vec<String>, po
                 })
                 .collect::<Vec<ActiveModel>>(),
         )
+        .on_empty_do_nothing()
         .on_conflict(
             OnConflict::columns([Column::TagId, Column::PostId])
                 .do_nothing()

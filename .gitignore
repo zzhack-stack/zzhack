@@ -2,6 +2,7 @@
 **/target
 **/dist
 database.json
+output.css
 
 # Deps
 node_modules

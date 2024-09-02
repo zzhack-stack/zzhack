@@ -161,6 +161,8 @@ name = "app"
 version = "0.0.1"
 dependencies = [
  "api",
+ "cached 0.53.1",
+ "chrono",
  "gray_matter",
  "js-sys",
  "log",
@@ -626,7 +628,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a8466736fe5dbcaf8b8ee24f9bbefe43c884dc3e9ff7178da70f55bffca1133c"
 dependencies = [
  "ahash 0.8.11",
- "cached_proc_macro",
+ "cached_proc_macro 0.22.0",
  "cached_proc_macro_types",
  "hashbrown 0.14.5",
  "instant",
@@ -635,10 +637,37 @@ dependencies = [
 ]
 
 [[package]]
+name = "cached"
+version = "0.53.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b4d73155ae6b28cf5de4cfc29aeb02b8a1c6dab883cb015d15cd514e42766846"
+dependencies = [
+ "ahash 0.8.11",
+ "cached_proc_macro 0.23.0",
+ "cached_proc_macro_types",
+ "hashbrown 0.14.5",
+ "once_cell",
+ "thiserror",
+ "web-time",
+]
+
+[[package]]
 name = "cached_proc_macro"
 version = "0.22.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "575f32e012222055211b70f5b0601f951f84523410a0e65c81f2744a6042450d"
+dependencies = [
+ "darling",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.71",
+]
+
+[[package]]
+name = "cached_proc_macro"
+version = "0.23.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2f42a145ed2d10dce2191e1dcf30cfccfea9026660e143662ba5eec4017d5daa"
 dependencies = [
  "darling",
  "proc-macro2",
@@ -3430,7 +3459,7 @@ checksum = "f27f6278552951f1f2b8cf9da965d10969b2efdea95a6ec47987ab46edfe263a"
 name = "site_config"
 version = "0.0.1"
 dependencies = [
- "cached",
+ "cached 0.52.0",
  "serde",
  "serde_derive",
  "shared",
@@ -4411,6 +4440,16 @@ name = "web-sys"
 version = "0.3.69"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "77afa9a11836342370f4817622a2f0f418b134426d91a82dfb48f532d2ec13ef"
+dependencies = [
+ "js-sys",
+ "wasm-bindgen",
+]
+
+[[package]]
+name = "web-time"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5a6580f308b1fad9207618087a65c04e7a10bc77e02c8e84e9b00dd4b12fa0bb"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
