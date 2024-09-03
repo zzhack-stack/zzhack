@@ -66,12 +66,8 @@ async fn upsert_posts(db: &DatabaseConnection, dir_entries: &Vec<DirEntry>) -> a
             }
         }
 
-        upsert_tags(
-            db,
-            tags,
-            upsert_post(db, post_active_model).await?.last_insert_id,
-        )
-        .await;
+        let id = upsert_post(db, post_active_model).await?.last_insert_id;
+        upsert_tags(db, tags, id).await;
     }
 
     Ok(())
