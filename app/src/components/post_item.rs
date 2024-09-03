@@ -23,13 +23,17 @@ pub fn PostItem(props: &PostItemProps) -> Html {
 
     html! {
         <a href={format!("/post/{}", post.id)}>
-            <div class="my-5">
-                <div class="text-xl font-bold text-black">
-                    {&post.title}
-                    <div>{tags}</div>
+            <div class="mt-5">
+                <div class="flex items-center">
+                    <div class="font-semibold text-lg text-black dark:text-black-dark">{&post.title}</div>
+                    {for tags}
                 </div>
-                <div class="text-black-700 text-sm mt-0.5 mb-1">{&post.spoiler}</div>
-                <div class="text-xs text-black-500">{&post.created_at}</div>
+                <div class="text-sm text-black-400 dark:text-gray-900 mt-1.5 mb-2">
+                    {&post.spoiler}
+                </div>
+                <div class="text-xs text-gray-500 dark:text-gray-450">
+                    {&post.created_at}
+                </div>
             </div>
         </a>
     }

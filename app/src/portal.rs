@@ -14,25 +14,34 @@ pub struct BrowserAppProps {
 }
 
 #[function_component]
+pub fn App() -> Html {
+    let cb = Callback::from(|_| {
+        let document = web_sys::window()
+            .unwrap()
+            .document()
+            .unwrap()
+            .document_element()
+            .unwrap();
+
+        document.set_class_name("dark");
+    });
+
+    html! {
+        <main class="p-4 h-full w-full flex justify-center bg-white-200 dark:bg-black-900">
+            <div class="h-full w-[655px]">
+                <Nav />
+                <Switch<Routes> render={switch} />
+            </div>
+            <button onclick={cb}>{"Dark"}</button>
+        </main>
+    }
+}
+
+#[function_component]
 pub fn BrowserApp() -> Html {
     html! {
         <BrowserRouter>
-            <main class="p-4 h-full w-full flex justify-center">
-                <div class="h-full w-[768px]">
-                    <Nav />
-                    <Switch<Routes> render={switch} />
-                </div>
-            </main>
-            <footer class="footer">
-                <div class="content has-text-centered">
-                    { "Powered by " }
-                    <a href="https://yew.rs">{ "Yew" }</a>
-                    { " using " }
-                    <a href="https://bulma.io">{ "Bulma" }</a>
-                    { " and images from " }
-                    <a href="https://unsplash.com">{ "Unsplash" }</a>
-                </div>
-            </footer>
+            <App />
         </BrowserRouter>
     }
 }
@@ -54,22 +63,7 @@ pub fn ServerApp(props: &ServerAppProps) -> Html {
 
     html! {
         <Router history={history}>
-            <main class="p-4 h-full w-full flex justify-center">
-                <div class="h-full w-[768px]">
-                    <Nav />
-                    <Switch<Routes> render={switch} />
-                </div>
-            </main>
-            <footer class="footer">
-                <div class="content has-text-centered">
-                    { "Powered by " }
-                    <a href="https://yew.rs">{ "Yew" }</a>
-                    { " using " }
-                    <a href="https://bulma.io">{ "Bulma" }</a>
-                    { " and images from " }
-                    <a href="https://unsplash.com">{ "Unsplash" }</a>
-                </div>
-            </footer>
+           <App />
         </Router>
     }
 }
