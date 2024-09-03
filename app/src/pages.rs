@@ -1,5 +1,4 @@
 pub mod dynamic;
-pub mod home;
 pub mod links;
 pub mod not_found;
 pub mod post;

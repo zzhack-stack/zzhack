@@ -1,5 +1,6 @@
 use std::rc::Rc;
 
+use crate::components::card::outline_card::OutlineCard;
 use crate::components::{load_more::LoadMore, post_item::PostItem};
 use crate::http::HTTP;
 use shared::post::{PaginationPostsRes, Post};
@@ -67,12 +68,14 @@ pub fn Content() -> HtmlResult {
     });
 
     Ok(html! {
-        <div class="mt-12">
-            {for rendered_posts}
-            if *has_load_more {
-                <LoadMore onload={handle_load_more_click} />
-            }
-        </div>
+        <OutlineCard class="mt-8">
+            <div class="pb-7 pt-1 px-6 grid gap-5 divide-y md:divide-solid divide-gray-200 dark:divide-gray-100">
+                {for rendered_posts}
+                if *has_load_more {
+                    <LoadMore onload={handle_load_more_click} />
+                }
+            </div>
+        </OutlineCard>
     })
 }
 
