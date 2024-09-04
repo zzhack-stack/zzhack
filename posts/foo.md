@@ -2,7 +2,9 @@
 title: "Global variables"
 spoiler: "The limits of my language mean the limits of my world."
 tags:
-    - Hello
+    - text: Hello
+      color: "#000000"
+
     - World
 ---
 
