@@ -11,6 +11,9 @@ module.exports = {
       },
     },
     colors: {
+      orange: {
+        DEFAULT: "#FFBE76",
+      },
       gray: {
         500: "rgba(156,156,156,0.5)",
         200: "rgba(217,217,217,0.2)",

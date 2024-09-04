@@ -19,6 +19,7 @@ impl MigrationTrait for Migration {
                             .primary_key(),
                     )
                     .col(ColumnDef::new(Tags::Text).string().unique_key().not_null())
+                    .col(ColumnDef::new(Tags::Color).string())
                     .to_owned(),
             )
             .await
@@ -36,4 +37,5 @@ enum Tags {
     Table,
     Id,
     Text,
+    Color,
 }

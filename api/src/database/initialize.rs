@@ -5,7 +5,7 @@ use crate::{
         tag::upsert_tags_with_post_id,
     },
     utils::{
-        gray_matter::{get_post_content, get_post_front_matter},
+        gray_matter::{get_post_content, get_post_front_matter, Tag},
         post::get_markdown_path,
     },
 };
@@ -28,7 +28,7 @@ fn format_system_time_to_rfc2822(time: SystemTime) -> String {
 // Create a new tag if it does not exist in the database
 // Delete the tag if it is not used by the post which id is post_id,
 // but keep the tag in the tags table
-async fn upsert_tags(db: &DatabaseConnection, tags: Option<Vec<String>>, post_id: i32) {
+async fn upsert_tags(db: &DatabaseConnection, tags: Option<Vec<Tag>>, post_id: i32) {
     let tags = tags.unwrap_or_default();
 
     upsert_tags_with_post_id(db, tags.clone(), post_id)
@@ -46,10 +46,21 @@ async fn upsert_posts(db: &DatabaseConnection, dir_entries: &Vec<DirEntry>) -> a
         let dir_path = dir_entry.path();
         let path = get_markdown_path(dir_path.clone());
         let stringify_dir_path = dir_path.to_string_lossy().to_string();
+
+        // If updated_at is the same, then we don't need to update the post
+        if let Some(post) = get_post_by_path(db, &stringify_dir_path).await? {
+            if post.updated_at == updated_at {
+                continue;
+            }
+        }
+
         let content = read_to_string(path.clone())?;
         let front_matter = get_post_front_matter(&content);
         let content = get_post_content(&content);
         let tags = front_matter.tags;
+
+        println!("Upserting tags: {:?}", tags);
+
         let post_active_model = ActiveModel {
             path: Set(stringify_dir_path.clone()),
             content: Set(markdown::parse::parse_markdown(&content)),
@@ -60,14 +71,10 @@ async fn upsert_posts(db: &DatabaseConnection, dir_entries: &Vec<DirEntry>) -> a
             ..Default::default()
         };
 
-        if let Some(post) = get_post_by_path(db, &stringify_dir_path).await? {
-            if post.updated_at == updated_at {
-                continue;
-            }
-        }
+        upsert_post(db, post_active_model).await?;
+        let post = get_post_by_path(db, &stringify_dir_path).await?;
 
-        let id = upsert_post(db, post_active_model).await?.last_insert_id;
-        upsert_tags(db, tags, id).await;
+        upsert_tags(db, tags, post.unwrap().id).await;
     }
 
     Ok(())

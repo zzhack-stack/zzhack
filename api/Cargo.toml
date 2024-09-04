@@ -14,6 +14,6 @@ shared = { path = "../shared" }
 markdown = { path = "../markdown"}
 tokio = "1.38.0"
 toml = "0.8.14"
-sea-orm = { version = "0.12.15", features = ["macros", "runtime-tokio-rustls", "sqlx-sqlite"] }
+sea-orm = { version = "1.0.1", features = ["macros", "runtime-tokio-rustls", "sqlx-sqlite"] }
 futures = "0.3.30"
 

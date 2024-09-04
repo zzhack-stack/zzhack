@@ -16,7 +16,7 @@ pub fn PostItem(props: &PostItemProps) -> Html {
         .iter()
         .map(|tag| {
             html! {
-                <Tag>{tag.text.clone()}</Tag>
+                <Tag color={"#ff00ff"}>{tag.text.clone()}</Tag>
             }
         })
         .collect::<Vec<Html>>();
@@ -26,7 +26,9 @@ pub fn PostItem(props: &PostItemProps) -> Html {
             <div class="mt-5">
                 <div class="flex items-center">
                     <div class="font-semibold text-lg text-black dark:text-black-dark">{&post.title}</div>
-                    {for tags}
+                    <div class="ml-4 flex items-center">
+                        {for tags}
+                    </div>
                 </div>
                 <div class="text-sm text-black-400 dark:text-gray-900 mt-1.5 mb-2">
                     {&post.spoiler}

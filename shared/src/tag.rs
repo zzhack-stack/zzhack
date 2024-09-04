@@ -4,4 +4,5 @@ use serde::{Deserialize, Serialize};
 pub struct Tag {
     pub id: i32,
     pub text: String,
+    pub color: Option<String>,
 }
