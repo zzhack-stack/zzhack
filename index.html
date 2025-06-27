@@ -7,8 +7,7 @@
     <meta name="description" content="A browser-based terminal emulator built with Rust and Yew">
     
     <link href="./output.css" rel="stylesheet">
-    <base href="/" />
-    <base href="/zzhack" />
+    <base href="/zzhack/" />
     <style>
         /* Loading indicator while WASM loads */
         #app:empty::before {
@@ -22,19 +21,19 @@
             font-family: 'Courier New', monospace;
         }
     </style>
-<link rel="modulepreload" href="/terminal-emulator-bab07821f92a6882.js" crossorigin="anonymous" integrity="sha384-O7AN2UFR1bTKmDLCOPGuYYHuEqcACQ1KKOZja/1i7rW3Ih6CIv02FNgX6lb1pOil"><link rel="preload" href="/terminal-emulator-bab07821f92a6882_bg.wasm" crossorigin="anonymous" integrity="sha384-3CHy1nBBRSm74diEjoKltJoJkI45c1OpdY7rs6/1+qvS8uxTSYdIS9Qe1kn+0LdM" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="/zzhack/terminal-emulator-c836cf2e3a871a1b.js" crossorigin="anonymous" integrity="sha384-O7AN2UFR1bTKmDLCOPGuYYHuEqcACQ1KKOZja/1i7rW3Ih6CIv02FNgX6lb1pOil"><link rel="preload" href="/zzhack/terminal-emulator-c836cf2e3a871a1b_bg.wasm" crossorigin="anonymous" integrity="sha384-3HzX6Wl7mZGKS1T1tfyiTqTUAHYQejpzpqzaBPNfQLHguunUxZ5+qVormBNOw52H" as="fetch" type="application/wasm"></head>
 <body>
     <!-- Main application container - Trunk will inject the WASM here -->
     <div id="app"></div>
     
     <!-- Include TailwindCSS with custom styles -->
-    <link rel="stylesheet" href="/input-8a1a165d9f081c67.css" integrity="sha384-kfnJxCWS3WY1LO7Cj2tK2FJxWWGpC0LjUbEf0rLoRabYWdbwjriGBoYAHJJQ3wHG"/>
+    <link rel="stylesheet" href="/zzhack/input-8a1a165d9f081c67.css" integrity="sha384-kfnJxCWS3WY1LO7Cj2tK2FJxWWGpC0LjUbEf0rLoRabYWdbwjriGBoYAHJJQ3wHG"/>
     
     <!-- Specify which Rust binary to build -->
     
 <script type="module">
-import init, * as bindings from '/terminal-emulator-bab07821f92a6882.js';
-const wasm = await init({ module_or_path: '/terminal-emulator-bab07821f92a6882_bg.wasm' });
+import init, * as bindings from '/zzhack/terminal-emulator-c836cf2e3a871a1b.js';
+const wasm = await init({ module_or_path: '/zzhack/terminal-emulator-c836cf2e3a871a1b_bg.wasm' });
 
 
 window.wasmBindings = bindings;
