@@ -1,0 +1,76 @@
+{
+  "type": "directory",
+  "name": "data",
+  "path": "",
+  "children": {
+    "about": {
+      "type": "directory",
+      "name": "about",
+      "path": "about",
+      "children": {
+        "demo.md": {
+          "type": "file",
+          "name": "demo.md",
+          "path": "about/demo.md",
+          "size": 466,
+          "modified": "2025-06-27T06:46:06.396Z",
+          "extension": "md"
+        }
+      }
+    },
+    "foo.md": {
+      "type": "file",
+      "name": "foo.md",
+      "path": "foo.md",
+      "size": 6,
+      "modified": "2025-06-27T07:02:39.058Z",
+      "extension": "md"
+    },
+    "links": {
+      "type": "directory",
+      "name": "links",
+      "path": "links",
+      "children": {
+        "demo.md": {
+          "type": "file",
+          "name": "demo.md",
+          "path": "links/demo.md",
+          "size": 1215,
+          "modified": "2025-06-27T06:46:25.681Z",
+          "extension": "md"
+        },
+        "resources.md": {
+          "type": "file",
+          "name": "resources.md",
+          "path": "links/resources.md",
+          "size": 1215,
+          "modified": "2025-06-27T07:54:26.124Z",
+          "extension": "md"
+        }
+      }
+    },
+    "posts": {
+      "type": "directory",
+      "name": "posts",
+      "path": "posts",
+      "children": {
+        "blog.md": {
+          "type": "file",
+          "name": "blog.md",
+          "path": "posts/blog.md",
+          "size": 753,
+          "modified": "2025-06-27T07:54:15.889Z",
+          "extension": "md"
+        },
+        "demo.md": {
+          "type": "file",
+          "name": "demo.md",
+          "path": "posts/demo.md",
+          "size": 753,
+          "modified": "2025-06-27T06:46:15.443Z",
+          "extension": "md"
+        }
+      }
+    }
+  }
+}
