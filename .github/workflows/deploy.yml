@@ -18,6 +18,17 @@ jobs:
         with:
           toolchain: stable
 
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Rust target
+        run: rustup target add wasm32-unknown-unknown
+
+      - name: Generate metadata
+        run: node ./generate_metadata.js
+
       - name: Build
         run: sh build.sh
 
