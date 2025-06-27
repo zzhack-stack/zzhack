@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Terminal Emulator</title>
+    <meta name="description" content="A browser-based terminal emulator built with Rust and Yew">
+    
+    <link href="./output.css" rel="stylesheet">
+    <base href="/" />
+    <style>
+        /* Loading indicator while WASM loads */
+        #app:empty::before {
+            content: "Loading Terminal Emulator...";
+            color: #d4d4d4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+<link rel="modulepreload" href="/terminal-emulator-531f0c45214edb61.js" crossorigin="anonymous" integrity="sha384-O7AN2UFR1bTKmDLCOPGuYYHuEqcACQ1KKOZja/1i7rW3Ih6CIv02FNgX6lb1pOil"><link rel="preload" href="/terminal-emulator-531f0c45214edb61_bg.wasm" crossorigin="anonymous" integrity="sha384-Hbk6F4b+VBA5g1/4KIFv9b3QYyJ28MnZ6e23yMP8Nn8uC+cBp8NFHJ/gww2bTBJ3" as="fetch" type="application/wasm"></head>
+<body>
+    <!-- Main application container - Trunk will inject the WASM here -->
+    <div id="app"></div>
+    
+    <!-- Include TailwindCSS with custom styles -->
+    <link rel="stylesheet" href="/input-8a1a165d9f081c67.css" integrity="sha384-kfnJxCWS3WY1LO7Cj2tK2FJxWWGpC0LjUbEf0rLoRabYWdbwjriGBoYAHJJQ3wHG"/>
+    
+    <!-- Specify which Rust binary to build -->
+    
+<script type="module">
+import init, * as bindings from '/terminal-emulator-531f0c45214edb61.js';
+const wasm = await init({ module_or_path: '/terminal-emulator-531f0c45214edb61_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+</body>
+</html>
