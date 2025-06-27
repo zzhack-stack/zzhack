@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Terminal Emulator</title>
+    <meta name="description" content="A browser-based terminal emulator built with Rust and Yew">
+    
+    <link href="./output.css" rel="stylesheet">
+    
+<script type="module">
+import init, * as bindings from '/zzhack/terminal-emulator-7c455f806acdf584.js';
+const wasm = await init({ module_or_path: '/zzhack/terminal-emulator-7c455f806acdf584_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+    <base href="/zzhack/" />
+    <style>
+        /* Loading indicator while WASM loads */
+        #app:empty::before {
+            content: "Loading Terminal Emulator...";
+            color: #d4d4d4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+<link rel="modulepreload" href="/zzhack/terminal-emulator-7c455f806acdf584.js" crossorigin="anonymous" integrity="sha384-O7AN2UFR1bTKmDLCOPGuYYHuEqcACQ1KKOZja/1i7rW3Ih6CIv02FNgX6lb1pOil"><link rel="preload" href="/zzhack/terminal-emulator-7c455f806acdf584_bg.wasm" crossorigin="anonymous" integrity="sha384-KEmw8j+Y4jlHteq7iRNR0fJ4vnp0fyrxLygli/b0SuiMcUEk+eS27Obb+Eg1FsEI" as="fetch" type="application/wasm"></head>
+<body>
+    <!-- Main application container - Trunk will inject the WASM here -->
+    <div id="app"></div> 
+</body>
+</html>
