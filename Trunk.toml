@@ -4,6 +4,7 @@
 [build]
 # Target directory for build outputs
 target = "index.html"
+public_url = "/zzhack/"
 # Directory to output the built files
 dist = "dist"
 # Enable optimization for release builds
