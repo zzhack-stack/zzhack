@@ -15,12 +15,6 @@ release = false
 source = "data"
 target = "data"
 
-[watch]
-# Watch for changes in these directories
-watch = ["src", "input.css", "tailwind.config.js"]
-# Ignore these patterns when watching for changes
-ignore = ["dist", "target"]
-
 [serve]
 # Port for the development server
 port = 8080

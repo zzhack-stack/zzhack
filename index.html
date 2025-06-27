@@ -7,6 +7,7 @@
     <meta name="description" content="A browser-based terminal emulator built with Rust and Yew">
     <link data-trunk rel="copy-dir" href="data">
     <link href="./output.css" rel="stylesheet">
+    <link data-trunk rel="rust" data-bin="terminal-emulator" />
     <base data-trunk-public-url />
     <style>
         /* Loading indicator while WASM loads */
@@ -24,12 +25,6 @@
 </head>
 <body>
     <!-- Main application container - Trunk will inject the WASM here -->
-    <div id="app"></div>
-    
-    <!-- Include TailwindCSS with custom styles -->
-    <link data-trunk rel="css" href="input.css" />
-    
-    <!-- Specify which Rust binary to build -->
-    <link data-trunk rel="rust" data-bin="terminal-emulator" />
+    <div id="app"></div> 
 </body>
 </html>

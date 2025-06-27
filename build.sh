@@ -11,11 +11,11 @@ if ! command -v trunk &> /dev/null; then
     cargo install --locked trunk
 fi
 
-echo "Generating TailwindCSS styles..."
-npx tailwindcss@3.4.0 -i ./input.css -o ./dist/output.css --minify
-
 echo "Building for release..."
 trunk build --release
+
+echo "Generating TailwindCSS styles..."
+npx tailwindcss@3.4.0 -i ./input.css -o ./dist/output.css --minify
 
 echo "Build complete! The application is ready in the 'dist' directory."
 echo "To serve the application locally, run:"
