@@ -7,6 +7,18 @@
     <meta name="description" content="A browser-based terminal emulator built with Rust and Yew">
     
     <link href="./output.css" rel="stylesheet">
+    
+<script type="module">
+import init, * as bindings from '/zzhack/terminal-emulator-291bd9e2940a2e33.js';
+const wasm = await init({ module_or_path: '/zzhack/terminal-emulator-291bd9e2940a2e33_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
     <base href="/zzhack/" />
     <style>
         /* Loading indicator while WASM loads */
@@ -21,26 +33,9 @@
             font-family: 'Courier New', monospace;
         }
     </style>
-<link rel="modulepreload" href="/zzhack/terminal-emulator-b208365975906015.js" crossorigin="anonymous" integrity="sha384-O7AN2UFR1bTKmDLCOPGuYYHuEqcACQ1KKOZja/1i7rW3Ih6CIv02FNgX6lb1pOil"><link rel="preload" href="/zzhack/terminal-emulator-b208365975906015_bg.wasm" crossorigin="anonymous" integrity="sha384-l1sMykVarPgCgc8nWC29wMzPMeMkRGei2EF43ppQsFTyMJdei+CzqH0u7USi5o6q" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="/zzhack/terminal-emulator-291bd9e2940a2e33.js" crossorigin="anonymous" integrity="sha384-O7AN2UFR1bTKmDLCOPGuYYHuEqcACQ1KKOZja/1i7rW3Ih6CIv02FNgX6lb1pOil"><link rel="preload" href="/zzhack/terminal-emulator-291bd9e2940a2e33_bg.wasm" crossorigin="anonymous" integrity="sha384-Qy964GNkKroNCMqixyQlLtjG/9UqNTfEQuAUydVT9GlceFF1yUsxXRSO7dZkaAJz" as="fetch" type="application/wasm"></head>
 <body>
     <!-- Main application container - Trunk will inject the WASM here -->
-    <div id="app"></div>
-    
-    <!-- Include TailwindCSS with custom styles -->
-    <link rel="stylesheet" href="/zzhack/input-8a1a165d9f081c67.css" integrity="sha384-kfnJxCWS3WY1LO7Cj2tK2FJxWWGpC0LjUbEf0rLoRabYWdbwjriGBoYAHJJQ3wHG"/>
-    
-    <!-- Specify which Rust binary to build -->
-    
-<script type="module">
-import init, * as bindings from '/zzhack/terminal-emulator-b208365975906015.js';
-const wasm = await init({ module_or_path: '/zzhack/terminal-emulator-b208365975906015_bg.wasm' });
-
-
-window.wasmBindings = bindings;
-
-
-dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
-
-</script>
+    <div id="app"></div> 
 </body>
 </html>
