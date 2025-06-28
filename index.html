@@ -9,8 +9,8 @@
     <link href="./output.css" rel="stylesheet">
     
 <script type="module">
-import init, * as bindings from '/zzhack/terminal-emulator-2c57cd7e5fd63009.js';
-const wasm = await init({ module_or_path: '/zzhack/terminal-emulator-2c57cd7e5fd63009_bg.wasm' });
+import init, * as bindings from '/zzhack/terminal-emulator-b534b4fd0f6a44d0.js';
+const wasm = await init({ module_or_path: '/zzhack/terminal-emulator-b534b4fd0f6a44d0_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -33,7 +33,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
             font-family: 'Courier New', monospace;
         }
     </style>
-<link rel="modulepreload" href="/zzhack/terminal-emulator-2c57cd7e5fd63009.js" crossorigin="anonymous" integrity="sha384-Wi+/OFIZeOno+XjXkkY5lwYFOoZC4ka5tecDrn9szgfg3u6Lq4Cq08RIGO/TB6y1"><link rel="preload" href="/zzhack/terminal-emulator-2c57cd7e5fd63009_bg.wasm" crossorigin="anonymous" integrity="sha384-IrdURId5NdLaugp1faS+8Mr0DvGU/pPPFL3WCjqlCk0oYjariwn6PY+8rL73FwlV" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="/zzhack/terminal-emulator-b534b4fd0f6a44d0.js" crossorigin="anonymous" integrity="sha384-SnxHUY8Nk8mWOFV5WXGG3vF22GDFZMALsLw6dOfiLwJT3Q1BHO4Rgui9hNcO3fBB"><link rel="preload" href="/zzhack/terminal-emulator-b534b4fd0f6a44d0_bg.wasm" crossorigin="anonymous" integrity="sha384-VjUHGUp8m403dDZkGM2sQwBJjaKYHknYmvKZl1WubfiW//e/dsNBe/UBguljfkVh" as="fetch" type="application/wasm"></head>
 <body>
     <!-- Main application container - Trunk will inject the WASM here -->
     <div id="app"></div> 
