@@ -11,7 +11,6 @@ use gloo::timers::callback::Timeout;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
-
 /// Main terminal component that manages the terminal interface
 #[function_component(Terminal)]
 pub fn terminal() -> Html {
@@ -182,7 +181,7 @@ pub fn terminal() -> Html {
                         let history_clone_for_clear = history.clone();
                         let history_clone_for_html = history.clone();
                         let command_clone_for_html = command.clone();
-                        
+
                         let context = TerminalContext {
                             clear_screen: std::rc::Rc::new(move || {
                                 let welcome_history = vec![create_welcome_entry()];
@@ -190,7 +189,10 @@ pub fn terminal() -> Html {
                             }),
                             output_html: std::rc::Rc::new(move |html_content: String| {
                                 let mut current_history = (*history_clone_for_html).clone();
-                                current_history.push(create_html_entry(command_clone_for_html.clone(), html_content));
+                                current_history.push(create_html_entry(
+                                    command_clone_for_html.clone(),
+                                    html_content,
+                                ));
                                 history_clone_for_html.set(current_history);
                             }),
                         };
@@ -203,28 +205,45 @@ pub fn terminal() -> Html {
                             CommandResult::Success(output) => {
                                 let mut current_history = (*history).clone();
                                 if !output.is_empty() {
-                                    current_history.push(create_command_entry(command.clone(), output, false));
+                                    current_history.push(create_command_entry(
+                                        command.clone(),
+                                        output,
+                                        false,
+                                    ));
                                 } else {
-                                    current_history.push(create_command_entry(command.clone(), String::new(), false));
+                                    current_history.push(create_command_entry(
+                                        command.clone(),
+                                        String::new(),
+                                        false,
+                                    ));
                                 }
                                 history.set(current_history);
                             }
                             CommandResult::Error(error) => {
                                 let mut current_history = (*history).clone();
-                                current_history.push(create_command_entry(command.clone(), format!("Error: {}", error), true));
+                                current_history.push(create_command_entry(
+                                    command.clone(),
+                                    format!("Error: {}", error),
+                                    true,
+                                ));
                                 history.set(current_history);
                             }
                             CommandResult::Html(html_content) => {
                                 let mut current_history = (*history).clone();
-                                current_history.push(create_html_entry(command.clone(), html_content));
+                                current_history
+                                    .push(create_html_entry(command.clone(), html_content));
                                 history.set(current_history);
                             }
                             CommandResult::Async(future) => {
                                 // Add command to history immediately with loading message
                                 let mut current_history = (*history).clone();
-                                current_history.push(create_command_entry(command.clone(), "Loading...".to_string(), false));
+                                current_history.push(create_command_entry(
+                                    command.clone(),
+                                    "Loading...".to_string(),
+                                    false,
+                                ));
                                 history.set(current_history);
-                                
+
                                 // Spawn the async task
                                 let history_clone = history.clone();
                                 let command_clone = command.clone();
@@ -233,27 +252,42 @@ pub fn terminal() -> Html {
                                     let mut current_history = (*history_clone).clone();
                                     // Remove the "Loading..." entry
                                     current_history.pop();
-                                    
+
                                     match async_result {
                                         CommandResult::Success(output) => {
-                                            current_history.push(create_command_entry(command_clone, output, false));
+                                            current_history.push(create_command_entry(
+                                                command_clone,
+                                                output,
+                                                false,
+                                            ));
                                         }
                                         CommandResult::Error(error) => {
-                                            current_history.push(create_command_entry(command_clone, format!("Error: {}", error), true));
+                                            current_history.push(create_command_entry(
+                                                command_clone,
+                                                format!("Error: {}", error),
+                                                true,
+                                            ));
                                         }
                                         CommandResult::Html(html_content) => {
-                                            current_history.push(create_html_entry(command_clone, html_content));
+                                            current_history.push(create_html_entry(
+                                                command_clone,
+                                                html_content,
+                                            ));
                                         }
                                         CommandResult::Async(_) => {
                                             // Nested async not supported, treat as error
-                                            current_history.push(create_command_entry(command_clone, "Error: Nested async operations not supported".to_string(), true));
+                                            current_history.push(create_command_entry(
+                                                command_clone,
+                                                "Error: Nested async operations not supported"
+                                                    .to_string(),
+                                                true,
+                                            ));
                                         }
                                     }
                                     history_clone.set(current_history);
                                 });
                             }
                         }
-
 
                         // Clear the input field
                         input_value.set(String::new());
@@ -370,7 +404,7 @@ pub fn terminal() -> Html {
 
                 // Input line with prompt and syntax highlighted content - directly after history
                 <div class="flex items-start">
-                    <span class="text-green-500 mr-2 mt-0.5 text-sm font-mono">{"$ "}</span>
+                    <span class="text-green-500 mr-2 mt-0.5 text-sm font-mono font-bold">{"$ "}</span>
                     <div class="flex-1 relative">
                         // Hidden input for actual typing
                         <input

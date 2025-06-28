@@ -64,6 +64,6 @@ fn render_markdown_to_html(markdown_input: &str) -> String {
     let mut html_output = String::new();
     html::push_html(&mut html_output, parser);
 
-    // Wrap the rendered HTML in a div with markdown-renderer class
-    format!("<div class=\"markdown-renderer\">{}</div>", html_output)
+    // Wrap the rendered HTML in a div with markdown-content class
+    format!("<div class=\"markdown-content\">{}</div>", html_output)
 }
