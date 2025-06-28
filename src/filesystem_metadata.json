@@ -15,13 +15,21 @@
           "size": 466,
           "modified": "2025-06-27T06:46:06.396Z",
           "extension": "md"
+        },
+        "index.md": {
+          "type": "file",
+          "name": "index.md",
+          "path": "about/index.md",
+          "size": 464,
+          "modified": "2025-06-28T12:02:42.786Z",
+          "extension": "md"
         }
       }
     },
-    "foo.md": {
+    "index.md": {
       "type": "file",
-      "name": "foo.md",
-      "path": "foo.md",
+      "name": "index.md",
+      "path": "index.md",
       "size": 6,
       "modified": "2025-06-27T07:02:39.058Z",
       "extension": "md"

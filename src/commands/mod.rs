@@ -3,12 +3,12 @@
 // It includes built-in commands like 'help' and 'echo', and provides a framework
 // for adding new commands in the future.
 
-use std::collections::HashMap;
 use crate::filesystem::FileSystem;
 use std::cell::RefCell;
-use std::rc::Rc;
+use std::collections::HashMap;
 use std::future::Future;
 use std::pin::Pin;
+use std::rc::Rc;
 
 // Import command implementations
 mod cat;
@@ -16,7 +16,9 @@ mod cd;
 mod clear;
 mod echo;
 mod help;
+mod history_push;
 mod ls;
+mod navigate;
 mod pwd;
 mod view;
 
@@ -34,6 +36,7 @@ pub struct TerminalContext<'a> {
     pub clear_screen: std::rc::Rc<dyn Fn()>,
     pub output_html: std::rc::Rc<dyn Fn(String)>,
     pub command_executor: &'a CommandExecutor,
+    pub execute: std::rc::Rc<dyn Fn(&str) -> CommandResult>,
 }
 
 /// Result of executing a terminal command
@@ -78,6 +81,20 @@ pub struct CommandExecutor {
     pub commands: HashMap<String, Box<dyn Command>>,
 }
 
+impl Clone for CommandExecutor {
+    fn clone(&self) -> Self {
+        CommandExecutor::new()
+    }
+}
+
+impl PartialEq for CommandExecutor {
+    fn eq(&self, _other: &Self) -> bool {
+        // For simplicity, consider all executors equal
+        // In practice, you might want to compare command names
+        true
+    }
+}
+
 impl CommandExecutor {
     /// Create a new command executor with all built-in commands registered
     ///
@@ -87,7 +104,7 @@ impl CommandExecutor {
     /// - filesystem commands using local metadata
     pub fn new() -> Self {
         let mut commands: HashMap<String, Box<dyn Command>> = HashMap::new();
-        
+
         // Create shared filesystem instance
         let filesystem = Rc::new(RefCell::new(FileSystem::new()));
 
@@ -95,11 +112,41 @@ impl CommandExecutor {
         commands.insert("help".to_string(), Box::new(HelpCommand));
         commands.insert("echo".to_string(), Box::new(EchoCommand));
         commands.insert("clear".to_string(), Box::new(ClearCommand));
-        commands.insert("pwd".to_string(), Box::new(PwdCommand { filesystem: filesystem.clone() }));
-        commands.insert("cd".to_string(), Box::new(CdCommand { filesystem: filesystem.clone() }));
-        commands.insert("cat".to_string(), Box::new(CatCommand { filesystem: filesystem.clone() }));
-        commands.insert("ls".to_string(), Box::new(LsCommand { filesystem: filesystem.clone() }));
-        commands.insert("view".to_string(), Box::new(ViewCommand { filesystem: filesystem.clone() }));
+        commands.insert(
+            "history_push".to_string(),
+            Box::new(history_push::HistoryPushCommand),
+        );
+        commands.insert("navigate".to_string(), Box::new(navigate::NavigateCommand));
+        commands.insert(
+            "pwd".to_string(),
+            Box::new(PwdCommand {
+                filesystem: filesystem.clone(),
+            }),
+        );
+        commands.insert(
+            "cd".to_string(),
+            Box::new(CdCommand {
+                filesystem: filesystem.clone(),
+            }),
+        );
+        commands.insert(
+            "cat".to_string(),
+            Box::new(CatCommand {
+                filesystem: filesystem.clone(),
+            }),
+        );
+        commands.insert(
+            "ls".to_string(),
+            Box::new(LsCommand {
+                filesystem: filesystem.clone(),
+            }),
+        );
+        commands.insert(
+            "view".to_string(),
+            Box::new(ViewCommand {
+                filesystem: filesystem.clone(),
+            }),
+        );
 
         Self { commands }
     }
@@ -178,12 +225,16 @@ impl CommandExecutor {
             )),
         }
     }
-    
+
     /// Get completion suggestions for tab completion
     ///
     /// This method delegates to the filesystem for file/directory completion
     /// and handles command name completion internally.
-    pub fn get_completion_suggestions(&self, input: &str, cursor_position: usize) -> (Vec<String>, String) {
+    pub fn get_completion_suggestions(
+        &self,
+        input: &str,
+        cursor_position: usize,
+    ) -> (Vec<String>, String) {
         // Try to get filesystem from any filesystem command
         if let Some(pwd_cmd) = self.commands.get("pwd") {
             // We need to access the filesystem through the command
@@ -194,11 +245,11 @@ impl CommandExecutor {
             // Fallback to command completion only
             let input = &input[..cursor_position.min(input.len())];
             let parts: Vec<&str> = input.split_whitespace().collect();
-            
+
             if parts.is_empty() || (parts.len() == 1 && !input.ends_with(' ')) {
                 let command_prefix = if parts.is_empty() { "" } else { parts[0] };
                 let mut suggestions = Vec::new();
-                
+
                 for cmd_name in self.get_command_names() {
                     if cmd_name.starts_with(command_prefix) {
                         suggestions.push(cmd_name);

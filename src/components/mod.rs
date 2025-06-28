@@ -6,5 +6,5 @@ pub mod history;
 pub mod syntax;
 pub mod terminal;
 
-// Re-export main components for easier access
+// Re-export main components for easier access  
 pub use terminal::Terminal;

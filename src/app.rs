@@ -2,7 +2,7 @@
 // This file contains the root App component that serves as the entry point
 // for the terminal emulator application
 
-use crate::components::terminal::Terminal;
+use crate::components::Terminal;
 use yew::prelude::*;
 
 /// Main application component that renders the terminal emulator
