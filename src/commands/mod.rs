@@ -30,9 +30,10 @@ pub use pwd::PwdCommand;
 pub use view::ViewCommand;
 
 /// Terminal context providing utility functions for commands
-pub struct TerminalContext {
+pub struct TerminalContext<'a> {
     pub clear_screen: std::rc::Rc<dyn Fn()>,
     pub output_html: std::rc::Rc<dyn Fn(String)>,
+    pub command_executor: &'a CommandExecutor,
 }
 
 /// Result of executing a terminal command
@@ -60,6 +61,12 @@ pub trait Command {
 
     /// Get usage information showing how to use this command
     fn usage(&self) -> &'static str;
+
+    /// Get detailed help information for this command
+    /// Returns None if the command doesn't provide detailed help
+    fn help(&self) -> Option<&'static str> {
+        None
+    }
 }
 
 /// Main command executor that manages and executes terminal commands
@@ -68,7 +75,7 @@ pub trait Command {
 /// parsing input strings and routing them to the appropriate command implementations.
 pub struct CommandExecutor {
     /// Map of command names to their implementations
-    commands: HashMap<String, Box<dyn Command>>,
+    pub commands: HashMap<String, Box<dyn Command>>,
 }
 
 impl CommandExecutor {
@@ -146,7 +153,25 @@ impl CommandExecutor {
 
         // Look up and execute the command
         match self.commands.get(command_name) {
-            Some(command) => command.execute(args, context),
+            Some(command) => {
+                // Check for --help flag
+                if !args.is_empty() && (args[0] == "--help" || args[0] == "-h") {
+                    match command.help() {
+                        Some(help_text) => CommandResult::Success(help_text.to_string()),
+                        None => {
+                            // Fallback to basic usage and description if no detailed help
+                            CommandResult::Success(format!(
+                                "{} - {}\n\nUsage: {}",
+                                command_name,
+                                command.description(),
+                                command.usage()
+                            ))
+                        }
+                    }
+                } else {
+                    command.execute(args, context)
+                }
+            }
             None => CommandResult::Error(format!(
                 "Unknown command: '{}'. Type 'help' to see available commands.",
                 command_name

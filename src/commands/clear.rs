@@ -9,23 +9,6 @@ pub struct ClearCommand;
 
 impl Command for ClearCommand {
     fn execute(&self, args: &[String], context: &TerminalContext) -> CommandResult {
-        // Check for help flag first
-        if !args.is_empty() && (args[0] == "--help" || args[0] == "-h") {
-            let help_text = r#"clear - Clear the terminal screen
-
-Usage:
-  clear                   Clear all terminal output
-  clear --help            Show this help message
-
-Description:
-  The clear command removes all previous command output and history
-  from the terminal display, providing a clean workspace.
-
-Examples:
-  clear"#;
-            return CommandResult::Success(help_text.to_string());
-        }
-
         // Call the terminal's clear screen function directly
         (context.clear_screen)();
         CommandResult::Success(String::new())
@@ -37,5 +20,20 @@ Examples:
 
     fn usage(&self) -> &'static str {
         "clear"
+    }
+
+    fn help(&self) -> Option<&'static str> {
+        Some(r#"clear - Clear the terminal screen
+
+Usage:
+  clear                   Clear all terminal output
+  clear --help            Show this help message
+
+Description:
+  The clear command removes all previous command output and history
+  from the terminal display, providing a clean workspace.
+
+Examples:
+  clear"#)
     }
 }

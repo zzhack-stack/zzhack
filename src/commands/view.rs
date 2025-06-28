@@ -13,24 +13,6 @@ pub struct ViewCommand {
 
 impl Command for ViewCommand {
     fn execute(&self, args: &[String], _context: &TerminalContext) -> CommandResult {
-        if !args.is_empty() && (args[0] == "--help" || args[0] == "-h") {
-            let help_text = r#"view - Render markdown files
-
-Usage:
-  view <file.md>          Render and display markdown file
-  view --help             Show this help message
-
-Description:
-  The view command renders markdown files and displays them with formatting.
-  Only markdown files (.md, .markdown) are supported.
-  The output includes styled HTML with colors, headers, lists, and other markdown elements.
-
-Examples:
-  view README.md          Render and display README.md
-  view about/demo.md      Render and display about/demo.md"#;
-            return CommandResult::Success(help_text.to_string());
-        }
-        
         if args.is_empty() {
             return CommandResult::Error("view: missing filename".to_string());
         }
@@ -77,5 +59,22 @@ Examples:
     
     fn usage(&self) -> &'static str {
         "view <file.md>"
+    }
+
+    fn help(&self) -> Option<&'static str> {
+        Some(r#"view - Render markdown files
+
+Usage:
+  view <file.md>          Render and display markdown file
+  view --help             Show this help message
+
+Description:
+  The view command renders markdown files and displays them with formatting.
+  Only markdown files (.md, .markdown) are supported.
+  The output includes styled HTML with colors, headers, lists, and other markdown elements.
+
+Examples:
+  view README.md          Render and display README.md
+  view about/demo.md      Render and display about/demo.md"#)
     }
 }

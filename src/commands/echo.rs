@@ -15,36 +15,6 @@ impl Command for EchoCommand {
         } else {
             let output = args.join(" ");
             
-            // Check for help flag first
-            if output == "--help" || output == "-h" {
-                let help_text = r#"echo - Output the specified text to the terminal
-
-Usage:
-  echo <text>             Output the specified text
-  echo --red <text>       Output text in red color
-  echo --green <text>     Output text in green color
-  echo --blue <text>      Output text in blue color
-  echo --yellow <text>    Output text in yellow color
-  echo --bold <text>      Output text in bold
-  echo --rainbow <text>   Display text in rainbow colors
-  echo --rainbow          Display default rainbow text
-  echo --help             Show this help message
-
-ANSI Escape Sequences:
-  echo "\033[0;31mRed text\033[0m"     Output red text using ANSI codes
-  echo "\x1b[1;32mBold green\x1b[0m"   Bold green text using hex escape
-
-Examples:
-  echo "Hello World"
-  echo --red "Error message"
-  echo --green "Success!"
-  echo --bold "Important text"
-  echo --rainbow "Hello World"
-  echo "\033[0;31mLove\033[0m"
-  echo "\x1b[1;34mBold Blue\x1b[0m""#;
-                return CommandResult::Success(help_text.to_string());
-            }
-            
             // Check for special color flags
             if output.starts_with("--red ") {
                 let text = &output[6..];
@@ -83,6 +53,34 @@ Examples:
 
     fn usage(&self) -> &'static str {
         "echo <text>"
+    }
+
+    fn help(&self) -> Option<&'static str> {
+        Some(r#"echo - Output the specified text to the terminal
+
+Usage:
+  echo <text>             Output the specified text
+  echo --red <text>       Output text in red color
+  echo --green <text>     Output text in green color
+  echo --blue <text>      Output text in blue color
+  echo --yellow <text>    Output text in yellow color
+  echo --bold <text>      Output text in bold
+  echo --rainbow <text>   Display text in rainbow colors
+  echo --rainbow          Display default rainbow text
+  echo --help             Show this help message
+
+ANSI Escape Sequences:
+  echo "\033[0;31mRed text\033[0m"     Output red text using ANSI codes
+  echo "\x1b[1;32mBold green\x1b[0m"   Bold green text using hex escape
+
+Examples:
+  echo "Hello World"
+  echo --red "Error message"
+  echo --green "Success!"
+  echo --bold "Important text"
+  echo --rainbow "Hello World"
+  echo "\033[0;31mLove\033[0m"
+  echo "\x1b[1;34mBold Blue\x1b[0m""#)
     }
 }
 

@@ -8,43 +8,26 @@ use super::{Command, CommandResult, TerminalContext};
 pub struct HelpCommand;
 
 impl Command for HelpCommand {
-    fn execute(&self, _args: &[String], _context: &TerminalContext) -> CommandResult {
-        let help_text = r#"Available Commands:
+    fn execute(&self, _args: &[String], context: &TerminalContext) -> CommandResult {
+        let mut help_text = String::from("Available Commands:\n\n");
 
-help    - Display help information for all commands
-echo    - Output the specified text to the terminal
-clear   - Clear the terminal screen
-pwd     - Print name of current directory
-cd      - Change the current directory
-cat     - Display file contents
+        // Get all registered commands from the context
+        let command_names = context.command_executor.get_command_names();
+        let mut sorted_commands = command_names;
+        sorted_commands.sort();
 
-Usage:
-  help                    Show all available commands
-  echo <text>             Output the specified text
-  clear                   Clear all terminal output
-  pwd                     Show current directory path
-  cd [directory]          Change to directory
-  cat <file>              Display contents of file
-  echo --red <text>       Output text in red color
-  echo --green <text>     Output text in green color
-  echo --blue <text>      Output text in blue color
-  echo --yellow <text>    Output text in yellow color
-  echo --bold <text>      Output text in bold
-  echo --rainbow          Display a colorful rainbow text
+        // Add each command with usage and description with proper alignment
+        for command_name in &sorted_commands {
+            if let Some(command) = context.command_executor.commands.get(command_name) {
+                help_text.push_str(&format!(
+                    "{:<24}{}\n",
+                    command.usage(),
+                    command.description()
+                ));
+            }
+        }
 
-ANSI Escape Sequences:
-  echo "\033[0;31mRed text\033[0m"     Output red text using ANSI codes
-  echo "\x1b[1;32mBold green\x1b[0m"   Bold green text using hex escape
-
-Examples:
-  echo "Hello World"
-  echo --red "Error message"
-  echo --green "Success!"
-  echo --bold "Important text"
-  echo "\033[0;31mLove\033[0m"
-  echo "\x1b[1;34mBold Blue\x1b[0m""#;
-        
-        CommandResult::Success(help_text.to_string())
+        CommandResult::Success(help_text)
     }
 
     fn description(&self) -> &'static str {

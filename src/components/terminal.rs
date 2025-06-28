@@ -195,6 +195,7 @@ pub fn terminal() -> Html {
                                 ));
                                 history_clone_for_html.set(current_history);
                             }),
+                            command_executor: &executor,
                         };
 
                         // Execute the command using the command executor

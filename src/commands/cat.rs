@@ -13,23 +13,6 @@ pub struct CatCommand {
 
 impl Command for CatCommand {
     fn execute(&self, args: &[String], _context: &TerminalContext) -> CommandResult {
-        if !args.is_empty() && (args[0] == "--help" || args[0] == "-h") {
-            let help_text = r#"cat - Display file contents
-
-Usage:
-  cat <file>              Display contents of file
-  cat --help              Show this help message
-
-Description:
-  The cat command displays the contents of the specified file.
-  The file path is relative to the current directory.
-
-Examples:
-  cat README.md           Display contents of README.md
-  cat about/demo.md       Display contents of about/demo.md"#;
-            return CommandResult::Success(help_text.to_string());
-        }
-
         if args.is_empty() {
             return CommandResult::Error("cat: missing filename".to_string());
         }
@@ -74,5 +57,21 @@ Examples:
 
     fn usage(&self) -> &'static str {
         "cat <file>"
+    }
+
+    fn help(&self) -> Option<&'static str> {
+        Some(r#"cat - Display file contents
+
+Usage:
+  cat <file>              Display contents of file
+  cat --help              Show this help message
+
+Description:
+  The cat command displays the contents of the specified file.
+  The file path is relative to the current directory.
+
+Examples:
+  cat README.md           Display contents of README.md
+  cat about/demo.md       Display contents of about/demo.md"#)
     }
 }
