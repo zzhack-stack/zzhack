@@ -14,9 +14,11 @@ impl Command for NavigateCommand {
         }
 
         let path = &args[0];
+        let execute = context.execute.clone();
 
-        (context.execute)(format!("history_push {}", path).as_str());
-        (context.execute)(format!("view {}/index.md", path).as_str())
+        execute(format!("cd {}", path).as_str());
+        execute(format!("history_push {}", path).as_str());
+        execute(format!("view {}/index.md", path).as_str())
     }
 
     fn description(&self) -> &'static str {
