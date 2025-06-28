@@ -202,4 +202,13 @@
   .markdown-content hr {
     @apply border-gray-600 my-6;
   }
+
+  /* Code block styles - syntect handles syntax highlighting with inline styles */
+  .markdown-code-block {
+    @apply bg-gray-900 rounded-lg overflow-x-auto mb-4 p-4;
+  }
+
+  .markdown-code-block code {
+    @apply bg-transparent p-0 text-sm leading-relaxed;
+  }
 }
