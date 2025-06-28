@@ -34,3 +34,6 @@ features = [
   "Headers",
 ]
 
+[build-dependencies]
+toml = "0.8"
+

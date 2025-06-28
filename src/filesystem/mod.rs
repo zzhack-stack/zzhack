@@ -2,6 +2,7 @@
 // This module provides filesystem operations using pre-generated metadata
 // instead of a server-based virtual filesystem
 
+use crate::utils::config::build_data_url;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use wasm_bindgen::JsCast;
@@ -252,7 +253,7 @@ impl FileSystem {
 
 /// Fetch file content from the data directory
 pub async fn fetch_file_content(file_path: &str) -> Result<String, String> {
-    let url = format!("/zzhack/data/{}", file_path);
+    let url = build_data_url(file_path);
 
     let mut opts = RequestInit::new();
     opts.set_method("GET");

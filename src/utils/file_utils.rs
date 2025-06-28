@@ -1,6 +1,7 @@
 // File operation utilities
 // Provides functions for fetching and processing file content
 
+use super::config::build_data_url;
 use pulldown_cmark::{Parser, Options, html};
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
@@ -8,7 +9,7 @@ use web_sys::{Request, RequestInit, RequestMode, Response};
 
 /// Fetch file content from the data directory
 pub async fn fetch_file_content(file_path: &str) -> Result<String, String> {
-    let url = format!("/zzhack/data/{}", file_path);
+    let url = build_data_url(file_path);
 
     let mut opts = RequestInit::new();
     opts.set_method("GET");

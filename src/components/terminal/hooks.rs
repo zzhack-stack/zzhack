@@ -5,6 +5,7 @@ use crate::commands::{CommandExecutor, CommandResult, TerminalContext};
 use crate::components::history::{
     create_command_entry, create_html_entry, create_welcome_entry, HistoryEntry,
 };
+use crate::utils::config::get_base_url;
 use gloo::timers::callback::Timeout;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
@@ -66,7 +67,7 @@ fn execute_auto_navigation(
     if let Some(window) = web_sys::window() {
         let location = window.location();
         if let Ok(pathname) = location.pathname() {
-            let baseurl = "/zzhack";
+            let baseurl = get_base_url();
             let navigate_path = if pathname == baseurl {
                 "/".to_string()
             } else if pathname.starts_with(&format!("{}/", baseurl)) {

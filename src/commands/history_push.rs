@@ -2,6 +2,7 @@
 // This file contains the history_push command that manipulates browser history
 
 use super::{Command, CommandResult, TerminalContext};
+use crate::utils::config::get_base_url;
 use web_sys::window;
 
 /// Built-in history_push command that pushes a new path to browser history
@@ -17,7 +18,7 @@ impl Command for HistoryPushCommand {
         let path = &args[0];
         
         // Handle baseurl - prepend baseurl to the path
-        let baseurl = "/zzhack"; // TODO: Make this configurable
+        let baseurl = get_base_url();
         let full_path = if path.starts_with('/') {
             // Path starts with /, append to baseurl
             format!("{}{}", baseurl, path)
