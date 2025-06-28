@@ -1,6 +1,8 @@
 // Navigate Command Implementation
 // This file contains the navigate command that combines history_push and view operations
 
+use crate::utils::config::start_with_slash;
+
 use super::{Command, CommandResult, TerminalContext};
 
 /// Built-in navigate command that pushes to browser history and views index.md
@@ -13,7 +15,7 @@ impl Command for NavigateCommand {
             return CommandResult::Error("navigate: missing path argument".to_string());
         }
 
-        let path = &args[0];
+        let path = start_with_slash(&args[0]);
         let execute = context.execute.clone();
 
         execute(format!("cd {}", path).as_str());
