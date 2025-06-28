@@ -204,21 +204,24 @@ pub fn terminal() -> Html {
                         // Handle the result based on its type
                         match result {
                             CommandResult::Success(output) => {
-                                let mut current_history = (*history).clone();
-                                if !output.is_empty() {
-                                    current_history.push(create_command_entry(
-                                        command.clone(),
-                                        output,
-                                        false,
-                                    ));
-                                } else {
-                                    current_history.push(create_command_entry(
-                                        command.clone(),
-                                        String::new(),
-                                        false,
-                                    ));
+                                // Special handling for clear command - don't add to history
+                                if command.trim() != "clear" {
+                                    let mut current_history = (*history).clone();
+                                    if !output.is_empty() {
+                                        current_history.push(create_command_entry(
+                                            command.clone(),
+                                            output,
+                                            false,
+                                        ));
+                                    } else {
+                                        current_history.push(create_command_entry(
+                                            command.clone(),
+                                            String::new(),
+                                            false,
+                                        ));
+                                    }
+                                    history.set(current_history);
                                 }
-                                history.set(current_history);
                             }
                             CommandResult::Error(error) => {
                                 let mut current_history = (*history).clone();
@@ -243,6 +246,7 @@ pub fn terminal() -> Html {
                                     "Loading...".to_string(),
                                     false,
                                 ));
+                                let loading_index = current_history.len() - 1; // Remember the index of loading entry
                                 history.set(current_history);
 
                                 // Spawn the async task
@@ -251,8 +255,16 @@ pub fn terminal() -> Html {
                                 wasm_bindgen_futures::spawn_local(async move {
                                     let async_result = future.await;
                                     let mut current_history = (*history_clone).clone();
-                                    // Remove the "Loading..." entry
-                                    current_history.pop();
+                                    
+                                    // Safely remove the loading entry if it's still at the expected position
+                                    if current_history.len() > loading_index {
+                                        if let Some(entry) = current_history.get(loading_index) {
+                                            // Check if this is still the loading entry we added
+                                            if entry.command_text == command_clone && entry.output.contains("Loading...") {
+                                                current_history.remove(loading_index);
+                                            }
+                                        }
+                                    }
 
                                     match async_result {
                                         CommandResult::Success(output) => {
