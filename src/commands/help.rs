@@ -1,14 +1,14 @@
 // Help Command Implementation
 // This file contains the help command that displays information about available commands
 
-use super::{Command, CommandResult};
+use super::{Command, CommandResult, TerminalContext};
 
 /// Built-in help command that displays information about available commands
 /// This command shows a list of all available commands with their descriptions and usage
 pub struct HelpCommand;
 
 impl Command for HelpCommand {
-    fn execute(&self, _args: &[String]) -> CommandResult {
+    fn execute(&self, _args: &[String], _context: &TerminalContext) -> CommandResult {
         let help_text = r#"Available Commands:
 
 help    - Display help information for all commands

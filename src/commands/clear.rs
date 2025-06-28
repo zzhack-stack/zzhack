@@ -1,14 +1,14 @@
 // Clear Command Implementation
 // This file contains the clear command that clears the terminal screen
 
-use super::{Command, CommandResult};
+use super::{Command, CommandResult, TerminalContext};
 
 /// Built-in clear command that clears the terminal screen
 /// This command removes all previous output and resets the terminal to a clean state
 pub struct ClearCommand;
 
 impl Command for ClearCommand {
-    fn execute(&self, args: &[String]) -> CommandResult {
+    fn execute(&self, args: &[String], context: &TerminalContext) -> CommandResult {
         // Check for help flag first
         if !args.is_empty() && (args[0] == "--help" || args[0] == "-h") {
             let help_text = r#"clear - Clear the terminal screen
@@ -26,9 +26,9 @@ Examples:
             return CommandResult::Success(help_text.to_string());
         }
 
-        // Clear command returns a special marker that the terminal will recognize
-        // We use a special control sequence to indicate screen clearing
-        CommandResult::Success("__CLEAR_SCREEN__".to_string())
+        // Call the terminal's clear screen function directly
+        (context.clear_screen)();
+        CommandResult::Success(String::new())
     }
 
     fn description(&self) -> &'static str {

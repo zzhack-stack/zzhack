@@ -34,5 +34,3 @@ features = [
   "Headers",
 ]
 
-[lib]
-crate-type = ["cdylib"]

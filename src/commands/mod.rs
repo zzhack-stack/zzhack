@@ -7,36 +7,53 @@ use std::collections::HashMap;
 use crate::filesystem::FileSystem;
 use std::cell::RefCell;
 use std::rc::Rc;
+use std::future::Future;
+use std::pin::Pin;
 
 // Import command implementations
+mod cat;
+mod cd;
 mod clear;
 mod echo;
-pub mod filesystem;
-pub mod local_filesystem;
 mod help;
+mod ls;
+mod pwd;
+mod view;
 
+pub use cat::CatCommand;
+pub use cd::CdCommand;
 pub use clear::ClearCommand;
 pub use echo::EchoCommand;
-pub use filesystem::{PwdCommand as OldPwdCommand, CdCommand as OldCdCommand, CatCommand as OldCatCommand, LsCommand as OldLsCommand, ViewCommand as OldViewCommand};
-pub use local_filesystem::{PwdCommand, CdCommand, CatCommand, LsCommand, ViewCommand};
 pub use help::HelpCommand;
+pub use ls::LsCommand;
+pub use pwd::PwdCommand;
+pub use view::ViewCommand;
+
+/// Terminal context providing utility functions for commands
+pub struct TerminalContext {
+    pub clear_screen: std::rc::Rc<dyn Fn()>,
+    pub output_html: std::rc::Rc<dyn Fn(String)>,
+}
 
 /// Result of executing a terminal command
 /// Commands can either succeed with output or fail with an error message
-#[derive(Debug, Clone)]
 pub enum CommandResult {
     /// Command executed successfully with the given output
     Success(String),
     /// Command failed with the given error message
     Error(String),
+    /// Command executed successfully with HTML output
+    Html(String),
+    /// Command requires async operation - returns a future
+    Async(Pin<Box<dyn Future<Output = CommandResult>>>),
 }
 
 /// Trait that all terminal commands must implement
 /// This provides a consistent interface for command execution and documentation
 pub trait Command {
-    /// Execute the command with the given arguments
+    /// Execute the command with the given arguments and terminal context
     /// Returns either a success result with output or an error
-    fn execute(&self, args: &[String]) -> CommandResult;
+    fn execute(&self, args: &[String], context: &TerminalContext) -> CommandResult;
 
     /// Get a brief description of what this command does
     fn description(&self) -> &'static str;
@@ -103,10 +120,11 @@ impl CommandExecutor {
     ///
     /// # Arguments
     /// * `input` - The raw command string entered by the user
+    /// * `context` - Terminal context with utility functions
     ///
     /// # Returns
     /// * `CommandResult` - Either success with output or error with message
-    pub fn execute(&self, input: &str) -> CommandResult {
+    pub fn execute(&self, input: &str, context: &TerminalContext) -> CommandResult {
         let input = input.trim();
 
         // Handle empty input
@@ -128,7 +146,7 @@ impl CommandExecutor {
 
         // Look up and execute the command
         match self.commands.get(command_name) {
-            Some(command) => command.execute(args),
+            Some(command) => command.execute(args, context),
             None => CommandResult::Error(format!(
                 "Unknown command: '{}'. Type 'help' to see available commands.",
                 command_name

@@ -1,14 +1,14 @@
 // Echo Command Implementation
 // This file contains the echo command that outputs text to the terminal
 
-use super::{Command, CommandResult};
+use super::{Command, CommandResult, TerminalContext};
 
 /// Built-in echo command that outputs text to the terminal
 /// This command takes any number of arguments and outputs them as a single line
 pub struct EchoCommand;
 
 impl Command for EchoCommand {
-    fn execute(&self, args: &[String]) -> CommandResult {
+    fn execute(&self, args: &[String], _context: &TerminalContext) -> CommandResult {
         if args.is_empty() {
             // Return empty string if no arguments provided
             CommandResult::Success(String::new())

@@ -110,33 +110,28 @@ impl FileSystem {
         }
     }
 
-    /// Execute pwd command
-    pub fn pwd(&self) -> String {
+    /// Get current working directory path
+    pub fn get_current_directory(&self) -> String {
         self.current_path_string()
     }
 
-    /// Execute cd command
-    pub fn cd(&mut self, target: &str) -> Result<String, String> {
+    /// Navigate to a directory
+    pub fn navigate(&mut self, target: &str) -> Result<(), String> {
         let target = if target.is_empty() { "/" } else { target };
-
         let new_path = self.resolve_path(target);
 
-        // Check if the target path exists and is a directory
         match self.get_node_at_path(&new_path) {
             Some(node) if node.node_type == "directory" => {
                 self.current_path = new_path;
-                Ok(format!(
-                    "Changed directory to {}",
-                    self.current_path_string()
-                ))
+                Ok(())
             }
-            Some(_) => Err(format!("cd: not a directory: {}", target)),
-            None => Err(format!("cd: no such file or directory: {}", target)),
+            Some(_) => Err(format!("not a directory: {}", target)),
+            None => Err(format!("no such file or directory: {}", target)),
         }
     }
 
-    /// Execute ls command
-    pub fn ls(&self, target_dir: Option<&str>) -> Result<String, String> {
+    /// Read directory contents
+    pub fn read_directory(&self, target_dir: Option<&str>) -> Result<Vec<String>, String> {
         let target_path = if let Some(target) = target_dir {
             self.resolve_path(target)
         } else {
@@ -146,7 +141,6 @@ impl FileSystem {
         match self.get_node_at_path(&target_path) {
             Some(node) if node.node_type == "directory" => {
                 let mut items = Vec::new();
-
                 for (name, child_node) in &node.children {
                     match child_node.node_type.as_str() {
                         "directory" => items.push(format!("{}/", name)),
@@ -154,64 +148,34 @@ impl FileSystem {
                         _ => items.push(name.clone()),
                     }
                 }
-
                 items.sort();
-                let output = if items.is_empty() {
-                    String::new()
-                } else {
-                    items.join("  ")
-                };
-
-                Ok(output)
+                Ok(items)
             }
-            Some(_) => Err(format!(
-                "ls: not a directory: {}",
-                target_dir.unwrap_or(".")
-            )),
-            None => Err(format!(
-                "ls: no such file or directory: {}",
-                target_dir.unwrap_or(".")
-            )),
+            Some(_) => Err(format!("not a directory: {}", target_dir.unwrap_or("."))),
+            None => Err(format!("no such file or directory: {}", target_dir.unwrap_or("."))),
         }
     }
 
-    /// Execute cat command - returns special marker for async file fetching
-    pub fn cat(&self, filename: &str) -> Result<String, String> {
+    /// Check if a file exists and get its metadata
+    pub fn get_file_info(&self, filename: &str) -> Result<&FileSystemNode, String> {
         let file_path = self.resolve_path(filename);
-
         match self.get_node_at_path(&file_path) {
-            Some(node) if node.node_type == "file" => {
-                // Return a special marker that indicates we need to fetch the file content
-                Ok(format!("__FETCH_FILE__:{}", node.path))
-            }
-            Some(_) => Err(format!("cat: is a directory: {}", filename)),
-            None => Err(format!("cat: no such file or directory: {}", filename)),
+            Some(node) if node.node_type == "file" => Ok(node),
+            Some(_) => Err(format!("is a directory: {}", filename)),
+            None => Err(format!("no such file or directory: {}", filename)),
         }
     }
 
-    /// Execute view command for markdown files - returns special marker for async file fetching
-    pub fn view(&self, filename: &str) -> Result<String, String> {
-        let file_path = self.resolve_path(filename);
+    /// Check if a path exists and is a directory
+    pub fn is_directory(&self, path: &str) -> bool {
+        let resolved_path = self.resolve_path(path);
+        matches!(self.get_node_at_path(&resolved_path), Some(node) if node.node_type == "directory")
+    }
 
-        match self.get_node_at_path(&file_path) {
-            Some(node) if node.node_type == "file" => {
-                // Check if it's a markdown file using the extension field
-                let is_markdown = node
-                    .extension
-                    .as_ref()
-                    .map(|ext| ext == "md" || ext == "markdown")
-                    .unwrap_or(false);
-
-                if !is_markdown {
-                    return Err(format!("view: not a markdown file: {}", filename));
-                }
-
-                // Return a special marker that indicates we need to fetch and render the markdown file
-                Ok(format!("__FETCH_MARKDOWN__:{}", node.path))
-            }
-            Some(_) => Err(format!("view: is a directory: {}", filename)),
-            None => Err(format!("view: no such file or directory: {}", filename)),
-        }
+    /// Check if a path exists and is a file
+    pub fn is_file(&self, path: &str) -> bool {
+        let resolved_path = self.resolve_path(path);
+        matches!(self.get_node_at_path(&resolved_path), Some(node) if node.node_type == "file")
     }
 
     /// Get completion suggestions for tab completion

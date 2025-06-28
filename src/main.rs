@@ -2,9 +2,10 @@
 // This file initializes the Yew application and mounts it to the DOM
 
 mod app;
-mod components;
 mod commands;
+mod components;
 mod filesystem;
+mod utils;
 
 use app::App;
 
