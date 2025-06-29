@@ -24,3 +24,6 @@ open = true
 [clean]
 # Clean configuration for trunk clean command
 cargo = true
+
+[watch]
+ignore = ["data"]

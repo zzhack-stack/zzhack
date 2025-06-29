@@ -22,6 +22,39 @@
             font-family: 'Courier New', monospace;
         }
     </style>
+    <script>
+        // Global function to execute commands from HTML clicks
+        window.executeCommand = function(command) {
+            // Find the terminal input element
+            const inputElement = document.querySelector('input[type="text"]');
+            if (inputElement) {
+                // Set the value
+                inputElement.value = command;
+                
+                // Focus the input
+                inputElement.focus();
+                
+                // Trigger input event to update Yew state
+                const inputEvent = new Event('input', { bubbles: true });
+                inputElement.dispatchEvent(inputEvent);
+                
+                // Small delay to ensure state is updated, then trigger Enter
+                setTimeout(() => {
+                    const enterEvent = new KeyboardEvent('keydown', {
+                        key: 'Enter',
+                        code: 'Enter',
+                        which: 13,
+                        keyCode: 13,
+                        bubbles: true,
+                        cancelable: true
+                    });
+                    inputElement.dispatchEvent(enterEvent);
+                }, 10);
+            } else {
+                console.log('Input element not found');
+            }
+        };
+    </script>
 </head>
 <body>
     <!-- Main application container - Trunk will inject the WASM here -->

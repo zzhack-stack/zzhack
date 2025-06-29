@@ -20,19 +20,52 @@
           "type": "file",
           "name": "index.md",
           "path": "about/index.md",
-          "size": 464,
-          "modified": "2025-06-28T12:02:42.786Z",
-          "extension": "md"
+          "size": 598,
+          "modified": "2025-06-29T07:21:50.518Z",
+          "extension": "md",
+          "title": "关于页面",
+          "description": "个人简介和技能展示页面",
+          "tags": [
+            "about",
+            "personal",
+            "skills",
+            "rust",
+            "programming"
+          ]
         }
       }
+    },
+    "green_theme_demo.md": {
+      "type": "file",
+      "name": "green_theme_demo.md",
+      "path": "green_theme_demo.md",
+      "size": 2389,
+      "modified": "2025-06-29T07:21:14.274Z",
+      "extension": "md",
+      "title": "Shell 绿色主题演示",
+      "description": "展示终端模拟器的 Matrix 风格绿色主题配色方案",
+      "tags": [
+        "theme",
+        "green",
+        "matrix",
+        "shell",
+        "demo"
+      ]
     },
     "index.md": {
       "type": "file",
       "name": "index.md",
       "path": "index.md",
-      "size": 6,
-      "modified": "2025-06-27T07:02:39.058Z",
-      "extension": "md"
+      "size": 716,
+      "modified": "2025-06-29T07:21:07.001Z",
+      "extension": "md",
+      "title": "数据目录",
+      "description": "包含所有演示文件和文档的根目录",
+      "tags": [
+        "root",
+        "demo",
+        "documentation"
+      ]
     },
     "links": {
       "type": "directory",
@@ -56,6 +89,22 @@
           "extension": "md"
         }
       }
+    },
+    "metadata_demo.md": {
+      "type": "file",
+      "name": "metadata_demo.md",
+      "path": "metadata_demo.md",
+      "size": 2219,
+      "modified": "2025-06-29T07:24:07.047Z",
+      "extension": "md",
+      "title": "Markdown 元数据功能演示",
+      "description": "展示如何在 markdown 文件中使用 frontmatter 元数据",
+      "tags": [
+        "metadata",
+        "frontmatter",
+        "markdown",
+        "demo"
+      ]
     },
     "posts": {
       "type": "directory",

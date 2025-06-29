@@ -56,13 +56,16 @@ pub async fn fetch_and_render_markdown(file_path: &str) -> Result<String, String
 
 /// Render markdown content to HTML with syntax highlighting
 fn render_markdown_to_html(markdown_input: &str) -> String {
+    // Remove frontmatter metadata before parsing
+    let content_without_metadata = strip_frontmatter(markdown_input);
+    
     let mut options = Options::empty();
     options.insert(Options::ENABLE_STRIKETHROUGH);
     options.insert(Options::ENABLE_TABLES);
     options.insert(Options::ENABLE_FOOTNOTES);
     options.insert(Options::ENABLE_TASKLISTS);
 
-    let parser = Parser::new_ext(markdown_input, options);
+    let parser = Parser::new_ext(&content_without_metadata, options);
     let highlighter = SyntaxHighlighter::new();
 
     // Process events to add syntax highlighting
@@ -118,6 +121,34 @@ fn render_markdown_to_html(markdown_input: &str) -> String {
 
     // Wrap the rendered HTML in a div with markdown-content class
     format!("<div class=\"markdown-content\">{}</div>", html_output)
+}
+
+/// Strip frontmatter metadata from markdown content
+fn strip_frontmatter(markdown_input: &str) -> String {
+    // Check if content starts with frontmatter delimiter
+    if !markdown_input.starts_with("--\n") && !markdown_input.starts_with("---\n") {
+        return markdown_input.to_string();
+    }
+    
+    let delimiter = if markdown_input.starts_with("---\n") { "---" } else { "--" };
+    let lines: Vec<&str> = markdown_input.split('\n').collect();
+    
+    // Find the end of frontmatter
+    let mut end_index = None;
+    for (i, line) in lines.iter().enumerate().skip(1) {
+        if line.trim() == delimiter {
+            end_index = Some(i);
+            break;
+        }
+    }
+    
+    if let Some(end_idx) = end_index {
+        // Return content after the closing delimiter
+        lines[(end_idx + 1)..].join("\n")
+    } else {
+        // If no closing delimiter found, return original content
+        markdown_input.to_string()
+    }
 }
 
 /// Escape HTML special characters

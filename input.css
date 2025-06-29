@@ -246,4 +246,50 @@
     /* syntect will override colors with inline styles, but set a fallback */
     color: #00ff00;
   }
+
+  /* File list styles for ls --link */
+  .file-list {
+    @apply space-y-2;
+    color: #00ff00;
+  }
+
+  .file-list-empty {
+    @apply text-center py-4;
+    color: #90ee90;
+  }
+
+  .file-item {
+    @apply flex items-center p-3 rounded-lg cursor-pointer transition-all duration-200;
+    background-color: rgba(0, 255, 0, 0.05);
+    border: 1px solid rgba(0, 255, 0, 0.1);
+  }
+
+  .file-item:hover {
+    background-color: rgba(0, 255, 0, 0.1);
+    border-color: #32cd32;
+    transform: translateX(4px);
+  }
+
+  .file-icon {
+    @apply text-xl mr-4 flex-shrink-0;
+  }
+
+  .file-info {
+    @apply flex-1 min-w-0;
+  }
+
+  .file-title {
+    @apply font-medium text-base;
+    color: #39ff14;
+  }
+
+  .file-description {
+    @apply text-sm mt-1;
+    color: #90ee90;
+  }
+
+  .file-modified {
+    @apply text-sm flex-shrink-0 ml-4;
+    color: #32cd32;
+  }
 }

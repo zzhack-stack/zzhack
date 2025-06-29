@@ -23,6 +23,13 @@ pub struct FileSystemNode {
     pub modified: Option<String>,
     #[serde(default)]
     pub extension: Option<String>,
+    // Markdown metadata fields
+    #[serde(default)]
+    pub title: Option<String>,
+    #[serde(default)]
+    pub description: Option<String>,
+    #[serde(default)]
+    pub tags: Option<Vec<String>>,
 }
 
 #[derive(Debug, Clone)]
@@ -177,6 +184,33 @@ impl FileSystem {
     pub fn is_file(&self, path: &str) -> bool {
         let resolved_path = self.resolve_path(path);
         matches!(self.get_node_at_path(&resolved_path), Some(node) if node.node_type == "file")
+    }
+
+    /// Get directory contents with metadata (for ls --link)
+    pub fn read_directory_with_metadata(&self, target_dir: Option<&str>) -> Result<Vec<(String, Option<&FileSystemNode>)>, String> {
+        let target_path = if let Some(target) = target_dir {
+            self.resolve_path(target)
+        } else {
+            self.current_path.clone()
+        };
+
+        match self.get_node_at_path(&target_path) {
+            Some(node) if node.node_type == "directory" => {
+                let mut items = Vec::new();
+                for (name, child_node) in &node.children {
+                    let display_name = match child_node.node_type.as_str() {
+                        "directory" => format!("{}/", name),
+                        "file" => name.clone(),
+                        _ => name.clone(),
+                    };
+                    items.push((display_name, Some(child_node)));
+                }
+                items.sort_by_key(|(name, _)| name.clone());
+                Ok(items)
+            }
+            Some(_) => Err(format!("not a directory: {}", target_dir.unwrap_or("."))),
+            None => Err(format!("no such file or directory: {}", target_dir.unwrap_or(".")))
+        }
     }
 
     /// Get completion suggestions for tab completion
