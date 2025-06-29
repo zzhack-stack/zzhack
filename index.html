@@ -9,8 +9,8 @@
     <link href="./output.css" rel="stylesheet">
     
 <script type="module">
-import init, * as bindings from '/terminal-emulator-89a21c9d3379051a.js';
-const wasm = await init({ module_or_path: '/terminal-emulator-89a21c9d3379051a_bg.wasm' });
+import init, * as bindings from '/terminal-emulator-25babd57aa41a400.js';
+const wasm = await init({ module_or_path: '/terminal-emulator-25babd57aa41a400_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -33,7 +33,40 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
             font-family: 'Courier New', monospace;
         }
     </style>
-<link rel="modulepreload" href="/terminal-emulator-89a21c9d3379051a.js" crossorigin="anonymous" integrity="sha384-qF0aByfwqDq7/KpKswUAx0UDuFiPo/z3xPCxefwowtF737maT9utDj6tPh7YSPWW"><link rel="preload" href="/terminal-emulator-89a21c9d3379051a_bg.wasm" crossorigin="anonymous" integrity="sha384-rnc/ayOUlshyTx28o//ZYwBoSmAeAF6AmxzdIA+6w97YviQmafkHMaKNSE7Lnk64" as="fetch" type="application/wasm"></head>
+    <script>
+        // Global function to execute commands from HTML clicks
+        window.executeCommand = function(command) {
+            // Find the terminal input element
+            const inputElement = document.querySelector('input[type="text"]');
+            if (inputElement) {
+                // Set the value
+                inputElement.value = command;
+                
+                // Focus the input
+                inputElement.focus();
+                
+                // Trigger input event to update Yew state
+                const inputEvent = new Event('input', { bubbles: true });
+                inputElement.dispatchEvent(inputEvent);
+                
+                // Small delay to ensure state is updated, then trigger Enter
+                setTimeout(() => {
+                    const enterEvent = new KeyboardEvent('keydown', {
+                        key: 'Enter',
+                        code: 'Enter',
+                        which: 13,
+                        keyCode: 13,
+                        bubbles: true,
+                        cancelable: true
+                    });
+                    inputElement.dispatchEvent(enterEvent);
+                }, 10);
+            } else {
+                console.log('Input element not found');
+            }
+        };
+    </script>
+<link rel="modulepreload" href="/terminal-emulator-25babd57aa41a400.js" crossorigin="anonymous" integrity="sha384-5bLpswc3td23BS/XCQAJyoXIMflw5sZEJRRLXrtkR/sbHOhF2sq0U71KD/MAOUyu"><link rel="preload" href="/terminal-emulator-25babd57aa41a400_bg.wasm" crossorigin="anonymous" integrity="sha384-zI7+Tc+0qkEcVRXteyzK45RJfS+k7pQSyXEGXfeOv4SBCqgdLUPkDGeLL6xqY0nm" as="fetch" type="application/wasm"></head>
 <body>
     <!-- Main application container - Trunk will inject the WASM here -->
     <div id="app"></div> 

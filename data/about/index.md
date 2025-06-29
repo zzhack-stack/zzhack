@@ -1,6 +1,12 @@
-# Index
+--
+title: 关于页面
+description: 个人简介和技能展示页面
+tags: about, personal, skills, rust, programming
+--
 
-This is a demo markdown file in the **about** directory.
+# 关于页面
+
+这是关于目录的主页，展示个人简介和技能。
 
 ## Background
 
