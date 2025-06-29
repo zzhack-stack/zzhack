@@ -20,8 +20,10 @@ tags: root, demo, documentation
 - `syntax_highlight_demo.md` - 语法高亮功能演示
 - `syntect_test.md` - Syntect 测试文件
 
+## 📜 演示文件
+
 ```run
-ls --link
+eval -e "1 + 1"
 ```
 
 ## 📖 使用方法
