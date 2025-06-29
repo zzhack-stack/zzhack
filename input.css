@@ -114,57 +114,71 @@
     opacity: 1;
   }
 
-  /* Markdown content styling */
+  /* Markdown content styling - Shell green theme */
   .markdown-content {
-    @apply text-gray-200;
+    color: #00ff00; /* Matrix green for base text */
   }
 
   .markdown-content h1 {
-    @apply text-2xl font-bold text-cyan-400 mb-4 mt-6;
+    @apply text-2xl font-bold mb-4 mt-6;
+    color: #39ff14; /* Bright neon green for main headers */
   }
 
   .markdown-content h2 {
-    @apply text-xl font-bold text-blue-400 mb-3 mt-5;
+    @apply text-xl font-bold mb-3 mt-5;
+    color: #32cd32; /* Lime green for secondary headers */
   }
 
   .markdown-content h3 {
-    @apply text-lg font-bold text-green-400 mb-2 mt-4;
+    @apply text-lg font-bold mb-2 mt-4;
+    color: #00ff7f; /* Spring green for third-level headers */
   }
 
   .markdown-content h4, .markdown-content h5, .markdown-content h6 {
-    @apply text-base font-bold text-yellow-400 mb-2 mt-3;
+    @apply text-base font-bold mb-2 mt-3;
+    color: #90ee90; /* Light green for smaller headers */
   }
 
   .markdown-content p {
     @apply mb-3 leading-relaxed;
+    color: #00ff00; /* Matrix green for paragraph text */
   }
 
   .markdown-content strong {
-    @apply font-bold text-white;
+    @apply font-bold;
+    color: #39ff14; /* Bright green for emphasis */
   }
 
   .markdown-content em {
-    @apply italic text-gray-300;
+    @apply italic;
+    color: #90ee90; /* Light green for italic text */
   }
 
   .markdown-content code {
-    @apply bg-gray-800 text-green-400 px-1 py-0.5 rounded text-sm font-mono;
+    @apply px-1 py-0.5 rounded text-sm font-mono;
+    background-color: #001100; /* Very dark green background */
+    color: #00ff7f; /* Spring green for inline code */
   }
 
   .markdown-content pre {
-    @apply bg-gray-900 p-4 rounded-lg overflow-x-auto mb-4;
+    @apply p-4 rounded-lg overflow-x-auto mb-4;
+    background-color: #001100; /* Very dark green background */
+    border: 1px solid #006400; /* Dark green border */
   }
 
   .markdown-content pre code {
-    @apply bg-transparent text-gray-300 p-0;
+    @apply bg-transparent p-0;
+    color: #00ff00; /* Matrix green for code blocks */
   }
 
   .markdown-content ul, .markdown-content ol {
     @apply mb-4 pl-6;
+    color: #00ff00;
   }
 
   .markdown-content li {
     @apply mb-1;
+    color: #00ff00;
   }
 
   .markdown-content ul li {
@@ -175,8 +189,15 @@
     @apply list-decimal;
   }
 
+  .markdown-content ul li::marker, .markdown-content ol li::marker {
+    color: #32cd32; /* Lime green for list markers */
+  }
+
   .markdown-content blockquote {
-    @apply border-l-4 border-blue-500 pl-4 py-2 mb-4 text-gray-400 italic;
+    @apply pl-4 py-2 mb-4 italic;
+    border-left: 4px solid #32cd32; /* Lime green border */
+    color: #90ee90; /* Light green for quotes */
+    background-color: #002200; /* Very dark green background */
   }
 
   .markdown-content table {
@@ -184,31 +205,45 @@
   }
 
   .markdown-content th, .markdown-content td {
-    @apply border border-gray-600 px-3 py-2 text-left;
+    @apply px-3 py-2 text-left;
+    border: 1px solid #006400; /* Dark green borders */
   }
 
   .markdown-content th {
-    @apply bg-gray-800 font-bold text-white;
+    @apply font-bold;
+    background-color: #003300; /* Dark green header background */
+    color: #39ff14; /* Bright green header text */
   }
 
   .markdown-content td {
-    @apply bg-gray-900;
+    background-color: #001100; /* Very dark green cell background */
+    color: #00ff00; /* Matrix green cell text */
   }
 
   .markdown-content a {
-    @apply text-blue-400 underline hover:text-blue-300;
+    color: #00ff7f; /* Spring green for links */
+    text-decoration: underline;
+  }
+
+  .markdown-content a:hover {
+    color: #39ff14; /* Bright green on hover */
   }
 
   .markdown-content hr {
-    @apply border-gray-600 my-6;
+    @apply my-6;
+    border-color: #006400; /* Dark green separator */
   }
 
   /* Code block styles - syntect handles syntax highlighting with inline styles */
   .markdown-code-block {
-    @apply bg-gray-900 rounded-lg overflow-x-auto mb-4 p-4;
+    @apply rounded-lg overflow-x-auto mb-4 p-4;
+    background-color: #001100; /* Very dark green background to match shell theme */
+    border: 1px solid #006400; /* Dark green border */
   }
 
   .markdown-code-block code {
     @apply bg-transparent p-0 text-sm leading-relaxed;
+    /* syntect will override colors with inline styles, but set a fallback */
+    color: #00ff00;
   }
 }
