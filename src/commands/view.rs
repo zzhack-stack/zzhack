@@ -3,7 +3,7 @@
 
 use super::{Command, CommandResult, TerminalContext};
 use crate::filesystem::FileSystem;
-use crate::utils::fetch_and_render_markdown;
+use crate::utils::fetch_and_render_markdown_with_executor;
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -12,7 +12,7 @@ pub struct ViewCommand {
 }
 
 impl Command for ViewCommand {
-    fn execute(&self, args: &[String], _context: &TerminalContext) -> CommandResult {
+    fn execute(&self, args: &[String], context: &TerminalContext) -> CommandResult {
         if args.is_empty() {
             return CommandResult::Error("view: missing filename".to_string());
         }
@@ -34,9 +34,10 @@ impl Command for ViewCommand {
                 } else {
                     let file_path = node.path.clone();
                     
-                    // Return async future that will resolve to the rendered markdown
+                    // Return async future that will resolve to the rendered markdown with command execution support
+                    let executor = context.command_executor.clone();
                     let future = Box::pin(async move {
-                        match fetch_and_render_markdown(&file_path).await {
+                        match fetch_and_render_markdown_with_executor(&file_path, &executor).await {
                             Ok(html_content) => {
                                 CommandResult::Html(html_content)
                             }

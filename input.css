@@ -290,6 +290,19 @@
 
   .file-modified {
     @apply text-sm flex-shrink-0 ml-4;
-    color: #32cd32;
+    color: #4fc1ff;
+  }
+
+  /* Run block output styling */
+  .run-output {
+    @apply rounded-lg overflow-x-auto mb-4 p-4;
+    background-color: #2d2d30; /* Slightly lighter than code blocks */
+    border-left: 4px solid #569cd6; /* Blue accent border */
+    border: 1px solid #3c3c3c; /* Gray border */
+  }
+
+  .run-output pre {
+    @apply m-0 text-sm leading-relaxed;
+    color: #d4d4d4;
   }
 }

@@ -3,7 +3,9 @@
 
 use super::config::build_data_url;
 use super::syntax_highlighter::SyntaxHighlighter;
+use crate::commands::{CommandExecutor, CommandResult};
 use pulldown_cmark::{html, CodeBlockKind, Event, Options, Parser, Tag};
+use std::rc::Rc;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{Request, RequestInit, RequestMode, Response};
@@ -51,14 +53,23 @@ pub async fn fetch_file_content(file_path: &str) -> Result<String, String> {
 /// Fetch and render markdown file content to HTML
 pub async fn fetch_and_render_markdown(file_path: &str) -> Result<String, String> {
     let content = fetch_file_content(file_path).await?;
-    Ok(render_markdown_to_html(&content))
+    Ok(render_markdown_to_html(&content, None))
 }
 
-/// Render markdown content to HTML with syntax highlighting
-fn render_markdown_to_html(markdown_input: &str) -> String {
+/// Fetch and render markdown file content to HTML with command execution support
+pub async fn fetch_and_render_markdown_with_executor(
+    file_path: &str,
+    executor: &CommandExecutor,
+) -> Result<String, String> {
+    let content = fetch_file_content(file_path).await?;
+    Ok(render_markdown_to_html(&content, Some(executor)))
+}
+
+/// Render markdown content to HTML with syntax highlighting and optional command execution
+fn render_markdown_to_html(markdown_input: &str, executor: Option<&CommandExecutor>) -> String {
     // Remove frontmatter metadata before parsing
     let content_without_metadata = strip_frontmatter(markdown_input);
-    
+
     let mut options = Options::empty();
     options.insert(Options::ENABLE_STRIKETHROUGH);
     options.insert(Options::ENABLE_TABLES);
@@ -86,11 +97,25 @@ fn render_markdown_to_html(markdown_input: &str) -> String {
             }
             Event::End(Tag::CodeBlock(CodeBlockKind::Fenced(_))) => {
                 if in_code_block {
-                    // Apply syntax highlighting
-                    let highlighted_html = if code_block_lang.is_empty() {
-                        // No language specified, just escape HTML
-                        html_escape(&code_block_content)
+                    let highlighted_html = if code_block_lang == "run" {
+                        // Handle executable code block
+                        if let Some(exec) = executor {
+                            execute_run_block(&code_block_content, exec)
+                        } else {
+                            // Fallback to regular code block for run blocks without executor
+                            format!(
+                                "<pre><code>{}</code></pre>",
+                                html_escape(&code_block_content)
+                            )
+                        }
+                    } else if code_block_lang.is_empty() {
+                        // No language specified, just escape HTML - use regular markdown rendering
+                        format!(
+                            "<pre><code>{}</code></pre>",
+                            html_escape(&code_block_content)
+                        )
                     } else {
+                        // Apply syntax highlighting - use regular markdown rendering
                         highlighter.highlight_code(&code_block_content, &code_block_lang)
                     };
 
@@ -129,10 +154,14 @@ fn strip_frontmatter(markdown_input: &str) -> String {
     if !markdown_input.starts_with("--\n") && !markdown_input.starts_with("---\n") {
         return markdown_input.to_string();
     }
-    
-    let delimiter = if markdown_input.starts_with("---\n") { "---" } else { "--" };
+
+    let delimiter = if markdown_input.starts_with("---\n") {
+        "---"
+    } else {
+        "--"
+    };
     let lines: Vec<&str> = markdown_input.split('\n').collect();
-    
+
     // Find the end of frontmatter
     let mut end_index = None;
     for (i, line) in lines.iter().enumerate().skip(1) {
@@ -141,13 +170,89 @@ fn strip_frontmatter(markdown_input: &str) -> String {
             break;
         }
     }
-    
+
     if let Some(end_idx) = end_index {
         // Return content after the closing delimiter
         lines[(end_idx + 1)..].join("\n")
     } else {
         // If no closing delimiter found, return original content
         markdown_input.to_string()
+    }
+}
+
+/// Execute a run code block with multiple commands
+fn execute_run_block(code_content: &str, executor: &CommandExecutor) -> String {
+    let commands: Vec<&str> = code_content
+        .trim()
+        .lines()
+        .map(|line| line.trim())
+        .filter(|line| !line.is_empty() && !line.starts_with('#'))
+        .collect();
+
+    if commands.is_empty() {
+        return String::new();
+    }
+
+    let mut last_result: Option<String> = None;
+
+    // Execute each command sequentially
+    for command in commands {
+        let parts: Vec<String> = command.split_whitespace().map(|s| s.to_string()).collect();
+
+        if parts.is_empty() {
+            continue;
+        }
+
+        // Use a minimal context for command execution
+        let dummy_clear = Rc::new(|| {});
+        let dummy_output = Rc::new(|_: String| {});
+        let dummy_execute = Rc::new(|_: &str| CommandResult::Success(String::new()));
+
+        let context = crate::commands::TerminalContext {
+            clear_screen: dummy_clear,
+            output_html: dummy_output,
+            command_executor: executor,
+            execute: dummy_execute,
+        };
+
+        match executor.execute_command(&parts[0], &parts[1..], &context) {
+            CommandResult::Success(output) => {
+                if !output.trim().is_empty() {
+                    last_result = Some(output);
+                }
+            }
+            CommandResult::Html(html_output) => {
+                if !html_output.trim().is_empty() {
+                    last_result = Some(html_output);
+                }
+            }
+            CommandResult::Error(_) => {
+                // Continue executing other commands even if one fails
+                continue;
+            }
+            CommandResult::Async(_) => {
+                // Skip async commands in run blocks for now
+                continue;
+            }
+        }
+    }
+
+    // Return the output of the last command that produced output, or empty if none
+    match last_result {
+        Some(output) => {
+            // Check if the output is HTML (contains HTML tags) or plain text
+            if output.contains('<') && (output.contains("</div>") || output.contains("</span>")) {
+                // Already HTML, return as-is
+                output
+            } else {
+                // Plain text, wrap in a div with run-output styling
+                format!(
+                    "<div class=\"run-output\"><pre>{}</pre></div>",
+                    html_escape(&output)
+                )
+            }
+        }
+        None => String::new(),
     }
 }
 

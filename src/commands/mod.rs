@@ -39,6 +39,7 @@ pub struct TerminalContext<'a> {
     pub execute: std::rc::Rc<dyn Fn(&str) -> CommandResult>,
 }
 
+
 /// Result of executing a terminal command
 /// Commands can either succeed with output or fail with an error message
 pub enum CommandResult {
@@ -198,6 +199,11 @@ impl CommandExecutor {
         let command_name = &parts[0];
         let args = &parts[1..];
 
+        self.execute_command(command_name, args, context)
+    }
+
+    /// Execute a specific command with arguments
+    pub fn execute_command(&self, command_name: &str, args: &[String], context: &TerminalContext) -> CommandResult {
         // Look up and execute the command
         match self.commands.get(command_name) {
             Some(command) => {
