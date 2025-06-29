@@ -3,6 +3,14 @@
   "name": "data",
   "path": "",
   "children": {
+    "a.js": {
+      "type": "file",
+      "name": "a.js",
+      "path": "a.js",
+      "size": 24,
+      "modified": "2025-06-29T09:22:09.423Z",
+      "extension": "js"
+    },
     "about": {
       "type": "directory",
       "name": "about",

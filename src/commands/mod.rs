@@ -15,6 +15,7 @@ mod cat;
 mod cd;
 mod clear;
 mod echo;
+mod eval;
 mod help;
 mod history_push;
 mod ls;
@@ -26,6 +27,7 @@ pub use cat::CatCommand;
 pub use cd::CdCommand;
 pub use clear::ClearCommand;
 pub use echo::EchoCommand;
+pub use eval::EvalCommand;
 pub use help::HelpCommand;
 pub use ls::LsCommand;
 pub use pwd::PwdCommand;
@@ -145,6 +147,12 @@ impl CommandExecutor {
         commands.insert(
             "view".to_string(),
             Box::new(ViewCommand {
+                filesystem: filesystem.clone(),
+            }),
+        );
+        commands.insert(
+            "eval".to_string(),
+            Box::new(EvalCommand {
                 filesystem: filesystem.clone(),
             }),
         );
