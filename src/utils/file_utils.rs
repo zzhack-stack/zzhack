@@ -197,7 +197,7 @@ fn execute_run_block(code_content: &str, executor: &CommandExecutor) -> String {
 
     // Execute each command sequentially
     for command in commands {
-        let parts: Vec<String> = command.split_whitespace().map(|s| s.to_string()).collect();
+        let parts = parse_command_with_quotes(command);
 
         if parts.is_empty() {
             continue;
@@ -240,20 +240,43 @@ fn execute_run_block(code_content: &str, executor: &CommandExecutor) -> String {
     // Return the output of the last command that produced output, or empty if none
     match last_result {
         Some(output) => {
-            // Check if the output is HTML (contains HTML tags) or plain text
-            if output.contains('<') && (output.contains("</div>") || output.contains("</span>")) {
-                // Already HTML, return as-is
-                output
-            } else {
-                // Plain text, wrap in a div with run-output styling
-                format!(
-                    "<div class=\"run-output\"><pre>{}</pre></div>",
-                    html_escape(&output)
-                )
-            }
+            // Return output as-is, whether it's HTML or plain text
+            output
         }
         None => String::new(),
     }
+}
+
+/// Parse command line with quote handling
+fn parse_command_with_quotes(input: &str) -> Vec<String> {
+    let mut parts = Vec::new();
+    let mut current_part = String::new();
+    let mut in_quotes = false;
+    let mut escape_next = false;
+    
+    for ch in input.chars() {
+        if escape_next {
+            current_part.push(ch);
+            escape_next = false;
+        } else if ch == '\\' {
+            escape_next = true;
+        } else if ch == '"' {
+            in_quotes = !in_quotes;
+        } else if ch.is_whitespace() && !in_quotes {
+            if !current_part.is_empty() {
+                parts.push(current_part.clone());
+                current_part.clear();
+            }
+        } else {
+            current_part.push(ch);
+        }
+    }
+    
+    if !current_part.is_empty() {
+        parts.push(current_part);
+    }
+    
+    parts
 }
 
 /// Escape HTML special characters
