@@ -19,7 +19,10 @@ pub fn terminal_history(props: &TerminalHistoryProps) -> Html {
         <>
             {for props.history.iter().map(|entry| {
                 html! {
-                    <HistoryItem entry={entry.clone()} valid_commands={valid_commands.clone()} />
+                    <HistoryItem 
+                        entry={entry.clone()} 
+                        valid_commands={valid_commands.clone()}
+                    />
                 }
             })}
         </>

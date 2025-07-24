@@ -1,9 +1,10 @@
 // Terminal History Management
 // This module handles terminal history entries and their rendering
 
-use yew::prelude::*;
 use crate::components::ansi::{parse_ansi_text, render_ansi_segments};
 use crate::components::syntax::render_command_with_syntax;
+use crate::utils::use_app_config;
+use yew::prelude::*;
 
 /// Represents a single entry in the terminal history
 /// Each entry contains the command that was executed and its output
@@ -33,13 +34,14 @@ pub struct HistoryItemProps {
 pub fn history_item(props: &HistoryItemProps) -> Html {
     // Hooks must be at the top level
     let html_ref = use_node_ref();
-    
+    let app_config = use_app_config();
+
     // Set up effect for HTML content
     {
         let html_ref = html_ref.clone();
         let output = props.entry.output.clone();
         let is_html = props.entry.is_html;
-        
+
         use_effect_with((output.clone(), is_html), move |_| {
             if is_html {
                 if let Some(element) = html_ref.cast::<web_sys::HtmlElement>() {
@@ -90,7 +92,9 @@ pub fn history_item(props: &HistoryItemProps) -> Html {
             {if !props.entry.command.is_empty() {
                 html! {
                     <div class="mb-1 flex items-start">
-                        <span class="text-green-500 mr-2 text-sm font-mono">{"$ "}</span>
+                        <span class="mr-2 text-sm font-mono" style={format!("color: {}", app_config.config.terminal.color)}>
+                            {format!("{} ", app_config.config.terminal.prompt)}
+                        </span>
                         <div class="flex-1 text-sm font-mono">
                             {render_command_with_syntax(&props.entry.command_text, &props.valid_commands)}
                         </div>

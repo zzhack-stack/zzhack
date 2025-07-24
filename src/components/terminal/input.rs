@@ -3,6 +3,7 @@
 
 use crate::commands::CommandExecutor;
 use crate::components::syntax::{parse_syntax_segments, render_syntax_segments};
+use crate::utils::use_app_config;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
@@ -50,8 +51,12 @@ pub fn terminal_input(props: &TerminalInputProps) -> Html {
 
 #[function_component(TerminalPrompt)]
 fn terminal_prompt() -> Html {
+    let app_config = use_app_config();
+
     html! {
-        <span class="text-green-500 mr-2 mt-0.5 text-sm font-mono font-bold">{"$ "}</span>
+        <span class="mr-2 mt-0.5 text-sm font-mono font-bold" style={format!("color: {}", app_config.config.terminal.color)}>
+            {format!("{} ", app_config.config.terminal.prompt)}
+        </span>
     }
 }
 
@@ -114,11 +119,13 @@ struct TerminalCursorProps {
 
 #[function_component(TerminalCursor)]
 fn terminal_cursor(props: &TerminalCursorProps) -> Html {
+    let app_config = use_app_config();
+
     html! {
         <div
-            class={format!("absolute bg-green-500 cursor-blink pointer-events-none {}", props.trailing_class)}
-            style={format!("left: {}px; top: 0.125rem; width: 8px; height: 18px; z-index: 3;",
-                (props.position as f32 * 8.4))}
+            class={format!("absolute cursor-blink pointer-events-none {}", props.trailing_class)}
+            style={format!("left: {}px; top: 0.125rem; width: 8px; height: 18px; z-index: 3; background-color: {};",
+                (props.position as f32 * 8.4), app_config.config.terminal.color)}
         ></div>
     }
 }

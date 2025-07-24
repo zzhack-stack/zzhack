@@ -1,0 +1,10 @@
+{
+  "author": {
+    "name": "Mist",
+    "email": "mist.zzh@gmail.com"
+  },
+  "terminal": {
+    "prompt": "$",
+    "color": "#22C55D"
+  }
+}

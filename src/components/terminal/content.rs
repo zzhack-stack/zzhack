@@ -34,7 +34,7 @@ pub fn terminal_content(props: &TerminalContentProps) -> Html {
         >
             <TerminalHistory 
                 history={props.history.clone()} 
-                executor={props.executor.clone()} 
+                executor={props.executor.clone()}
             />
             
             <TerminalInput

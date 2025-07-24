@@ -160,7 +160,10 @@ impl FileSystem {
                 Ok(items)
             }
             Some(_) => Err(format!("not a directory: {}", target_dir.unwrap_or("."))),
-            None => Err(format!("no such file or directory: {}", target_dir.unwrap_or("."))),
+            None => Err(format!(
+                "no such file or directory: {}",
+                target_dir.unwrap_or(".")
+            )),
         }
     }
 
@@ -187,7 +190,10 @@ impl FileSystem {
     }
 
     /// Get directory contents with metadata (for ls --link)
-    pub fn read_directory_with_metadata(&self, target_dir: Option<&str>) -> Result<Vec<(String, Option<&FileSystemNode>)>, String> {
+    pub fn read_directory_with_metadata(
+        &self,
+        target_dir: Option<&str>,
+    ) -> Result<Vec<(String, Option<&FileSystemNode>)>, String> {
         let target_path = if let Some(target) = target_dir {
             self.resolve_path(target)
         } else {
@@ -209,7 +215,10 @@ impl FileSystem {
                 Ok(items)
             }
             Some(_) => Err(format!("not a directory: {}", target_dir.unwrap_or("."))),
-            None => Err(format!("no such file or directory: {}", target_dir.unwrap_or(".")))
+            None => Err(format!(
+                "no such file or directory: {}",
+                target_dir.unwrap_or(".")
+            )),
         }
     }
 
@@ -289,7 +298,7 @@ impl FileSystem {
 pub async fn fetch_file_content(file_path: &str) -> Result<String, String> {
     let url = build_data_url(file_path);
 
-    let mut opts = RequestInit::new();
+    let opts = RequestInit::new();
     opts.set_method("GET");
     opts.set_mode(RequestMode::Cors);
 
@@ -379,7 +388,7 @@ fn should_highlight_file(filename: &str) -> bool {
 }
 
 /// Apply basic syntax highlighting (simplified)
-fn apply_syntax_highlighting(content: &str, filename: &str) -> String {
+fn apply_syntax_highlighting(content: &str, _filename: &str) -> String {
     // For now, just return the content as-is
     // In a real implementation, you would parse and highlight the syntax
     content.to_string()
