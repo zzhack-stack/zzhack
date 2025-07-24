@@ -17,7 +17,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        mono: ["Courier New", "monospace"],
+        mono: ["CaskaydiaCove Nerd Font", "Cascadia Code", "Consolas", "monospace"],
       },
     },
   },
