@@ -9,8 +9,8 @@
     <link href="./output.css" rel="stylesheet">
     
 <script type="module">
-import init, * as bindings from '/terminal-emulator-58f91c4d9b94f142.js';
-const wasm = await init({ module_or_path: '/terminal-emulator-58f91c4d9b94f142_bg.wasm' });
+import init, * as bindings from '/terminal-emulator-4205f35eb59f45fa.js';
+const wasm = await init({ module_or_path: '/terminal-emulator-4205f35eb59f45fa_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -30,7 +30,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
             align-items: center;
             height: 100vh;
             font-size: 16px;
-            font-family: 'Courier New', monospace;
+            font-family: 'CaskaydiaCove Nerd Font', 'Cascadia Code', 'Consolas', monospace;
         }
     </style>
     <script>
@@ -66,7 +66,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
             }
         };
     </script>
-<link rel="modulepreload" href="/terminal-emulator-58f91c4d9b94f142.js" crossorigin="anonymous" integrity="sha384-xmc316vrFxR8dlqCO8DsDJy/aTT1sY0BmhYsQ20yqKbW31QQIoyvpN46UOoJcugA"><link rel="preload" href="/terminal-emulator-58f91c4d9b94f142_bg.wasm" crossorigin="anonymous" integrity="sha384-RDIKbZmBtrQM5j1z/ntZYGecLjWtj9l3vKNxAjNUxIslbZalkPVSWWzzJBVbTGCE" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="/terminal-emulator-4205f35eb59f45fa.js" crossorigin="anonymous" integrity="sha384-xmc316vrFxR8dlqCO8DsDJy/aTT1sY0BmhYsQ20yqKbW31QQIoyvpN46UOoJcugA"><link rel="preload" href="/terminal-emulator-4205f35eb59f45fa_bg.wasm" crossorigin="anonymous" integrity="sha384-8W89gXIjBciaWCcpB2X6TM/UVBGyMxW/1WakhlLn0Ld2PpErv3D1cwADU/3USrU+" as="fetch" type="application/wasm"></head>
 <body>
     <!-- Main application container - Trunk will inject the WASM here -->
     <div id="app"></div> 
