@@ -49,7 +49,7 @@ pub fn terminal_input(props: &TerminalInputProps) -> Html {
 }
 
 #[function_component(TerminalPrompt)]
-fn terminal_prompt() -> Html {
+pub fn terminal_prompt() -> Html {
     let app_config = use_app_config();
 
     html! {

@@ -3,6 +3,7 @@
 
 use crate::components::ansi::{parse_ansi_text, render_ansi_segments};
 use crate::components::syntax::render_command_with_syntax;
+use crate::components::terminal::input::TerminalPrompt;
 use crate::utils::use_app_config;
 use yew::prelude::*;
 
@@ -92,9 +93,7 @@ pub fn history_item(props: &HistoryItemProps) -> Html {
             {if !props.entry.command.is_empty() {
                 html! {
                     <div class="mb-1 flex items-start">
-                        <span class="mr-2 text-sm font-mono text-terminal-prompt">
-                            {format!("{} ", app_config.config.terminal.prompt)}
-                        </span>
+                        <TerminalPrompt />
                         <div class="flex-1 text-sm font-mono">
                             {render_command_with_syntax(&props.entry.command_text, &props.valid_commands)}
                         </div>

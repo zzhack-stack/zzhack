@@ -4,8 +4,8 @@
 
 use crate::components::Terminal;
 use crate::utils::use_app_config;
-use yew::prelude::*;
 use web_sys::window;
+use yew::prelude::*;
 
 /// Main application component that renders the terminal emulator
 ///
@@ -15,29 +15,23 @@ use web_sys::window;
 pub fn app() -> Html {
     let app_config = use_app_config();
     let is_center_layout = app_config.config.layout.align == "center";
-    
+
     // Apply theme to body element on component mount
     let theme_class = app_config.get_theme_class();
+
     {
         let theme_class = theme_class.to_string();
-        use_effect_with(theme_class.clone(), move |_| {
-            if let Some(window) = window() {
-                if let Some(document) = window.document() {
-                    if let Some(body) = document.body() {
-                        let _ = body.set_class_name(&theme_class);
-                    }
-                }
-            }
-            || {}
+        use_effect_with(theme_class.to_string().clone(), move |_| {
+            window()
+                .unwrap()
+                .document()
+                .unwrap()
+                .body()
+                .unwrap()
+                .set_class_name(&theme_class);
         });
     }
-    
-    let container_class = if is_center_layout {
-        format!("w-full h-screen bg-terminal-bg flex justify-center {}", theme_class)
-    } else {
-        format!("w-full h-screen bg-terminal-bg {}", theme_class)
-    };
-    
+
     let terminal_class = if is_center_layout {
         "w-full max-w-[65ch]"
     } else {
@@ -45,7 +39,7 @@ pub fn app() -> Html {
     };
 
     html! {
-        <div class={container_class}>
+        <div class={vec![format!("w-full h-screen bg-terminal-bg overflow-y-scroll {} {}", theme_class, if is_center_layout {"flex justify-center"} else {""}), ]}>
             <div class={terminal_class}>
                 <Terminal />
             </div>
