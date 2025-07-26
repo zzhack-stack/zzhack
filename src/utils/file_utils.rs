@@ -50,11 +50,6 @@ pub async fn fetch_file_content(file_path: &str) -> Result<String, String> {
     Ok(content)
 }
 
-/// Fetch and render markdown file content to HTML
-pub async fn fetch_and_render_markdown(file_path: &str) -> Result<String, String> {
-    let content = fetch_file_content(file_path).await?;
-    Ok(render_markdown_to_html(&content, None))
-}
 
 /// Fetch and render markdown file content to HTML with command execution support
 pub async fn fetch_and_render_markdown_with_executor(
@@ -205,12 +200,10 @@ fn execute_run_block(code_content: &str, executor: &CommandExecutor) -> String {
 
         // Use a minimal context for command execution
         let dummy_clear = Rc::new(|| {});
-        let dummy_output = Rc::new(|_: String| {});
         let dummy_execute = Rc::new(|_: &str| CommandResult::Success(String::new()));
 
         let context = crate::commands::TerminalContext {
             clear_screen: dummy_clear,
-            output_html: dummy_output,
             command_executor: executor,
             execute: dummy_execute,
             app_config: AppConfigService::new(),

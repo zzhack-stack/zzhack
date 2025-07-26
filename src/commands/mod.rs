@@ -43,7 +43,6 @@ pub use whoimi::WhoimiCommand;
 /// Terminal context providing utility functions for commands
 pub struct TerminalContext<'a> {
     pub clear_screen: std::rc::Rc<dyn Fn()>,
-    pub output_html: std::rc::Rc<dyn Fn(String)>,
     pub command_executor: &'a CommandExecutor,
     pub execute: std::rc::Rc<dyn Fn(&str) -> CommandResult>,
     pub app_config: AppConfigService,
@@ -180,12 +179,6 @@ impl CommandExecutor {
         self.commands.keys().cloned().collect()
     }
 
-    /// Check if a command is registered
-    ///
-    /// Returns true if the given command name is registered in the executor.
-    pub fn has_command(&self, command_name: &str) -> bool {
-        self.commands.contains_key(command_name)
-    }
 
     /// Execute a command from a raw input string
     ///

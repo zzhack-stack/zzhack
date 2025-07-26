@@ -182,8 +182,6 @@ fn execute_command(
     app_config: &UseStateHandle<AppConfigService>,
 ) {
     let history_clone_for_clear = history.clone();
-    let history_clone_for_html = history.clone();
-    let command_clone_for_html = command.to_string();
     let executor_clone_for_execute = executor.clone();
     let app_config_clone_for_theme = app_config.clone();
 
@@ -193,19 +191,10 @@ fn execute_command(
             let welcome_history = vec![create_welcome_entry()];
             history_clone_for_clear.set(welcome_history);
         }),
-        output_html: std::rc::Rc::new(move |html_content: String| {
-            let mut current_history = (*history_clone_for_html).clone();
-            current_history.push(create_html_entry(
-                command_clone_for_html.clone(),
-                html_content,
-            ));
-            history_clone_for_html.set(current_history);
-        }),
         command_executor: executor,
         execute: std::rc::Rc::new(move |command_str: &str| {
             let minimal_context = TerminalContext {
                 clear_screen: std::rc::Rc::new(|| {}),
-                output_html: std::rc::Rc::new(|_| {}),
                 command_executor: &executor_clone_for_execute,
                 execute: std::rc::Rc::new(|_| {
                     CommandResult::Error("Nested execute not supported".to_string())

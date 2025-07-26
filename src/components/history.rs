@@ -4,7 +4,6 @@
 use crate::components::ansi::{parse_ansi_text, render_ansi_segments};
 use crate::components::syntax::render_command_with_syntax;
 use crate::components::terminal::input::TerminalPrompt;
-use crate::hooks::use_app_config;
 use yew::prelude::*;
 
 /// Represents a single entry in the terminal history
@@ -35,7 +34,6 @@ pub struct HistoryItemProps {
 pub fn history_item(props: &HistoryItemProps) -> Html {
     // Hooks must be at the top level
     let html_ref = use_node_ref();
-    let app_config = use_app_config();
 
     // Set up effect for HTML content
     {

@@ -85,18 +85,6 @@ impl SyntaxHighlighter {
         }
     }
 
-    /// Get available theme names
-    pub fn get_available_themes(&self) -> Vec<String> {
-        self.theme_set.themes.keys().cloned().collect()
-    }
-
-    /// Get available syntax names  
-    pub fn get_available_syntaxes(&self) -> Vec<String> {
-        self.syntax_set.syntaxes()
-            .iter()
-            .map(|syntax| syntax.name.clone())
-            .collect()
-    }
 }
 
 impl Default for SyntaxHighlighter {
@@ -117,13 +105,6 @@ fn html_escape(text: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn test_syntax_highlighter_creation() {
-        let highlighter = SyntaxHighlighter::new();
-        assert!(!highlighter.get_available_themes().is_empty());
-        assert!(!highlighter.get_available_syntaxes().is_empty());
-    }
 
     #[test]
     fn test_rust_code_highlighting() {

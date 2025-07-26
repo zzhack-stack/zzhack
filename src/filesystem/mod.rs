@@ -70,10 +70,6 @@ impl FileSystem {
         Some(current)
     }
 
-    /// Get node at current directory
-    fn get_current_node(&self) -> Option<&FileSystemNode> {
-        self.get_node_at_path(&self.current_path)
-    }
 
     /// Resolve a relative or absolute path from current location
     fn resolve_path(&self, target: &str) -> Vec<String> {
@@ -173,17 +169,6 @@ impl FileSystem {
         }
     }
 
-    /// Check if a path exists and is a directory
-    pub fn is_directory(&self, path: &str) -> bool {
-        let resolved_path = self.resolve_path(path);
-        matches!(self.get_node_at_path(&resolved_path), Some(node) if node.node_type == "directory")
-    }
-
-    /// Check if a path exists and is a file
-    pub fn is_file(&self, path: &str) -> bool {
-        let resolved_path = self.resolve_path(path);
-        matches!(self.get_node_at_path(&resolved_path), Some(node) if node.node_type == "file")
-    }
 
     /// Get directory contents with metadata (for ls --link)
     pub fn read_directory_with_metadata(
