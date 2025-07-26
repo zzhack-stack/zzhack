@@ -111,12 +111,12 @@ pub fn history_item(props: &HistoryItemProps) -> Html {
     }
 }
 
-/// Create initial welcome history entry
+/// Create initial welcome history entry (empty - no welcome message)
 pub fn create_welcome_entry() -> HistoryEntry {
     HistoryEntry {
         command: String::new(),
         command_text: String::new(),
-        output: "Welcome to Terminal Emulator! Type 'help' to see available commands.".to_string(),
+        output: String::new(),
         is_error: false,
         is_html: false,
     }

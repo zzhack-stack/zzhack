@@ -17,9 +17,15 @@ pub struct Terminal {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct Layout {
+    pub align: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct AppConfig {
     pub author: Author,
     pub terminal: Terminal,
+    pub layout: Layout,
 }
 
 #[derive(Debug, Clone)]

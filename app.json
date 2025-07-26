@@ -6,5 +6,8 @@
   "terminal": {
     "prompt": "$",
     "color": "#22C55D"
+  },
+  "layout": {
+    "align": "left"
   }
 }

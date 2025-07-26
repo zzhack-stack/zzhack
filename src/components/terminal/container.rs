@@ -1,12 +1,11 @@
 // Terminal Container Component
 // Main container that manages all terminal state and coordinates child components
 
-use crate::commands::CommandExecutor;
-use crate::components::history::create_welcome_entry;
 use super::content::TerminalContent;
 use super::handlers::*;
-use super::header::TerminalHeader;
 use super::hooks::{use_auto_focus, use_auto_navigation, use_trailing_effect};
+use crate::commands::CommandExecutor;
+use crate::components::history::create_welcome_entry;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
@@ -16,7 +15,7 @@ pub struct TerminalProps {
 }
 
 #[function_component(Terminal)]
-pub fn terminal(props: &TerminalProps) -> Html {
+pub fn terminal(_props: &TerminalProps) -> Html {
     // State management
     let input_value = use_state(|| String::new());
     let cursor_position = use_state(|| 0usize);
@@ -34,23 +33,23 @@ pub fn terminal(props: &TerminalProps) -> Html {
 
     // Event handlers
     let on_terminal_click = create_terminal_click_handler(input_ref.clone());
-    
+
     let on_input = create_input_handler(
         input_value.clone(),
         cursor_position.clone(),
         set_trailing.clone(),
     );
-    
+
     let on_focus = create_focus_handler(cursor_position.clone());
     let on_click = create_click_handler(cursor_position.clone());
-    
+
     let on_keyup = create_keyup_handler(
         cursor_position.clone(),
         trailing_class.clone(),
         trailing_timeout.clone(),
         set_trailing.clone(),
     );
-    
+
     let on_keydown = create_keydown_handler(
         input_value.clone(),
         cursor_position.clone(),
@@ -63,8 +62,6 @@ pub fn terminal(props: &TerminalProps) -> Html {
 
     html! {
         <div class="w-full h-full bg-terminal-bg text-terminal-text font-mono flex flex-col">
-            <TerminalHeader title={props.title.clone()} />
-            
             <TerminalContent
                 container_ref={container_ref}
                 history={(*history).clone()}

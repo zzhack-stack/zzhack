@@ -4,7 +4,6 @@
 pub mod container;
 pub mod content;
 pub mod handlers;
-pub mod header;
 pub mod history;
 pub mod hooks;
 pub mod input;

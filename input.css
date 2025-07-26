@@ -11,24 +11,16 @@
 
 @layer components {
   .terminal-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: #4a5568 #2d3748;
+    /* Hide scrollbar for Firefox */
+    scrollbar-width: none;
+    
+    /* Hide scrollbar for IE and Edge */
+    -ms-overflow-style: none;
   }
 
+  /* Hide scrollbar for WebKit browsers (Chrome, Safari, etc.) */
   .terminal-scrollbar::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  .terminal-scrollbar::-webkit-scrollbar-track {
-    @apply bg-gray-700;
-  }
-
-  .terminal-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-gray-500 rounded;
-  }
-
-  .terminal-scrollbar::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-400;
+    display: none;
   }
 
   .terminal-cursor {
