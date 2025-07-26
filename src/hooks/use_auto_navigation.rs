@@ -1,26 +1,10 @@
-// Terminal Hooks
-// Custom hooks for terminal functionality following React hooks pattern
-
 use crate::commands::{CommandExecutor, CommandResult, TerminalContext};
 use crate::components::history::{
     create_command_entry, create_html_entry, create_welcome_entry, HistoryEntry,
 };
 use crate::utils::config::{get_base_url, start_with_slash};
 use crate::utils::AppConfigService;
-use gloo::timers::callback::Timeout;
-use web_sys::HtmlInputElement;
 use yew::prelude::*;
-
-/// Auto-focus the input field on component mount
-#[hook]
-pub fn use_auto_focus(input_ref: NodeRef) {
-    use_effect_with((), move |_| {
-        if let Some(input) = input_ref.cast::<HtmlInputElement>() {
-            let _ = input.focus();
-        }
-        || {}
-    });
-}
 
 /// Auto-execute navigate command based on current pathname
 #[hook]
@@ -32,33 +16,6 @@ pub fn use_auto_navigation(
         execute_auto_navigation(history, executor);
         || {}
     });
-}
-
-/// Hook for managing trailing cursor effect
-#[hook]
-pub fn use_trailing_effect() -> (
-    UseStateHandle<String>,
-    UseStateHandle<Option<Timeout>>,
-    std::rc::Rc<dyn Fn(&str)>,
-) {
-    let trailing_class = use_state(|| String::new());
-    let trailing_timeout = use_state(|| None::<Timeout>);
-
-    let set_trailing = {
-        let trailing_class = trailing_class.clone();
-        let trailing_timeout = trailing_timeout.clone();
-
-        std::rc::Rc::new(move |direction: &str| {
-            trailing_class.set(direction.to_string());
-            let trailing_class_clear = trailing_class.clone();
-            let new_timeout = Timeout::new(80, move || {
-                trailing_class_clear.set(String::new());
-            });
-            trailing_timeout.set(Some(new_timeout));
-        }) as std::rc::Rc<dyn Fn(&str)>
-    };
-
-    (trailing_class, trailing_timeout, set_trailing)
 }
 
 fn execute_auto_navigation(

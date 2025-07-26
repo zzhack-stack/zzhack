@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
-use yew::prelude::*;
-use web_sys::{window, HtmlElement};
+use web_sys::window;
 
 // Include the app.json file content at compile time
 const CONFIG_JSON: &str = include_str!("../../app.json");
@@ -147,8 +146,3 @@ impl Default for AppConfigService {
     }
 }
 
-/// Hook for using AppConfig in Yew components
-#[hook]
-pub fn use_app_config() -> UseStateHandle<AppConfigService> {
-    use_state(|| AppConfigService::new())
-}

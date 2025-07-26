@@ -4,7 +4,7 @@
 use crate::components::ansi::{parse_ansi_text, render_ansi_segments};
 use crate::components::syntax::render_command_with_syntax;
 use crate::components::terminal::input::TerminalPrompt;
-use crate::utils::use_app_config;
+use crate::hooks::use_app_config;
 use yew::prelude::*;
 
 /// Represents a single entry in the terminal history

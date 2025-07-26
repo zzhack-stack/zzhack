@@ -3,10 +3,9 @@
 
 use super::content::TerminalContent;
 use super::handlers::*;
-use super::hooks::{use_auto_focus, use_auto_navigation, use_trailing_effect};
 use crate::commands::CommandExecutor;
 use crate::components::history::create_welcome_entry;
-use crate::utils::use_app_config;
+use crate::hooks::{use_app_config, use_auto_focus, use_auto_navigation, use_trailing_effect};
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]

@@ -3,7 +3,7 @@
 // for the terminal emulator application
 
 use crate::components::Terminal;
-use crate::utils::use_app_config;
+use crate::hooks::use_app_config;
 use web_sys::window;
 use yew::prelude::*;
 

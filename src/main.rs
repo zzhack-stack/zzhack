@@ -5,6 +5,7 @@ mod app;
 mod commands;
 mod components;
 mod filesystem;
+mod hooks;
 mod utils;
 
 use app::App;

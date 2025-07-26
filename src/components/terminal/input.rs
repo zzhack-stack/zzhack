@@ -3,7 +3,7 @@
 
 use crate::commands::CommandExecutor;
 use crate::components::syntax::{parse_syntax_segments, render_syntax_segments};
-use crate::utils::use_app_config;
+use crate::hooks::use_app_config;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
