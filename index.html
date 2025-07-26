@@ -9,8 +9,8 @@
     <link href="./output.css" rel="stylesheet">
     
 <script type="module">
-import init, * as bindings from '/terminal-emulator-63ddbb70a4db4323.js';
-const wasm = await init({ module_or_path: '/terminal-emulator-63ddbb70a4db4323_bg.wasm' });
+import init, * as bindings from '/terminal-emulator-7ba4f4045d8e650b.js';
+const wasm = await init({ module_or_path: '/terminal-emulator-7ba4f4045d8e650b_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -66,7 +66,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
             }
         };
     </script>
-<link rel="modulepreload" href="/terminal-emulator-63ddbb70a4db4323.js" crossorigin="anonymous" integrity="sha384-2UjR4hrGt3jQk4Iaip1BzkRTtbHdAuyHRxjcUlVdnJ4XCl4b7ADR4uC93c1f0Z3y"><link rel="preload" href="/terminal-emulator-63ddbb70a4db4323_bg.wasm" crossorigin="anonymous" integrity="sha384-ScT/jVOx480mv4a5xpFGyhVH5+FlcN7L+o4eBA3U/y7ImjZJ0jVhpJUiaYK/5vE8" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="/terminal-emulator-7ba4f4045d8e650b.js" crossorigin="anonymous" integrity="sha384-2UjR4hrGt3jQk4Iaip1BzkRTtbHdAuyHRxjcUlVdnJ4XCl4b7ADR4uC93c1f0Z3y"><link rel="preload" href="/terminal-emulator-7ba4f4045d8e650b_bg.wasm" crossorigin="anonymous" integrity="sha384-tFZh+8El3TIamGlzYCAtToF0LQzM+Dw2gSOR3yD9wuMWYg8Fy6cT0lg9hBl+Lm4w" as="fetch" type="application/wasm"></head>
 <body>
     <!-- Main application container - Trunk will inject the WASM here -->
     <div id="app"></div> 
