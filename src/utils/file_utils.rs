@@ -1,8 +1,8 @@
 // File operation utilities
 // Provides functions for fetching and processing file content
 
-use super::config::build_data_url;
 use super::syntax_highlighter::SyntaxHighlighter;
+use super::{config::build_data_url, AppConfigService};
 use crate::commands::{CommandExecutor, CommandResult};
 use pulldown_cmark::{html, CodeBlockKind, Event, Options, Parser, Tag};
 use std::rc::Rc;
@@ -213,6 +213,7 @@ fn execute_run_block(code_content: &str, executor: &CommandExecutor) -> String {
             output_html: dummy_output,
             command_executor: executor,
             execute: dummy_execute,
+            app_config: AppConfigService::new(),
         };
 
         match executor.execute_command(&parts[0], &parts[1..], &context) {
@@ -253,7 +254,7 @@ fn parse_command_with_quotes(input: &str) -> Vec<String> {
     let mut current_part = String::new();
     let mut in_quotes = false;
     let mut escape_next = false;
-    
+
     for ch in input.chars() {
         if escape_next {
             current_part.push(ch);
@@ -271,11 +272,11 @@ fn parse_command_with_quotes(input: &str) -> Vec<String> {
             current_part.push(ch);
         }
     }
-    
+
     if !current_part.is_empty() {
         parts.push(current_part);
     }
-    
+
     parts
 }
 

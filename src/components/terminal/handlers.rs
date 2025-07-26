@@ -2,7 +2,10 @@
 // Pure functions for handling terminal events
 
 use crate::commands::{CommandExecutor, CommandResult, TerminalContext};
-use crate::components::history::{create_command_entry, create_html_entry, create_welcome_entry, HistoryEntry};
+use crate::components::history::{
+    create_command_entry, create_html_entry, create_welcome_entry, HistoryEntry,
+};
+use crate::utils::AppConfigService;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
@@ -94,36 +97,44 @@ pub fn create_keydown_handler(
     executor: UseStateHandle<CommandExecutor>,
     container_ref: NodeRef,
 ) -> Callback<KeyboardEvent> {
-    Callback::from(move |e: KeyboardEvent| {
-        match e.key().as_str() {
-            "Enter" => {
-                e.prevent_default();
-                if !input_value.trim().is_empty() {
-                    handle_enter_key(
-                        &input_value,
-                        &cursor_position,
-                        &history,
-                        &command_history,
-                        &history_index,
-                        &executor,
-                        &container_ref,
-                    );
-                }
+    Callback::from(move |e: KeyboardEvent| match e.key().as_str() {
+        "Enter" => {
+            e.prevent_default();
+            if !input_value.trim().is_empty() {
+                handle_enter_key(
+                    &input_value,
+                    &cursor_position,
+                    &history,
+                    &command_history,
+                    &history_index,
+                    &executor,
+                    &container_ref,
+                );
             }
-            "ArrowUp" => {
-                e.prevent_default();
-                handle_arrow_up(&command_history, &history_index, &input_value, &cursor_position);
-            }
-            "ArrowDown" => {
-                e.prevent_default();
-                handle_arrow_down(&command_history, &history_index, &input_value, &cursor_position);
-            }
-            "Tab" => {
-                e.prevent_default();
-                handle_tab(&executor, &input_value, &cursor_position);
-            }
-            _ => {}
         }
+        "ArrowUp" => {
+            e.prevent_default();
+            handle_arrow_up(
+                &command_history,
+                &history_index,
+                &input_value,
+                &cursor_position,
+            );
+        }
+        "ArrowDown" => {
+            e.prevent_default();
+            handle_arrow_down(
+                &command_history,
+                &history_index,
+                &input_value,
+                &cursor_position,
+            );
+        }
+        "Tab" => {
+            e.prevent_default();
+            handle_tab(&executor, &input_value, &cursor_position);
+        }
+        _ => {}
     })
 }
 
@@ -140,7 +151,10 @@ fn handle_enter_key(
 
     // Add to command history
     let mut new_command_history = (**command_history).clone();
-    if !new_command_history.last().map_or(false, |last| last == &command) {
+    if !new_command_history
+        .last()
+        .map_or(false, |last| last == &command)
+    {
         new_command_history.push(command.clone());
     }
     command_history.set(new_command_history);
@@ -152,7 +166,7 @@ fn handle_enter_key(
     // Clear input and scroll
     input_value.set(String::new());
     cursor_position.set(0);
-    
+
     if let Some(container) = container_ref.cast::<web_sys::HtmlElement>() {
         let _ = container.set_scroll_top(container.scroll_height());
     }
@@ -169,6 +183,7 @@ fn execute_command(
     let executor_clone_for_execute = executor.clone();
 
     let context = TerminalContext {
+        app_config: AppConfigService::new(),
         clear_screen: std::rc::Rc::new(move || {
             let welcome_history = vec![create_welcome_entry()];
             history_clone_for_clear.set(welcome_history);
@@ -187,7 +202,10 @@ fn execute_command(
                 clear_screen: std::rc::Rc::new(|| {}),
                 output_html: std::rc::Rc::new(|_| {}),
                 command_executor: &executor_clone_for_execute,
-                execute: std::rc::Rc::new(|_| CommandResult::Error("Nested execute not supported".to_string())),
+                execute: std::rc::Rc::new(|_| {
+                    CommandResult::Error("Nested execute not supported".to_string())
+                }),
+                app_config: AppConfigService::new(),
             };
             executor_clone_for_execute.execute(command_str, &minimal_context)
         }),
@@ -239,11 +257,13 @@ fn handle_command_result(
             wasm_bindgen_futures::spawn_local(async move {
                 let async_result = future.await;
                 let mut current_history = (*history_clone).clone();
-                
+
                 // Remove loading entry
                 if current_history.len() > loading_index {
                     if let Some(entry) = current_history.get(loading_index) {
-                        if entry.command_text == command_clone && entry.output.contains("Loading...") {
+                        if entry.command_text == command_clone
+                            && entry.output.contains("Loading...")
+                        {
                             current_history.remove(loading_index);
                         }
                     }
@@ -288,7 +308,13 @@ fn handle_arrow_up(
     if !cmd_history.is_empty() {
         let new_index = match **history_index {
             None => cmd_history.len() - 1,
-            Some(idx) => if idx > 0 { idx - 1 } else { 0 },
+            Some(idx) => {
+                if idx > 0 {
+                    idx - 1
+                } else {
+                    0
+                }
+            }
         };
         history_index.set(Some(new_index));
         input_value.set(cmd_history[new_index].clone());
@@ -327,7 +353,8 @@ fn handle_tab(
     input_value: &UseStateHandle<String>,
     cursor_position: &UseStateHandle<usize>,
 ) {
-    let (suggestions, prefix) = executor.get_completion_suggestions(&**input_value, **cursor_position);
+    let (suggestions, prefix) =
+        executor.get_completion_suggestions(&**input_value, **cursor_position);
 
     if !suggestions.is_empty() {
         let suggestion = &suggestions[0];

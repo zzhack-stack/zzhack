@@ -6,6 +6,7 @@ use crate::components::history::{
     create_command_entry, create_html_entry, create_welcome_entry, HistoryEntry,
 };
 use crate::utils::config::{get_base_url, start_with_slash};
+use crate::utils::AppConfigService;
 use gloo::timers::callback::Timeout;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
@@ -115,9 +116,11 @@ fn execute_auto_command(
             ));
             history_clone_for_html.set(current_history);
         }),
+        app_config: AppConfigService::new(),
         command_executor: &executor,
         execute: std::rc::Rc::new(move |command_str: &str| {
             let minimal_context = TerminalContext {
+                app_config: AppConfigService::new(),
                 clear_screen: std::rc::Rc::new(|| {}),
                 output_html: std::rc::Rc::new(|_| {}),
                 command_executor: &executor_clone_for_execute,

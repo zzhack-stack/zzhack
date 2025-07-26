@@ -4,6 +4,7 @@
 // for adding new commands in the future.
 
 use crate::filesystem::FileSystem;
+use crate::utils::AppConfigService;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::future::Future;
@@ -15,6 +16,7 @@ mod cat;
 mod cd;
 mod clear;
 mod echo;
+mod email;
 mod eval;
 mod help;
 mod history_push;
@@ -22,16 +24,19 @@ mod ls;
 mod navigate;
 mod pwd;
 mod view;
+mod whoimi;
 
 pub use cat::CatCommand;
 pub use cd::CdCommand;
 pub use clear::ClearCommand;
 pub use echo::EchoCommand;
+pub use email::EmailCommand;
 pub use eval::EvalCommand;
 pub use help::HelpCommand;
 pub use ls::LsCommand;
 pub use pwd::PwdCommand;
 pub use view::ViewCommand;
+pub use whoimi::WhoimiCommand;
 
 /// Terminal context providing utility functions for commands
 pub struct TerminalContext<'a> {
@@ -39,8 +44,8 @@ pub struct TerminalContext<'a> {
     pub output_html: std::rc::Rc<dyn Fn(String)>,
     pub command_executor: &'a CommandExecutor,
     pub execute: std::rc::Rc<dyn Fn(&str) -> CommandResult>,
+    pub app_config: AppConfigService,
 }
-
 
 /// Result of executing a terminal command
 /// Commands can either succeed with output or fail with an error message
@@ -113,8 +118,10 @@ impl CommandExecutor {
 
         // Register built-in commands
         commands.insert("help".to_string(), Box::new(HelpCommand));
+        commands.insert("whoimi".to_string(), Box::new(WhoimiCommand));
         commands.insert("echo".to_string(), Box::new(EchoCommand));
         commands.insert("clear".to_string(), Box::new(ClearCommand));
+        commands.insert("email".to_string(), Box::new(EmailCommand));
         commands.insert(
             "history_push".to_string(),
             Box::new(history_push::HistoryPushCommand),
@@ -211,7 +218,12 @@ impl CommandExecutor {
     }
 
     /// Execute a specific command with arguments
-    pub fn execute_command(&self, command_name: &str, args: &[String], context: &TerminalContext) -> CommandResult {
+    pub fn execute_command(
+        &self,
+        command_name: &str,
+        args: &[String],
+        context: &TerminalContext,
+    ) -> CommandResult {
         // Look up and execute the command
         match self.commands.get(command_name) {
             Some(command) => {

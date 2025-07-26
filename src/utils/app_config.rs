@@ -1,6 +1,9 @@
 use serde::{Deserialize, Serialize};
 use yew::prelude::*;
 
+// Include the app.json file content at compile time
+const CONFIG_JSON: &str = include_str!("../../app.json");
+
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Author {
     pub name: String,
@@ -38,9 +41,6 @@ impl AppConfigService {
     }
 
     fn load_embedded_config() -> AppConfig {
-        // Include the app.json file content at compile time
-        const CONFIG_JSON: &str = include_str!("../../app.json");
-
         // Parse the embedded JSON
         serde_json::from_str::<AppConfig>(CONFIG_JSON).unwrap()
     }
