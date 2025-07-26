@@ -9,5 +9,6 @@
   },
   "layout": {
     "align": "left"
-  }
+  },
+  "theme": "dark"
 }

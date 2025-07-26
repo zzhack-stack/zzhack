@@ -75,8 +75,8 @@ pub fn history_item(props: &HistoryItemProps) -> Html {
         } else if props.entry.is_error {
             "text-terminal-error"
         } else {
-            // Default to white for regular output
-            "text-white"
+            // Default to terminal text color for regular output
+            "text-terminal-text"
         };
 
         html! {
@@ -92,7 +92,7 @@ pub fn history_item(props: &HistoryItemProps) -> Html {
             {if !props.entry.command.is_empty() {
                 html! {
                     <div class="mb-1 flex items-start">
-                        <span class="mr-2 text-sm font-mono" style={format!("color: {}", app_config.config.terminal.color)}>
+                        <span class="mr-2 text-sm font-mono text-terminal-prompt">
                             {format!("{} ", app_config.config.terminal.prompt)}
                         </span>
                         <div class="flex-1 text-sm font-mono">

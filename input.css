@@ -9,7 +9,102 @@
   }
 }
 
+@layer base {
+  /* CSS Variables for theming */
+  :root {
+    --terminal-bg: #1e1e1e;
+    --terminal-text: #d4d4d4;
+    --terminal-prompt: #4ec9b0;
+    --terminal-success: #4ec9b0;
+    --terminal-error: #f44747;
+    --terminal-info: #569cd6;
+    --terminal-border: #3e3e42;
+    --terminal-header: #2d2d30;
+  }
+
+  /* Dark theme (default) */
+  .theme-dark,
+  .theme-dark * {
+    --terminal-bg: #1e1e1e;
+    --terminal-text: #d4d4d4;
+    --terminal-prompt: #4ec9b0;
+    --terminal-success: #4ec9b0;
+    --terminal-error: #f44747;
+    --terminal-info: #569cd6;
+    --terminal-border: #3e3e42;
+    --terminal-header: #2d2d30;
+    
+    /* ANSI colors for dark theme */
+    --ansi-black: #1e1e1e;
+    --ansi-red: #f44747;
+    --ansi-green: #4ec9b0;
+    --ansi-yellow: #ffcc02;
+    --ansi-blue: #569cd6;
+    --ansi-magenta: #c586c0;
+    --ansi-cyan: #4ec9b0;
+    --ansi-white: #d4d4d4;
+    --ansi-bright-black: #808080;
+    --ansi-bright-red: #ff6b6b;
+    --ansi-bright-green: #51cf66;
+    --ansi-bright-yellow: #ffd43b;
+    --ansi-bright-blue: #74c0fc;
+    --ansi-bright-magenta: #d0bfff;
+    --ansi-bright-cyan: #51cf66;
+    --ansi-bright-white: #ffffff;
+  }
+
+  /* Light theme */
+  .theme-light,
+  .theme-light * {
+    --terminal-bg: #ffffff;
+    --terminal-text: #333333;
+    --terminal-prompt: #007acc;
+    --terminal-success: #28a745;
+    --terminal-error: #dc3545;
+    --terminal-info: #007bff;
+    --terminal-border: #e0e0e0;
+    --terminal-header: #f5f5f5;
+    
+    /* ANSI colors for light theme */
+    --ansi-black: #000000;
+    --ansi-red: #dc3545;
+    --ansi-green: #28a745;
+    --ansi-yellow: #ffc107;
+    --ansi-blue: #007bff;
+    --ansi-magenta: #6f42c1;
+    --ansi-cyan: #17a2b8;
+    --ansi-white: #333333;
+    --ansi-bright-black: #6c757d;
+    --ansi-bright-red: #e74c3c;
+    --ansi-bright-green: #2ecc71;
+    --ansi-bright-yellow: #f39c12;
+    --ansi-bright-blue: #3498db;
+    --ansi-bright-magenta: #9b59b6;
+    --ansi-bright-cyan: #1abc9c;
+    --ansi-bright-white: #000000;
+  }
+}
+
 @layer components {
+  /* ANSI color classes that use CSS variables */
+  .ansi-black { color: var(--ansi-black); }
+  .ansi-red { color: var(--ansi-red); }
+  .ansi-green { color: var(--ansi-green); }
+  .ansi-yellow { color: var(--ansi-yellow); }
+  .ansi-blue { color: var(--ansi-blue); }
+  .ansi-magenta { color: var(--ansi-magenta); }
+  .ansi-cyan { color: var(--ansi-cyan); }
+  .ansi-white { color: var(--ansi-white); }
+  .ansi-bright-black { color: var(--ansi-bright-black); }
+  .ansi-bright-red { color: var(--ansi-bright-red); }
+  .ansi-bright-green { color: var(--ansi-bright-green); }
+  .ansi-bright-yellow { color: var(--ansi-bright-yellow); }
+  .ansi-bright-blue { color: var(--ansi-bright-blue); }
+  .ansi-bright-magenta { color: var(--ansi-bright-magenta); }
+  .ansi-bright-cyan { color: var(--ansi-bright-cyan); }
+  .ansi-bright-white { color: var(--ansi-bright-white); }
+
+  /* Terminal component styles */
   .terminal-scrollbar {
     /* Hide scrollbar for Firefox */
     scrollbar-width: none;
@@ -106,71 +201,71 @@
     opacity: 1;
   }
 
-  /* Markdown content styling - Shell green theme */
+  /* Markdown content styling - adapts to theme */
   .markdown-content {
-    color: #00ff00; /* Matrix green for base text */
+    color: var(--terminal-text);
   }
 
   .markdown-content h1 {
     @apply text-2xl font-bold mb-4 mt-6;
-    color: #39ff14; /* Bright neon green for main headers */
+    color: var(--terminal-success);
   }
 
   .markdown-content h2 {
     @apply text-xl font-bold mb-3 mt-5;
-    color: #32cd32; /* Lime green for secondary headers */
+    color: var(--terminal-prompt);
   }
 
   .markdown-content h3 {
     @apply text-lg font-bold mb-2 mt-4;
-    color: #00ff7f; /* Spring green for third-level headers */
+    color: var(--terminal-info);
   }
 
   .markdown-content h4, .markdown-content h5, .markdown-content h6 {
     @apply text-base font-bold mb-2 mt-3;
-    color: #90ee90; /* Light green for smaller headers */
+    color: var(--terminal-text);
   }
 
   .markdown-content p {
     @apply mb-3 leading-relaxed;
-    color: #00ff00; /* Matrix green for paragraph text */
+    color: var(--terminal-text);
   }
 
   .markdown-content strong {
     @apply font-bold;
-    color: #39ff14; /* Bright green for emphasis */
+    color: var(--terminal-success);
   }
 
   .markdown-content em {
     @apply italic;
-    color: #90ee90; /* Light green for italic text */
+    color: var(--terminal-prompt);
   }
 
   .markdown-content code {
     @apply px-1 py-0.5 rounded text-sm font-mono;
-    background-color: #001100; /* Very dark green background */
-    color: #00ff7f; /* Spring green for inline code */
+    background-color: var(--terminal-header);
+    color: var(--terminal-info);
   }
 
   .markdown-content pre {
     @apply p-4 rounded-lg overflow-x-auto mb-4;
-    background-color: #001100; /* Very dark green background */
-    border: 1px solid #006400; /* Dark green border */
+    background-color: var(--terminal-header);
+    border: 1px solid var(--terminal-border);
   }
 
   .markdown-content pre code {
     @apply bg-transparent p-0;
-    color: #00ff00; /* Matrix green for code blocks */
+    color: var(--terminal-text);
   }
 
   .markdown-content ul, .markdown-content ol {
     @apply mb-4 pl-6;
-    color: #00ff00;
+    color: var(--terminal-text);
   }
 
   .markdown-content li {
     @apply mb-1;
-    color: #00ff00;
+    color: var(--terminal-text);
   }
 
   .markdown-content ul li {
@@ -182,14 +277,14 @@
   }
 
   .markdown-content ul li::marker, .markdown-content ol li::marker {
-    color: #32cd32; /* Lime green for list markers */
+    color: var(--terminal-prompt);
   }
 
   .markdown-content blockquote {
     @apply pl-4 py-2 mb-4 italic;
-    border-left: 4px solid #32cd32; /* Lime green border */
-    color: #90ee90; /* Light green for quotes */
-    background-color: #002200; /* Very dark green background */
+    border-left: 4px solid var(--terminal-prompt);
+    color: var(--terminal-text);
+    background-color: var(--terminal-header);
   }
 
   .markdown-content table {

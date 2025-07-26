@@ -118,6 +118,7 @@ fn execute_auto_command(
         }),
         app_config: AppConfigService::new(),
         command_executor: &executor,
+        set_theme: None,
         execute: std::rc::Rc::new(move |command_str: &str| {
             let minimal_context = TerminalContext {
                 app_config: AppConfigService::new(),
@@ -127,6 +128,7 @@ fn execute_auto_command(
                 execute: std::rc::Rc::new(|_| {
                     CommandResult::Error("Nested execute not supported".to_string())
                 }),
+                set_theme: None,
             };
             executor_clone_for_execute.execute(command_str, &minimal_context)
         }),

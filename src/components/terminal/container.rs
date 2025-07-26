@@ -6,6 +6,7 @@ use super::handlers::*;
 use super::hooks::{use_auto_focus, use_auto_navigation, use_trailing_effect};
 use crate::commands::CommandExecutor;
 use crate::components::history::create_welcome_entry;
+use crate::utils::use_app_config;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
@@ -25,6 +26,7 @@ pub fn terminal(_props: &TerminalProps) -> Html {
     let input_ref = use_node_ref();
     let container_ref = use_node_ref();
     let executor = use_state(|| CommandExecutor::new());
+    let app_config = use_app_config();
 
     // Custom hooks
     use_auto_focus(input_ref.clone());
@@ -58,6 +60,7 @@ pub fn terminal(_props: &TerminalProps) -> Html {
         history_index.clone(),
         executor.clone(),
         container_ref.clone(),
+        app_config.clone(),
     );
 
     html! {

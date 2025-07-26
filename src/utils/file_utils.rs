@@ -214,6 +214,7 @@ fn execute_run_block(code_content: &str, executor: &CommandExecutor) -> String {
             command_executor: executor,
             execute: dummy_execute,
             app_config: AppConfigService::new(),
+            set_theme: None,
         };
 
         match executor.execute_command(&parts[0], &parts[1..], &context) {

@@ -75,22 +75,22 @@ pub fn apply_ansi_code(code: &str, segment: &mut AnsiSegment) {
             3 => segment.italic = true,
             22 => segment.bold = false,
             23 => segment.italic = false,
-            30 => segment.color = Some("#1e1e1e".to_string()), // Black
-            31 => segment.color = Some("#f44747".to_string()), // Red
-            32 => segment.color = Some("#4ec9b0".to_string()), // Green
-            33 => segment.color = Some("#ffcc02".to_string()), // Yellow
-            34 => segment.color = Some("#569cd6".to_string()), // Blue
-            35 => segment.color = Some("#c586c0".to_string()), // Magenta
-            36 => segment.color = Some("#4ec9b0".to_string()), // Cyan
-            37 => segment.color = Some("#d4d4d4".to_string()), // White
-            90 => segment.color = Some("#808080".to_string()), // Bright Black (Gray)
-            91 => segment.color = Some("#ff6b6b".to_string()), // Bright Red
-            92 => segment.color = Some("#51cf66".to_string()), // Bright Green
-            93 => segment.color = Some("#ffd43b".to_string()), // Bright Yellow
-            94 => segment.color = Some("#74c0fc".to_string()), // Bright Blue
-            95 => segment.color = Some("#d0bfff".to_string()), // Bright Magenta
-            96 => segment.color = Some("#51cf66".to_string()), // Bright Cyan
-            97 => segment.color = Some("#ffffff".to_string()), // Bright White
+            30 => segment.color = Some("ansi-black".to_string()),        // Black
+            31 => segment.color = Some("ansi-red".to_string()),          // Red
+            32 => segment.color = Some("ansi-green".to_string()),        // Green
+            33 => segment.color = Some("ansi-yellow".to_string()),       // Yellow
+            34 => segment.color = Some("ansi-blue".to_string()),         // Blue
+            35 => segment.color = Some("ansi-magenta".to_string()),      // Magenta
+            36 => segment.color = Some("ansi-cyan".to_string()),         // Cyan
+            37 => segment.color = Some("ansi-white".to_string()),        // White
+            90 => segment.color = Some("ansi-bright-black".to_string()), // Bright Black (Gray)
+            91 => segment.color = Some("ansi-bright-red".to_string()),   // Bright Red
+            92 => segment.color = Some("ansi-bright-green".to_string()), // Bright Green
+            93 => segment.color = Some("ansi-bright-yellow".to_string()), // Bright Yellow
+            94 => segment.color = Some("ansi-bright-blue".to_string()),  // Bright Blue
+            95 => segment.color = Some("ansi-bright-magenta".to_string()), // Bright Magenta
+            96 => segment.color = Some("ansi-bright-cyan".to_string()),  // Bright Cyan
+            97 => segment.color = Some("ansi-bright-white".to_string()), // Bright White
             _ => {}                                            // Ignore unknown codes
         }
     }
@@ -101,28 +101,28 @@ pub fn render_ansi_segments(segments: &[AnsiSegment]) -> Html {
     html! {
         <>
             {for segments.iter().map(|segment| {
-                let mut style = String::new();
+                let mut classes = vec!["text-sm", "font-mono"];
 
-                // Apply color
-                if let Some(color) = &segment.color {
-                    style.push_str(&format!("color: {};", color));
+                // Apply color class
+                if let Some(color_class) = &segment.color {
+                    classes.push(color_class);
                 } else {
-                    // Default to white if no color specified
-                    style.push_str("color: #ffffff;");
+                    // Default to terminal text color if no color specified
+                    classes.push("text-terminal-text");
                 }
 
                 // Apply font weight
                 if segment.bold {
-                    style.push_str("font-weight: bold;");
+                    classes.push("font-bold");
                 }
 
                 // Apply font style
                 if segment.italic {
-                    style.push_str("font-style: italic;");
+                    classes.push("italic");
                 }
 
                 html! {
-                    <span class="text-sm font-mono" style={style}>{&segment.text}</span>
+                    <span class={classes.join(" ")}>{&segment.text}</span>
                 }
             })}
         </>

@@ -96,6 +96,7 @@ pub fn create_keydown_handler(
     history_index: UseStateHandle<Option<usize>>,
     executor: UseStateHandle<CommandExecutor>,
     container_ref: NodeRef,
+    app_config: UseStateHandle<AppConfigService>,
 ) -> Callback<KeyboardEvent> {
     Callback::from(move |e: KeyboardEvent| match e.key().as_str() {
         "Enter" => {
@@ -109,6 +110,7 @@ pub fn create_keydown_handler(
                     &history_index,
                     &executor,
                     &container_ref,
+                    &app_config,
                 );
             }
         }
@@ -146,6 +148,7 @@ fn handle_enter_key(
     history_index: &UseStateHandle<Option<usize>>,
     executor: &UseStateHandle<CommandExecutor>,
     container_ref: &NodeRef,
+    app_config: &UseStateHandle<AppConfigService>,
 ) {
     let command = (**input_value).clone();
 
@@ -161,7 +164,7 @@ fn handle_enter_key(
     history_index.set(None);
 
     // Execute command
-    execute_command(&command, history, executor);
+    execute_command(&command, history, executor, app_config);
 
     // Clear input and scroll
     input_value.set(String::new());
@@ -176,14 +179,16 @@ fn execute_command(
     command: &str,
     history: &UseStateHandle<Vec<HistoryEntry>>,
     executor: &UseStateHandle<CommandExecutor>,
+    app_config: &UseStateHandle<AppConfigService>,
 ) {
     let history_clone_for_clear = history.clone();
     let history_clone_for_html = history.clone();
     let command_clone_for_html = command.to_string();
     let executor_clone_for_execute = executor.clone();
+    let app_config_clone_for_theme = app_config.clone();
 
     let context = TerminalContext {
-        app_config: AppConfigService::new(),
+        app_config: (**app_config).clone(),
         clear_screen: std::rc::Rc::new(move || {
             let welcome_history = vec![create_welcome_entry()];
             history_clone_for_clear.set(welcome_history);
@@ -206,9 +211,19 @@ fn execute_command(
                     CommandResult::Error("Nested execute not supported".to_string())
                 }),
                 app_config: AppConfigService::new(),
+                set_theme: None,
             };
             executor_clone_for_execute.execute(command_str, &minimal_context)
         }),
+        set_theme: Some(std::rc::Rc::new(move |theme: &str| {
+            let mut config = (*app_config_clone_for_theme).clone();
+            if config.set_theme(theme) {
+                app_config_clone_for_theme.set(config);
+                true
+            } else {
+                false
+            }
+        })),
     };
 
     let result = executor.execute(command, &context);

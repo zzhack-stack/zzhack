@@ -23,6 +23,7 @@ mod history_push;
 mod ls;
 mod navigate;
 mod pwd;
+mod theme;
 mod view;
 mod whoimi;
 
@@ -35,6 +36,7 @@ pub use eval::EvalCommand;
 pub use help::HelpCommand;
 pub use ls::LsCommand;
 pub use pwd::PwdCommand;
+pub use theme::ThemeCommand;
 pub use view::ViewCommand;
 pub use whoimi::WhoimiCommand;
 
@@ -45,6 +47,7 @@ pub struct TerminalContext<'a> {
     pub command_executor: &'a CommandExecutor,
     pub execute: std::rc::Rc<dyn Fn(&str) -> CommandResult>,
     pub app_config: AppConfigService,
+    pub set_theme: Option<std::rc::Rc<dyn Fn(&str) -> bool>>,
 }
 
 /// Result of executing a terminal command
@@ -122,6 +125,7 @@ impl CommandExecutor {
         commands.insert("echo".to_string(), Box::new(EchoCommand));
         commands.insert("clear".to_string(), Box::new(ClearCommand));
         commands.insert("email".to_string(), Box::new(EmailCommand));
+        commands.insert("theme".to_string(), Box::new(ThemeCommand));
         commands.insert(
             "history_push".to_string(),
             Box::new(history_push::HistoryPushCommand),
