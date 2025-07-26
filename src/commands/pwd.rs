@@ -11,7 +11,7 @@ pub struct PwdCommand {
 }
 
 impl Command for PwdCommand {
-    fn execute(&self, args: &[String], _context: &TerminalContext) -> CommandResult {
+    fn execute(&self, _args: &[String], _context: &TerminalContext) -> CommandResult {
         let fs = self.filesystem.borrow();
         CommandResult::Success(fs.get_current_directory())
     }

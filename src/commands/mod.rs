@@ -262,7 +262,7 @@ impl CommandExecutor {
         cursor_position: usize,
     ) -> (Vec<String>, String) {
         // Try to get filesystem from any filesystem command
-        if let Some(pwd_cmd) = self.commands.get("pwd") {
+        if let Some(_pwd_cmd) = self.commands.get("pwd") {
             // We need to access the filesystem through the command
             // For now, create a new filesystem instance for completion
             let fs = FileSystem::new();

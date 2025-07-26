@@ -4,7 +4,6 @@
 use crate::commands::CommandExecutor;
 use crate::components::syntax::{parse_syntax_segments, render_syntax_segments};
 use crate::utils::use_app_config;
-use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]

@@ -8,7 +8,7 @@ use super::{Command, CommandResult, TerminalContext};
 pub struct ClearCommand;
 
 impl Command for ClearCommand {
-    fn execute(&self, args: &[String], context: &TerminalContext) -> CommandResult {
+    fn execute(&self, _args: &[String], context: &TerminalContext) -> CommandResult {
         // Call the terminal's clear screen function directly
         (context.clear_screen)();
         CommandResult::Success(String::new())

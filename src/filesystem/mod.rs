@@ -2,12 +2,8 @@
 // This module provides filesystem operations using pre-generated metadata
 // instead of a server-based virtual filesystem
 
-use crate::utils::config::build_data_url;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use wasm_bindgen::JsCast;
-use wasm_bindgen_futures::JsFuture;
-use web_sys::{Request, RequestInit, RequestMode, Response};
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct FileSystemNode {
@@ -294,102 +290,4 @@ impl FileSystem {
     }
 }
 
-/// Fetch file content from the data directory
-pub async fn fetch_file_content(file_path: &str) -> Result<String, String> {
-    let url = build_data_url(file_path);
 
-    let opts = RequestInit::new();
-    opts.set_method("GET");
-    opts.set_mode(RequestMode::Cors);
-
-    let request = Request::new_with_str_and_init(&url, &opts)
-        .map_err(|_| format!("Failed to create request for {}", file_path))?;
-
-    let window = web_sys::window().ok_or("No window object")?;
-    let resp_value = JsFuture::from(window.fetch_with_request(&request))
-        .await
-        .map_err(|_| format!("Network request failed for {}", file_path))?;
-
-    let resp: Response = resp_value
-        .dyn_into()
-        .map_err(|_| "Failed to cast response".to_string())?;
-
-    if !resp.ok() {
-        return Err(format!(
-            "Failed to fetch file {}: HTTP {}",
-            file_path,
-            resp.status()
-        ));
-    }
-
-    let text_promise = resp.text().map_err(|_| "Failed to get text promise")?;
-
-    let text_value = JsFuture::from(text_promise)
-        .await
-        .map_err(|_| "Failed to get text from response")?;
-
-    let content = text_value
-        .as_string()
-        .ok_or("Failed to convert response to string")?;
-
-    Ok(content)
-}
-
-/// Check if file should be syntax highlighted
-fn should_highlight_file(filename: &str) -> bool {
-    if let Some(ext) = filename.split('.').last() {
-        matches!(
-            ext.to_lowercase().as_str(),
-            "rs" | "js"
-                | "ts"
-                | "jsx"
-                | "tsx"
-                | "py"
-                | "java"
-                | "cpp"
-                | "c"
-                | "h"
-                | "css"
-                | "scss"
-                | "html"
-                | "xml"
-                | "json"
-                | "yaml"
-                | "yml"
-                | "toml"
-                | "go"
-                | "php"
-                | "rb"
-                | "swift"
-                | "kt"
-                | "cs"
-                | "sh"
-                | "bash"
-                | "zsh"
-                | "fish"
-                | "ps1"
-                | "sql"
-                | "r"
-                | "scala"
-                | "clj"
-                | "hs"
-                | "elm"
-                | "dart"
-                | "vue"
-                | "svelte"
-                | "tex"
-                | "dockerfile"
-                | "makefile"
-                | "gradle"
-        )
-    } else {
-        false
-    }
-}
-
-/// Apply basic syntax highlighting (simplified)
-fn apply_syntax_highlighting(content: &str, _filename: &str) -> String {
-    // For now, just return the content as-is
-    // In a real implementation, you would parse and highlight the syntax
-    content.to_string()
-}

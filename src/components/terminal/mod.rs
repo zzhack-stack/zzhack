@@ -11,7 +11,3 @@ pub mod input;
 
 // Re-export main components for easier access
 pub use container::Terminal;
-pub use content::TerminalContent;
-pub use header::TerminalHeader;
-pub use history::TerminalHistory;
-pub use input::TerminalInput;

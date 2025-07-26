@@ -1,8 +1,6 @@
 // LS Command Implementation
 // List directory contents command
 
-use gloo_console::log;
-
 use super::{Command, CommandResult, TerminalContext};
 use crate::filesystem::FileSystem;
 use std::cell::RefCell;
