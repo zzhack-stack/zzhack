@@ -4,8 +4,11 @@
     "email": "mist.zzh@gmail.com"
   },
   "terminal": {
-    "prompt": "$",
-    "color": "#22C55D"
+    "prompt": {
+      "symbol": "$",
+      "color": "#22C55D"
+    },
+    "background": "#1E293B"
   },
   "layout": {
     "align": "left"

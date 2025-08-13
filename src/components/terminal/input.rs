@@ -53,8 +53,8 @@ pub fn terminal_prompt() -> Html {
     let app_config = use_app_config();
 
     html! {
-        <span class="mr-2 mt-0.5 text-sm font-mono font-bold" style={format!("color: {}", app_config.config.terminal.color)}>
-            {format!("{} ", app_config.config.terminal.prompt)}
+        <span class="mr-2 mt-0.5 text-sm font-mono font-bold" style={format!("color: {}", app_config.config.terminal.prompt.color)}>
+            {format!("{} ", app_config.config.terminal.prompt.symbol)}
         </span>
     }
 }
@@ -124,7 +124,7 @@ fn terminal_cursor(props: &TerminalCursorProps) -> Html {
         <div
             class={format!("absolute cursor-blink pointer-events-none {}", props.trailing_class)}
             style={format!("left: {}px; top: 0.125rem; width: 8px; height: 18px; z-index: 3; background-color: {};",
-                (props.position as f32 * 8.4), app_config.config.terminal.color)}
+                (props.position as f32 * 8.4), app_config.config.terminal.prompt.color)}
         ></div>
     }
 }

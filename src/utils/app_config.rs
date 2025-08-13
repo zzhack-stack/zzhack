@@ -11,9 +11,15 @@ pub struct Author {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct Terminal {
-    pub prompt: String,
+pub struct Prompt {
+    pub symbol: String,
     pub color: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct Terminal {
+    pub prompt: Prompt,
+    pub background: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -45,11 +51,15 @@ impl AppConfigService {
     pub fn new() -> Self {
         // Load configuration from embedded JSON at compile time
         let config = Self::load_embedded_config();
-        
+
         // Check localStorage first, then fall back to config
-        let current_theme = Self::get_saved_theme().unwrap_or_else(|| Self::resolve_theme(&config.theme));
-        
-        Self { config, current_theme }
+        let current_theme =
+            Self::get_saved_theme().unwrap_or_else(|| Self::resolve_theme(&config.theme));
+
+        Self {
+            config,
+            current_theme,
+        }
     }
 
     fn load_embedded_config() -> AppConfig {
@@ -120,7 +130,7 @@ impl AppConfigService {
                 if let Some(body) = document.body() {
                     // Remove existing theme classes
                     let _ = body.set_class_name("");
-                    
+
                     // Add new theme class
                     let theme_class = match theme {
                         "light" => "theme-light",
@@ -145,4 +155,3 @@ impl Default for AppConfigService {
         Self::new()
     }
 }
-
