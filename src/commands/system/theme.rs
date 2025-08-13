@@ -1,4 +1,4 @@
-use super::{Command, CommandResult, TerminalContext};
+use crate::commands::{Command, CommandResult, TerminalContext};
 
 pub struct ThemeCommand;
 

@@ -1,7 +1,7 @@
 // VIEW Command Implementation
 // Render markdown files command
 
-use super::{Command, CommandResult, TerminalContext};
+use crate::commands::{Command, CommandResult, TerminalContext};
 use crate::filesystem::FileSystem;
 use crate::utils::fetch_and_render_markdown_with_executor;
 use std::cell::RefCell;

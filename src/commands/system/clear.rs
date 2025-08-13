@@ -1,7 +1,7 @@
 // Clear Command Implementation
 // This file contains the clear command that clears the terminal screen
 
-use super::{Command, CommandResult, TerminalContext};
+use crate::commands::{Command, CommandResult, TerminalContext};
 
 /// Built-in clear command that clears the terminal screen
 /// This command removes all previous output and resets the terminal to a clean state

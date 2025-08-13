@@ -1,9 +1,9 @@
-use super::Command;
+use crate::commands::{Command, CommandResult, TerminalContext};
 
 pub struct WhoimiCommand;
 
 impl Command for WhoimiCommand {
-    fn execute(&self, _args: &[String], context: &super::TerminalContext) -> super::CommandResult {
+    fn execute(&self, _args: &[String], context: &TerminalContext) -> CommandResult {
         let execute = context.execute.clone();
 
         execute(format!("echo {}", context.app_config.config.author.name).as_str())

@@ -1,91 +1,14 @@
-// Terminal Event Handlers
-// Pure functions for handling terminal events
+// Command Execution Handlers
+// Handlers for command execution and result processing
 
 use crate::commands::{CommandExecutor, CommandResult, TerminalContext};
 use crate::components::history::{
     create_command_entry, create_html_entry, create_welcome_entry, HistoryEntry,
 };
 use crate::utils::AppConfigService;
-use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
-/// Create input change handler
-pub fn create_input_handler(
-    input_value: UseStateHandle<String>,
-    cursor_position: UseStateHandle<usize>,
-    set_trailing: std::rc::Rc<dyn Fn(&str)>,
-) -> Callback<InputEvent> {
-    Callback::from(move |e: InputEvent| {
-        let input: HtmlInputElement = e.target_unchecked_into();
-        let new_value = input.value();
-        let old_pos = *cursor_position;
-        let new_pos = input.selection_start().unwrap_or(Some(0)).unwrap_or(0) as usize;
-
-        if new_pos > old_pos {
-            set_trailing("cursor-trailing-left");
-        } else if new_pos < old_pos {
-            set_trailing("cursor-trailing-right");
-        }
-
-        input_value.set(new_value);
-        cursor_position.set(new_pos);
-    })
-}
-
-/// Create focus handler
-pub fn create_focus_handler(cursor_position: UseStateHandle<usize>) -> Callback<FocusEvent> {
-    Callback::from(move |e: FocusEvent| {
-        let input: HtmlInputElement = e.target_unchecked_into();
-        cursor_position.set(input.selection_start().unwrap_or(Some(0)).unwrap_or(0) as usize);
-    })
-}
-
-/// Create click handler
-pub fn create_click_handler(cursor_position: UseStateHandle<usize>) -> Callback<MouseEvent> {
-    Callback::from(move |e: MouseEvent| {
-        let input: HtmlInputElement = e.target_unchecked_into();
-        cursor_position.set(input.selection_start().unwrap_or(Some(0)).unwrap_or(0) as usize);
-    })
-}
-
-/// Create terminal area click handler
-pub fn create_terminal_click_handler(input_ref: NodeRef) -> Callback<MouseEvent> {
-    Callback::from(move |_e: MouseEvent| {
-        if let Some(input) = input_ref.cast::<HtmlInputElement>() {
-            let _ = input.focus();
-        }
-    })
-}
-
-/// Create keyup handler
-pub fn create_keyup_handler(
-    cursor_position: UseStateHandle<usize>,
-    trailing_class: UseStateHandle<String>,
-    trailing_timeout: UseStateHandle<Option<gloo::timers::callback::Timeout>>,
-    set_trailing: std::rc::Rc<dyn Fn(&str)>,
-) -> Callback<KeyboardEvent> {
-    Callback::from(move |e: KeyboardEvent| {
-        let input: HtmlInputElement = e.target_unchecked_into();
-        let old_pos = *cursor_position;
-        let new_pos = input.selection_start().unwrap_or(Some(0)).unwrap_or(0) as usize;
-
-        match e.key().as_str() {
-            "ArrowLeft" | "ArrowRight" => {
-                if new_pos > old_pos {
-                    set_trailing("cursor-trailing-left");
-                } else if new_pos < old_pos {
-                    set_trailing("cursor-trailing-right");
-                }
-            }
-            _ => {
-                trailing_class.set(String::new());
-                trailing_timeout.set(None);
-            }
-        }
-
-        cursor_position.set(new_pos);
-    })
-}
+use super::{handle_arrow_down, handle_arrow_up, handle_tab};
 
 /// Create keydown handler for command execution and navigation
 pub fn create_keydown_handler(
@@ -219,7 +142,8 @@ fn execute_command(
     handle_command_result(result, command.to_string(), history);
 }
 
-fn handle_command_result(
+/// Handle command execution result
+pub fn handle_command_result(
     result: CommandResult,
     command: String,
     history: &UseStateHandle<Vec<HistoryEntry>>,
@@ -299,86 +223,5 @@ fn handle_command_result(
                 history_clone.set(current_history);
             });
         }
-    }
-}
-
-fn handle_arrow_up(
-    command_history: &UseStateHandle<Vec<String>>,
-    history_index: &UseStateHandle<Option<usize>>,
-    input_value: &UseStateHandle<String>,
-    cursor_position: &UseStateHandle<usize>,
-) {
-    let cmd_history = &**command_history;
-    if !cmd_history.is_empty() {
-        let new_index = match **history_index {
-            None => cmd_history.len() - 1,
-            Some(idx) => {
-                if idx > 0 {
-                    idx - 1
-                } else {
-                    0
-                }
-            }
-        };
-        history_index.set(Some(new_index));
-        input_value.set(cmd_history[new_index].clone());
-        cursor_position.set(cmd_history[new_index].len());
-    }
-}
-
-fn handle_arrow_down(
-    command_history: &UseStateHandle<Vec<String>>,
-    history_index: &UseStateHandle<Option<usize>>,
-    input_value: &UseStateHandle<String>,
-    cursor_position: &UseStateHandle<usize>,
-) {
-    let cmd_history = &**command_history;
-    if !cmd_history.is_empty() {
-        match **history_index {
-            None => {}
-            Some(idx) => {
-                if idx < cmd_history.len() - 1 {
-                    let new_index = idx + 1;
-                    history_index.set(Some(new_index));
-                    input_value.set(cmd_history[new_index].clone());
-                    cursor_position.set(cmd_history[new_index].len());
-                } else {
-                    history_index.set(None);
-                    input_value.set(String::new());
-                    cursor_position.set(0);
-                }
-            }
-        }
-    }
-}
-
-fn handle_tab(
-    executor: &UseStateHandle<CommandExecutor>,
-    input_value: &UseStateHandle<String>,
-    cursor_position: &UseStateHandle<usize>,
-) {
-    let (suggestions, prefix) =
-        executor.get_completion_suggestions(&**input_value, **cursor_position);
-
-    if !suggestions.is_empty() {
-        let suggestion = &suggestions[0];
-        let current_input = (**input_value).clone();
-        let cursor_pos = **cursor_position;
-
-        let prefix_start = if cursor_pos >= prefix.len() {
-            cursor_pos - prefix.len()
-        } else {
-            0
-        };
-
-        let mut new_input = String::new();
-        new_input.push_str(&current_input[..prefix_start]);
-        new_input.push_str(suggestion);
-        new_input.push_str(&current_input[cursor_pos..]);
-
-        let new_cursor_pos = prefix_start + suggestion.len();
-
-        input_value.set(new_input);
-        cursor_position.set(new_cursor_pos);
     }
 }

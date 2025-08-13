@@ -1,7 +1,7 @@
 // EVAL Command Implementation
 // Execute JavaScript code from files or inline strings
 
-use super::{Command, CommandResult, TerminalContext};
+use crate::commands::{Command, CommandResult, TerminalContext};
 use crate::filesystem::FileSystem;
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -51,7 +51,7 @@ impl Command for EvalCommand {
                         // Return async future to fetch and execute the JavaScript file
                         let future = Box::pin(async move {
                             match crate::utils::fetch_file_content(&file_path).await {
-                                Ok(js_content) => Self::execute_javascript(&js_content),
+                                Ok(js_content) => EvalCommand::execute_javascript(&js_content),
                                 Err(error) => CommandResult::Error(format!(
                                     "eval: Error reading file: {}",
                                     error

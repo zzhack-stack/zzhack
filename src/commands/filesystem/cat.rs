@@ -1,7 +1,7 @@
 // CAT Command Implementation
 // Display file contents command
 
-use super::{Command, CommandResult, TerminalContext};
+use crate::commands::{Command, CommandResult, TerminalContext};
 use crate::filesystem::FileSystem;
 use crate::utils::fetch_file_content;
 use std::cell::RefCell;

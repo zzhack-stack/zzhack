@@ -3,7 +3,7 @@
 
 use crate::utils::config::start_with_slash;
 
-use super::{Command, CommandResult, TerminalContext};
+use crate::commands::{Command, CommandResult, TerminalContext};
 
 /// Built-in navigate command that pushes to browser history and views index.md
 /// This command combines history_push and view operations for easy navigation

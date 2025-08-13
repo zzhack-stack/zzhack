@@ -1,7 +1,7 @@
 // History Push Command Implementation
 // This file contains the history_push command that manipulates browser history
 
-use super::{Command, CommandResult, TerminalContext};
+use crate::commands::{Command, CommandResult, TerminalContext};
 use crate::utils::build_url;
 use web_sys::window;
 

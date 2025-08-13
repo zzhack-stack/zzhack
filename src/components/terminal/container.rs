@@ -2,7 +2,10 @@
 // Main container that manages all terminal state and coordinates child components
 
 use super::content::TerminalContent;
-use super::handlers::*;
+use super::handlers::{
+    create_click_handler, create_focus_handler, create_input_handler, create_keydown_handler,
+    create_keyup_handler, create_terminal_click_handler,
+};
 use crate::commands::CommandExecutor;
 use crate::components::history::create_welcome_entry;
 use crate::hooks::{use_app_config, use_auto_focus, use_auto_navigation, use_trailing_effect};

@@ -1,7 +1,7 @@
 // PWD Command Implementation
 // Print Working Directory command
 
-use super::{Command, CommandResult, TerminalContext};
+use crate::commands::{Command, CommandResult, TerminalContext};
 use crate::filesystem::FileSystem;
 use std::cell::RefCell;
 use std::rc::Rc;

@@ -1,7 +1,7 @@
 // Help Command Implementation
 // This file contains the help command that displays information about available commands
 
-use super::{Command, CommandResult, TerminalContext};
+use crate::commands::{Command, CommandResult, TerminalContext};
 
 /// Built-in help command that displays information about available commands
 /// This command shows a list of all available commands with their descriptions and usage
